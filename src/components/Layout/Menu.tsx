@@ -73,7 +73,7 @@ function Menu() {
           </a>
         </li>
       </ul>
-      <ul className="hidden absolute bottom-3 menu bg-base-200 rounded-box gap-3">
+      <ul className="absolute bottom-3 menu bg-base-200 rounded-box gap-3">
         <li>
           <a>
             <svg
