@@ -66,9 +66,13 @@ function CreateNewProduct() {
                 className="select w-full"
               >
                 <option disabled={true}>موجودی را وارد نمایید</option>
-                <option>10</option>
-                <option>FireFox</option>
-                <option>Safari</option>
+                <option>+ ۵</option>
+                <option>+ ۱۰</option>
+                <option>+ ۲۰</option>
+                <option>+ ۳۰</option>
+                <option>+ ۴۰</option>
+                <option>+ ۵۰</option>
+                <option>+ ۱۰۰</option>
               </select>
             </fieldset>
           </div>
