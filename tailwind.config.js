@@ -9,6 +9,8 @@ module.exports = {
       {
         mytheme: {
           success: "#22c55e",
+          black: "#121212",
+          primary: "#db2777",
         },
       },
       "dark",

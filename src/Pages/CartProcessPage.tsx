@@ -22,7 +22,7 @@ const CartProcess = () => {
   return (
     <div className="bg-[#121212] min-h-screen flex flex-col items-center py-12 text-right">
       <div className="w-full h-1/2 flex justify-center">
-        <Stepper />
+        <Stepper activeStep={1} />
       </div>
       <h2 className="font-bold text-2xl mb-2 text-white text-right">
         آدرس دریافت

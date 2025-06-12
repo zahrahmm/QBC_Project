@@ -1,8 +1,6 @@
 const steps = ["ورود", "آدرس", "خلاصه خرید"];
 
-const activeStep = 1;
-
-const Stepper = () => (
+const Stepper = ({ activeStep = 0 }: { activeStep: number }) => (
   <ul
     dir="ltr"
     className="steps steps-horizontal lg:steps-horizontal w-2/3 flex justify-center my-8"
