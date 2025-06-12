@@ -1,11 +1,12 @@
 // import { useState } from "react";
 import Layout from "./components/Layout";
+import CreateNewProduct from "./components/CreateNewProduct";
 
 function App() {
   return (
     <Layout>
       <div>
-        <h1>Quera</h1>
+        <CreateNewProduct />
       </div>
     </Layout>
   );
