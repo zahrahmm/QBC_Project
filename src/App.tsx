@@ -1,4 +1,5 @@
 // import { useState } from "react";
+import Carousel from "./components/Carousel";
 import Layout from "./components/Layout";
 import ProductCard from "./components/ProductCard";
 
@@ -22,7 +23,6 @@ function App() {
     productRate: 5,
     productBrand: "Apple",
     //productUpdateTime: 12.06.2025,
-    
   };
 
   return (
@@ -34,6 +34,7 @@ function App() {
       <ProductCard productInfo={product1} />
       <ProductCard productInfo={product1} />
       <ProductCard productInfo={product1} />
+      <Carousel />
     </Layout>
   );
 }
