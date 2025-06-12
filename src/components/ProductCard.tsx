@@ -14,12 +14,11 @@ const ProductCard = ({ productInfo }: IProductCardProps) => {
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{productInfo.productName}</h2>
         <p>{productInfo.productDescription}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">
+          <div className="badge">
             {productInfo.productPrice.toLocaleString()} تومان
-          </button>
+          </div>
         </div>
       </div>
     </div>
