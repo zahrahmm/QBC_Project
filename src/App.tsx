@@ -9,8 +9,8 @@ export type productType = {
   productDescription: string;
   productRate: number;
   productBrand: string;
-  //productUpdateTime: ?;
-  //productAvailability: number;
+  // productUpdateTime: Date;
+  // productAvailability: number;
 };
 
 function App() {
@@ -21,12 +21,18 @@ function App() {
     productDescription: "گوشی موبایل اپل مدل iPhone 13 Pro Max CH دو سیم‌ کارت",
     productRate: 5,
     productBrand: "Apple",
+    //productUpdateTime: 12.06.2025,
+    
   };
+
   return (
     <Layout>
       <div>
         <h1>Quera</h1>
       </div>
+      <ProductCard productInfo={product1} />
+      <ProductCard productInfo={product1} />
+      <ProductCard productInfo={product1} />
       <ProductCard productInfo={product1} />
     </Layout>
   );
