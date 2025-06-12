@@ -1,6 +1,42 @@
+import type { productType } from "../App";
+type carouselItemProps = {
+  id: string;
+  imgSrc: string;
+  prevHref: string;
+  nextHref: string;
+  productInfo: productType;
+};
+const CarouselItem = ({
+  id,
+  imgSrc,
+  prevHref,
+  nextHref,
+  productInfo,
+}: carouselItemProps) => {
+  return (
+    <div id={id} className="carousel-item relative w-full">
+      <img
+        src={imgSrc}
+        alt={`{Carousel slide ${id}}`}
+        className="w-full object-cover rounded-lg"
+      />
+      <div className="cardDetails">
+        <p>{productInfo.productDescription}</p>
+      </div>
+      <div>
+        <a
+          href={prevHref}
+          className="btn btn-circle bg-white bg-opacity-50 border-none text-gray-800 hover:bg-white"></a>
+        <a
+          href={nextHref}
+          className="btn btn-circle bg-white bg-opacity-50 border-none text-gray-800 hover:bg-white"></a>
+      </div>
+    </div>
+  );
+};
 const Carousel = () => {
   return (
-    <div className="carousel w-full">
+    <div className="carousel ">
       <div id="slide1" className="carousel-item relative w-full">
         <img
           src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"

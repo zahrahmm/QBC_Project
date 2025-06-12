@@ -31,9 +31,6 @@ function App() {
         <h1>Quera</h1>
       </div>
       <ProductCard productInfo={product1} />
-      <ProductCard productInfo={product1} />
-      <ProductCard productInfo={product1} />
-      <ProductCard productInfo={product1} />
       <Carousel />
     </Layout>
   );

@@ -1,6 +1,6 @@
 import type { productType } from "../App";
 
-interface IProductCardProps {
+export interface IProductCardProps {
   productInfo: productType;
 }
 
