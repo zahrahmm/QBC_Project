@@ -1,7 +1,8 @@
 import OrderRow from "./orderRow.tsx";
-import {orders} from "../data/orders.tsx";
+import {orders} from "../../data/orders.ts";
 
 const OrderTableBody = () => {
+
     return (
         <tbody>
         {

@@ -2,7 +2,7 @@ import {Order} from "../models/Order.ts";
 import {User} from "../models/User.ts";
 import {Product} from "../models/Product.ts";
 
-const user = new User("Ali", "ali@gmail.com", "pass");
+const user = new User("Ali", "ali@gmail.com", "pass", true);
 const product1 = new Product("Mobile", 1000, "https://shop.fairphone.com/theme_fairphone/static/src/img/webshop_page_migrate/fp5green_carouselshop");
 const product2 = new Product("Laptop", 200, "https://shop.fairphone.com/theme_fairphone/static/src/img/webshop_page_migrate/fp5green_carouselshop");
 const product3 = new Product("airpod", 100, "https://shop.fairphone.com/theme_fairphone/static/src/img/webshop_page_migrate/fp5green_carouselshop");

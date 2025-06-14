@@ -1,11 +1,13 @@
 import './App.css';
-import OrderTable from "./components/orderTable.tsx";
+import EditUsersTable from "./components/edit-users/editUsersTable.tsx";
+
 
 function App() {
 
   return (
     <>
-      <OrderTable />
+      {/*<OrderTable />*/}
+      <EditUsersTable />
     </>
   )
 }
