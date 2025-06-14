@@ -51,14 +51,14 @@ const UpdateProfile = () => {
             نام
           </label>
           <input
+            type="text"
             id="name"
             name="name"
             value={form.name}
             onChange={handleChange}
             placeholder="نام خود را وارد نمایید"
-            className={`w-full px-4 py-3 rounded-lg bg-gray-800 border ${
-              errors.name ? "border-pink-500" : "border-gray-700"
-            } text-white text-lg focus:outline-none`}
+            className={`input w-full px-4 py-3 rounded-lg bg-gray-800 border text-white text-lg  focus:border-secondary
+    ${errors.name ? "border-secondary" : "border-gray-600"}`}
             dir="rtl"
           />
           {errors.name && (
@@ -76,9 +76,8 @@ const UpdateProfile = () => {
             value={form.email}
             onChange={handleChange}
             placeholder="ایمیل خود را وارد نمایید"
-            className={`w-full px-4 py-3 rounded-lg bg-gray-800 border ${
-              errors.email ? "border-pink-500" : "border-gray-700"
-            } text-white text-lg focus:outline-none`}
+            className={`input w-full px-4 py-3 rounded-lg bg-gray-800 border text-white text-lg  focus:border-secondary
+    ${errors.email ? "border-secondary" : "border-gray-600"}`}
             dir="rtl"
           />
           {errors.email && (
@@ -96,9 +95,8 @@ const UpdateProfile = () => {
             value={form.password}
             onChange={handleChange}
             placeholder="رمز عبور خود را وارد نمایید"
-            className={`w-full px-4 py-3 rounded-lg bg-gray-800 border ${
-              errors.password ? "border-pink-500" : "border-gray-700"
-            } text-white text-lg focus:outline-none`}
+            className={`input w-full px-4 py-3 rounded-lg bg-gray-800 border text-white text-lg  focus:border-secondary
+    ${errors.password ? "border-secondary" : "border-gray-600"}`}
             dir="rtl"
           />
           {errors.password && (
@@ -116,9 +114,8 @@ const UpdateProfile = () => {
             value={form.repeatPassword}
             onChange={handleChange}
             placeholder="تکرار رمز عبور خود را وارد نمایید"
-            className={`w-full px-4 py-3 rounded-lg bg-gray-800 border ${
-              errors.repeatPassword ? "border-pink-500" : "border-gray-700"
-            } text-white text-lg focus:outline-none`}
+            className={`input w-full px-4 py-3 rounded-lg bg-gray-800 border text-white text-lg  focus:border-secondary
+    ${errors.repeatPassword ? "border-secondary" : "border-gray-600"}`}
             dir="rtl"
           />
           {errors.repeatPassword && (
