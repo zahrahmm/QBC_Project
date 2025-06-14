@@ -11,7 +11,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         {/* <User />
         <Admin /> */}
       </aside>
-      <main>{children}</main>
+      <main className="pr-5 bg-gray-900 min-h-screen">{children}</main>
     </div>
   );
 };
