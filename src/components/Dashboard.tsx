@@ -1,3 +1,4 @@
+import { ArrowRightCircleIcon } from "@heroicons/react/16/solid";
 import {
   BarChart,
   Bar,
