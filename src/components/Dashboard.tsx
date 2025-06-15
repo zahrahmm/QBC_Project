@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+
 const data = [
   { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
   { name: "محصول دوم", مقدار: 876, pv: 2400, amt: 2400 },
@@ -35,7 +36,7 @@ const renderBarChart = (
       <CartesianGrid stroke="#ccc" strokeDasharray="1 15" />
       <Bar
         dataKey="مقدار"
-        fill="Secondary"
+        fill="Primaty"
         barSize={30}
         label={renderCustomBarLabel}
       />
