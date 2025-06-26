@@ -1,15 +1,12 @@
 // import { useState } from "react";
-import Layout from "./components/Layout";
-// import CreateNewProduct from "./components/CreateNewProduct";
-import Dashboard from "./components/Dashboard";
+import { BrowserRouter as Router } from "react-router-dom";
+import RoutesComponent from "./components/Routes";
 
 function App() {
   return (
-    <Layout>
-      <div>
-        <Dashboard />
-      </div>
-    </Layout>
+    <Router>
+      <RoutesComponent />
+    </Router>
   );
 }
 

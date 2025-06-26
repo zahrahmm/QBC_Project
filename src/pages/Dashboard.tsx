@@ -1,4 +1,3 @@
-import { ArrowRightCircleIcon } from "@heroicons/react/16/solid";
 import {
   BarChart,
   Bar,
@@ -8,6 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import Layout from "../components/Layout";
 
 const data = [
   { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
@@ -33,7 +33,7 @@ const renderBarChart = (
     <BarChart width={600} height={300} data={data}>
       <XAxis dataKey="name" stroke="currentColor" />
       <YAxis stroke="currentColor" />
-      <Tooltip />
+      {/* <Tooltip /> */}
       <CartesianGrid stroke="#ccc" strokeDasharray="1 15" />
       <Bar
         dataKey="مقدار"
@@ -47,25 +47,27 @@ const renderBarChart = (
 
 function Dashboard() {
   return (
-    <div className="m-auto max-w-[1090px] pt-26">
-      <div className="flex flex-row gap-3.5 justify-evenly pb-6">
-        <div>
-          <h3>فروش کل</h3>
-          <p>۰ تومان</p>
+    <Layout>
+      <div className="m-auto max-w-[1090px] pt-26">
+        <div className="flex flex-row gap-3.5 justify-evenly pb-6">
+          <div>
+            <h3>فروش کل</h3>
+            <p>۰ تومان</p>
+          </div>
+          <div>
+            <h3>مشتری ها</h3>
+            <p>۱۰</p>
+          </div>
+          <div>
+            <h3>سفارشات</h3>
+            <p>۱۰۰</p>
+          </div>
         </div>
-        <div>
-          <h3>مشتری ها</h3>
-          <p>۱۰</p>
-        </div>
-        <div>
-          <h3>سفارشات</h3>
-          <p>۱۰۰</p>
+        <div className="h-180" dir="left">
+          {renderBarChart}
         </div>
       </div>
-      <div className="h-180" dir="left">
-        {renderBarChart}
-      </div>
-    </div>
+    </Layout>
   );
 }
 
