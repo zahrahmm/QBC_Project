@@ -1,14 +1,10 @@
 // import React from 'react';
-import loginPageImage from '../../assets/loginPage.png';
-import RegisterForm from '../register/RegisterForm';
-
-import Sidebar from '../sidebar/sidebar';
+import loginPageImage from "../../assets/loginPage.png";
+import RegisterForm from "../components/register/RegisterForm";
 
 function LogInPage() {
   return (
     <div className="loginPageContainer flex min-h-full min-w-full max-h-screen bg-[#EEEFF1]">
-      <Sidebar />
-
       <RegisterForm />
 
       <div className="my-16 ml-16 max-h-screen max-w-[50%] rounded-xl">
