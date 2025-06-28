@@ -2,9 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CartPage from "./Pages/CartPage";
 import CartProcess from "./Pages/CartProcessPage";
 import SummaryPage from "./Pages/CartSummaryPage";
-
 import Layout from "./components/Layout";
-import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
   return (
