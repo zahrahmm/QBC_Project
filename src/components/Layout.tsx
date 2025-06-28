@@ -6,10 +6,10 @@ import Menu from "./Layout/Menu";
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div>
-      <aside className="fixed right-0 min-h-screen p-2 bg-neutral">
+      <aside className="fixed z-10 right-0 min-h-screen p-2 bg-base-300">
         <Menu />
-        {/* <User />
-        <Admin /> */}
+        {/* <User /> */}
+        {/* <Admin /> */}
       </aside>
       <main className="bg-gray-900 min-h-screen">{children}</main>
     </div>
