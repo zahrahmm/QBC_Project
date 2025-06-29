@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import InputField from '../../components/LoginPage/inputField'; //
-import Button from '../button/button';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import InputField from "../../components/LoginPage/inputField"; //
+import Button from "../button/button";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
-  const [formData, setFormData] = useState<string>('');
+  const [formData, setFormData] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(e.target.value);
@@ -15,7 +15,7 @@ function LoginForm() {
 
   return (
     <form className="flex flex-col flex-1 px-16 mt-[77px]">
-      <p className="text-black mb-8 text-2xl ">ورود</p>
+      <p className="mb-8 text-2xl ">ورود</p>
 
       <InputField
         label="نام"
@@ -64,9 +64,9 @@ function LoginForm() {
         variant="button2"
         style="h-[48px] w-[74px] mt-[32px]"
       />
-      <p className="text-black mt-4">
-        عضو نیستید؟
-        <Link to="/" className="text-[#DB2777] cursor-pointer">
+      <p className="mt-4">
+        عضو هستید؟
+        <Link to="/" className="text-secondary cursor-pointer">
           ورود
         </Link>
       </p>

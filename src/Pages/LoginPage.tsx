@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginPage/LoginForm";
 
 function LoginPage() {
   return (
-    <div className="loginPageContainer flex min-h-full min-w-full max-h-screen bg-[#EEEFF1]">
+    <div className="loginPageContainer flex min-h-full min-w-full max-h-screen">
       <LoginForm />
 
       <div className="my-16 ml-16 max-h-screen max-w-[50%] rounded-xl">

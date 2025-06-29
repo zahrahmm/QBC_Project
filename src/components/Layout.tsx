@@ -1,7 +1,6 @@
-
 // import User from "./Layout/User";
 import Menu from "./Layout/Menu";
-import { Outlet} from "react-router";
+import { Outlet } from "react-router";
 // import Admin from "./Layout/Admin";
 
 const Layout = () => {
@@ -12,7 +11,10 @@ const Layout = () => {
         {/* <User /> */}
         {/* <Admin /> */}
       </aside>
-      <main className="bg-gray-900 min-h-screen"> <Outlet/></main>
+      <main className="min-h-screen">
+        {" "}
+        <Outlet />
+      </main>
     </div>
   );
 };

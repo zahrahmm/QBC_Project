@@ -47,7 +47,7 @@ function LoginForm() {
       id="LogInPageForm"
       onSubmit={handleLogin}
     >
-      <p className="text-black mb-8 text-2xl ">ورود</p>
+      <p className="mb-8 text-2xl ">ورود</p>
 
       <InputField
         label="ایمیل"
@@ -78,9 +78,9 @@ function LoginForm() {
         variant="button2"
         style="h-[48px] w-[74px] mt-[32px]"
       />
-      <p className="text-black mt-4">
+      <p className="mt-4">
         عضو نیستید؟
-        <Link to="/register" className="text-[#DB2777] cursor-pointer">
+        <Link to="/register" className="text-secondary cursor-pointer">
           ثبت نام
         </Link>
       </p>

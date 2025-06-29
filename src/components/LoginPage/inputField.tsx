@@ -1,5 +1,5 @@
 // import React from 'react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent } from "react";
 
 interface CustomInputProps {
   label: string;
@@ -13,7 +13,7 @@ interface CustomInputProps {
 
 function CustomInput({
   label,
-  type = 'text',
+  type = "text",
   value,
   onChange,
   placeholder,
@@ -21,14 +21,14 @@ function CustomInput({
   name,
 }: CustomInputProps) {
   return (
-    <div className="text-black flex flex-col">
+    <div className="flex flex-col">
       <label className="mb-2">{label}</label>
       <input
         type={type}
         value={value} //
         onChange={onChange}
         placeholder={placeholder}
-        className={`border border-[#CED2D7] rounded-lg p-2.5 max-h-[42px] bg-white ${style}`}
+        className={`border rounded-lg p-2.5 max-h-[42px] ${style}`}
         name={name}
       />
     </div>

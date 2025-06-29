@@ -49,14 +49,14 @@ const CartPage = () => {
   return (
     <div
       dir="ltr"
-      className="bg-[#121212] min-h-screen flex items-center justify-center px-4 "
+      className="min-h-screen flex items-center justify-center px-4 "
     >
-      <div className="w-[1350px] flex gap-24 p-12 bg-[#121212] mx-auto">
+      <div className="w-[1350px] flex gap-24 p-12 mx-auto">
         <div className="flex flex-col gap-10">
           {items.map((item) => (
             <div key={item.id} className="flex items-center gap-4">
               <IconButton onClick={() => handleDelete(item.id)}>
-                <DeleteIcon className="text-red-600" />
+                <DeleteIcon className="text-error" />
               </IconButton>
               <Select
                 value={item.quantity}
@@ -101,11 +101,9 @@ const CartPage = () => {
               className="flex items-center gap-3 justify-end text-sm"
             >
               <div className="text-right">
-                <p className="text-pink-600 font-medium">{item.name}</p>
-                <p className="text-white">{item.brand}</p>
-                <p className="text-white">
-                  {item.price.toLocaleString()} تومان
-                </p>
+                <p className="text-secondary font-medium">{item.name}</p>
+                <p className="">{item.brand}</p>
+                <p className="">{item.price.toLocaleString()} تومان</p>
               </div>
               <img
                 src={item.image}
@@ -118,14 +116,14 @@ const CartPage = () => {
             </div>
           ))}
 
-          <div className="mt-4 text-right text-white">
+          <div className="mt-4 text-right">
             <p>تعداد ({totalQuantity})</p>
             <p className="font-bold text-lg mt-1">
               {totalPrice.toLocaleString()} تومان
             </p>
           </div>
 
-          <button className="btn bg-pink-600 hover:bg-pink-700 text-white w-lg rounded-full mt-2">
+          <button className="btn bg-secondary w-lg rounded-full mt-2">
             تکمیل خرید
           </button>
         </div>

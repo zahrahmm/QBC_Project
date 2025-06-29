@@ -6,6 +6,7 @@ import NotFound from "../Pages/NotFound";
 import Layout from "./Layout";
 import RegisterPage from "../Pages/RegisterPage";
 import LoginPage from "../Pages/LoginPage";
+import CreateNewProduct from "../Pages/CreateNewProduct";
 
 function RoutesComponent() {
   return (
@@ -17,6 +18,7 @@ function RoutesComponent() {
         {/* <Route path="Fave" element={<Fave />} />*/}
         <Route path="Login" element={<LoginPage />} />
         <Route path="Register" element={<RegisterPage />} />
+        <Route path="CreateNewProduct" element={<CreateNewProduct />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
