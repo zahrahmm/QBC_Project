@@ -10,8 +10,8 @@ export type productType = {
   productDescription: string;
   productRate: number;
   productBrand: string;
-  // productUpdateTime: Date;
-  // productAvailability: number;
+  productUpdateTime: Date;
+  productAvailability: number;
 };
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
     productRate: 5,
     productBrand: "Apple",
     //productUpdateTime: 12.06.2025,
+    productAvailability: 5,
   };
 
   return (
