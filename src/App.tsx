@@ -12,6 +12,7 @@ export type productType = {
   productBrand: string;
   productUpdateTime: Date;
   productAvailability: number;
+  productReviewCount: number;
 };
 
 function App() {
