@@ -15,23 +15,12 @@ export type productType = {
 };
 
 function App() {
-  const product1: productType = {
-    productName: "Apple",
-    productPrice: 90000000,
-    productCardImage: "",
-    productDescription: "گوشی موبایل اپل مدل iPhone 13 Pro Max CH دو سیم‌ کارت",
-    productRate: 5,
-    productBrand: "Apple",
-    //productUpdateTime: 12.06.2025,
-  };
+  
 
   return (
     <Router>
       <RoutesComponent />
-      <ProductCard productInfo={product1} />
-      <ProductCard productInfo={product1} />
-      <ProductCard productInfo={product1} />
-      <ProductCard productInfo={product1} />
+      
     </Router>
   );
 }
