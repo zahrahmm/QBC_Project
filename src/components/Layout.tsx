@@ -1,18 +1,16 @@
 import type { PropsWithChildren } from "react";
-// import User from "./Layout/User";
 import Menu from "./Layout/Menu";
-// import Admin from "./Layout/Admin";
+// import User from "./User";
+// import Admin from "./Admin";
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <div>
-      <aside className="fixed right-0 min-h-screen p-2 bg-neutral">
+    <>
+      <aside className="fixed right-0 w-20 h-screen bg-black flex flex-col justify-between items-center p-4 z-10">
         <Menu />
-        {/* <User />
-        <Admin /> */}
       </aside>
-      <main>{children}</main>
-    </div>
+      {children}
+    </>
   );
 };
 
