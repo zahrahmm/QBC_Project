@@ -23,7 +23,6 @@ function App() {
     productRate: 5,
     productBrand: "Apple",
     //productUpdateTime: 12.06.2025,
-    
   };
 
   return (
