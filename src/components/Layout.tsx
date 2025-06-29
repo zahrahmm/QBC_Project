@@ -1,9 +1,10 @@
-import type { PropsWithChildren } from "react";
+
 // import User from "./Layout/User";
 import Menu from "./Layout/Menu";
+import { Outlet} from "react-router";
 // import Admin from "./Layout/Admin";
 
-const Layout = ({ children }: PropsWithChildren) => {
+const Layout = () => {
   return (
     <div>
       <aside className="fixed z-10 right-0 min-h-screen p-2 bg-base-300">
@@ -11,7 +12,7 @@ const Layout = ({ children }: PropsWithChildren) => {
         {/* <User /> */}
         {/* <Admin /> */}
       </aside>
-      <main className="bg-gray-900 min-h-screen">{children}</main>
+      <main className="bg-gray-900 min-h-screen"> <Outlet/></main>
     </div>
   );
 };
