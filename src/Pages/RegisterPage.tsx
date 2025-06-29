@@ -2,7 +2,7 @@
 import loginPageImage from "../../assets/loginPage.png";
 import RegisterForm from "../components/register/RegisterForm";
 
-function LogInPage() {
+function RegisterPage() {
   return (
     <div className="loginPageContainer flex min-h-full min-w-full max-h-screen bg-[#EEEFF1]">
       <RegisterForm />
@@ -18,4 +18,4 @@ function LogInPage() {
   );
 }
 
-export default LogInPage;
+export default RegisterPage;
