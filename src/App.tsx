@@ -1,5 +1,6 @@
 // import { useState } from "react";
-import Layout from "./components/Layout";
+import { BrowserRouter as Router } from "react-router-dom";
+import RoutesComponent from "./components/Routes";
 import ProductCard from "./components/ProductCard";
 
 export type productType = {
@@ -26,15 +27,13 @@ function App() {
   };
 
   return (
-    <Layout>
-      <div>
-        <h1>Quera</h1>
-      </div>
+    <Router>
+      <RoutesComponent />
       <ProductCard productInfo={product1} />
       <ProductCard productInfo={product1} />
       <ProductCard productInfo={product1} />
       <ProductCard productInfo={product1} />
-    </Layout>
+    </Router>
   );
 }
 
