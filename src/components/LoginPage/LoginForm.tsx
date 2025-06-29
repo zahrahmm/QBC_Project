@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import InputField from './inputField'; // فرض می‌کنم این فایل وجود داره
-import Button from '../button/button';
-import { Link } from 'react-router-dom';
-import mockData from '../../Data/users.json';
+import React, { useState } from "react";
+import InputField from "./inputField"; // فرض می‌کنم این فایل وجود داره
+import Button from "../button/button";
+import { Link } from "react-router-dom";
+// import mockData from "../../data/users";
 
 interface FormData {
   email: string;
@@ -11,8 +11,8 @@ interface FormData {
 
 function LoginForm() {
   const [formData, setFormData] = useState<FormData>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,9 +35,9 @@ function LoginForm() {
     );
 
     if (user) {
-      alert('Login');
+      alert("Login");
     } else {
-      alert('ah');
+      alert("ah");
     }
   };
 

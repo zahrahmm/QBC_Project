@@ -1,5 +1,5 @@
 // import React from 'react';
-import loginPageImage from "../../assets/loginPage.png";
+import loginPageImage from "../assets/loginPage.png";
 import LoginForm from "../components/LoginPage/LoginForm";
 
 function LoginPage() {

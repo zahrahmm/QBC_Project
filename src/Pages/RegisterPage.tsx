@@ -1,5 +1,5 @@
 // import React from 'react';
-import loginPageImage from "../../assets/loginPage.png";
+import loginPageImage from "../assets/loginPage.png";
 import RegisterForm from "../components/register/RegisterForm";
 
 function RegisterPage() {
