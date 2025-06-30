@@ -1,4 +1,4 @@
-import type { productType } from "../App";
+import type { productType } from "../types/productType";
 
 export interface IProductCardProps {
   productInfo: productType;

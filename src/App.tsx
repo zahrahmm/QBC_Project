@@ -3,18 +3,6 @@ import Carousel from "./components/Carousel";
 import Layout from "./components/Layout";
 import ProductCard from "./components/ProductCard";
 
-export type productType = {
-  productName: string;
-  productPrice: number;
-  productCardImage: string;
-  productDescription: string;
-  productRate: number;
-  productBrand: string;
-  productUpdateTime: Date;
-  productAvailability: number;
-  productReviewCount: number;
-};
-
 function App() {
   const product1: productType = {
     productName: "Apple",
@@ -24,7 +12,6 @@ function App() {
     productRate: 5,
     productBrand: "Apple",
     //productUpdateTime: 12.06.2025,
-    productAvailability: 5,
   };
 
   return (
@@ -32,8 +19,15 @@ function App() {
       <div>
         <h1>Quera</h1>
       </div>
-      <ProductCard productInfo={product1} />
-      <Carousel />
+      <div className="grid grid-cols-2 gap-46">
+        <div className="grid grid-cols-2">
+          <ProductCard productInfo={product1} />
+          <ProductCard productInfo={product1} />
+          <ProductCard productInfo={product1} />
+          <ProductCard productInfo={product1} />
+        </div>
+        <Carousel />
+      </div>
     </Layout>
   );
 }
