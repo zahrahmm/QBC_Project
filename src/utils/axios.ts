@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: import.meta.env.VITE.APP_BASE_URL,
+  baseURL: "https://qbc9.liara.run",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 export default server;

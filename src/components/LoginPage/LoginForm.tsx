@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import InputField from "./inputField"; // فرض می‌کنم این فایل وجود داره
-import Button from "../button/button";
+import InputField from "./inputField";
 import { Link } from "react-router-dom";
-// import mockData from "../../data/users";
+import server from "../../utils/axios";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 interface FormData {
   email: string;
@@ -22,69 +22,85 @@ function LoginForm() {
       [name]: value,
     });
   };
-  const handleClick = () => {
-    console.log(`کلیک شد `);
-  };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const Login_URL = "/api/users/auth";
+  const { user, isAuthenticated, login, logout } = useAuthStore();
 
-    const user = mockData.users.find(
-      (user: { username: string; password: string }) =>
-        user.username === formData.email && user.password === formData.password
-    );
+  const handleLogin = async () => {
+    try {
+      const response = await server.post(
+        Login_URL,
+        JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        })
+      );
 
-    if (user) {
-      alert("Login");
-    } else {
-      alert("ah");
+      const mockUser = response.data;
+      const mockToken = response.data.access;
+
+      login(mockUser, mockToken);
+
+      localStorage.setItem("user", JSON.stringify(mockUser));
+      localStorage.setItem("token", mockToken);
+    } catch (error) {
+      console.log(error);
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  };
+
   return (
-    <form
-      className="flex flex-col flex-1 px-16 mt-[77px] "
-      id="LogInPageForm"
-      onSubmit={handleLogin}
-    >
-      <p className="mb-8 text-2xl ">ورود</p>
+    <>
+      {isAuthenticated ? (
+        <div>
+          <p>Welcome, {user?.username}!</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <form
+          className="flex flex-col flex-1 px-16 mt-[77px] "
+          id="LogInPageForm"
+        >
+          <p className="mb-8 text-2xl ">ورود</p>
 
-      <InputField
-        label="ایمیل"
-        type="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="ایمیل خود را وارد کنید"
-        style="mb-[24px]"
-        name="email"
-      />
+          <InputField
+            label="ایمیل"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="ایمیل خود را وارد کنید"
+            style="mb-[24px]"
+            name="email"
+          />
 
-      <InputField
-        label="رمز عبور"
-        type="password"
-        value={formData.password}
-        onChange={handleChange}
-        placeholder="رمز عبور خود را وارد کنید"
-        style=""
-        name="password"
-      />
+          <InputField
+            label="رمز عبور"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="رمز عبور خود را وارد کنید"
+            style=""
+            name="password"
+          />
 
-      <Button
-        type="submit"
-        text="ورود"
-        onClick={handleClick}
-        disabled={false}
-        loading={false}
-        variant="button2"
-        style="h-[48px] w-[74px] mt-[32px]"
-      />
-      <p className="mt-4">
-        عضو نیستید؟
-        <Link to="/register" className="text-secondary cursor-pointer">
-          ثبت نام
-        </Link>
-      </p>
-    </form>
+          <button onClick={handleLogin} className="btn btn-secondary w-30 mt-6">
+            ورود
+          </button>
+
+          <p className="mt-4">
+            عضو نیستید؟
+            <Link to="/register" className="text-secondary cursor-pointer">
+              ثبت نام
+            </Link>
+          </p>
+        </form>
+      )}
+    </>
   );
 }
 

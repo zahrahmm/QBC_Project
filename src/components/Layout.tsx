@@ -12,7 +12,6 @@ const Layout = () => {
         {/* <Admin /> */}
       </aside>
       <main className="min-h-screen">
-        {" "}
         <Outlet />
       </main>
     </div>

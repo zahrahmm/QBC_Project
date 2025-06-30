@@ -6,7 +6,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import Layout from "../components/Layout";
 
 const data = [
   { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
@@ -46,7 +45,7 @@ const renderBarChart = (
 
 function Dashboard() {
   return (
-    <Layout>
+    <div>
       <div className="m-auto max-w-[1090px] pt-26">
         <div className="flex flex-row gap-3.5 justify-evenly pb-6">
           <div>
@@ -66,7 +65,7 @@ function Dashboard() {
           {renderBarChart}
         </div>
       </div>
-    </Layout>
+    </div>
   );
 }
 

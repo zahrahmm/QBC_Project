@@ -15,7 +15,6 @@ function RoutesComponent() {
         <Route index element={<Home />} />
         <Route path="Shop" element={<Shop />} />
         <Route path="Cart" element={<CartPage />} />
-        {/* <Route path="Fave" element={<Fave />} />*/}
         <Route path="Login" element={<LoginPage />} />
         <Route path="Register" element={<RegisterPage />} />
         <Route path="CreateNewProduct" element={<CreateNewProduct />} />
