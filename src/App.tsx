@@ -3,10 +3,6 @@ import CartPage from "./Pages/CartPage";
 import CartProcess from "./Pages/CartProcessPage";
 import SummaryPage from "./Pages/CartSummaryPage";
 import Layout from "./components/Layout";
-import TabSelector from "./components/ProductPage/TabSelector";
-import ReviewForm from "./components/ProductPage/ReviewForm";
-import ReviewList from "./components/ProductPage/ReviewList";
-
 
 function App() {
   return (
