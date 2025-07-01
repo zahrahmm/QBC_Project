@@ -8,7 +8,7 @@ type FormData = {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirm_Password: string;
 };
 
 function RegisterForm() {
@@ -16,7 +16,7 @@ function RegisterForm() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_Password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm_Password) {
       alert("رمزعبور مطابقت ندارد!");
       return;
     } else {
@@ -43,7 +43,7 @@ function RegisterForm() {
             username: formData.name,
             email: formData.email,
             password: formData.password,
-            confirmPassword: formData.confirmPassword,
+            confirm_Password: formData.confirm_Password,
           })
         );
         console.log(formData);
@@ -92,11 +92,11 @@ function RegisterForm() {
       <InputField
         label="تکرار رمزعبور"
         type="password"
-        value={formData.confirmPassword}
+        value={formData.confirm_Password}
         onChange={handleChange}
         placeholder="تکرار رمزعبور خود را وارد کنید"
         style=""
-        name="confirmPassword"
+        name="confirm_Password"
       />
 
       <button className="btn btn-secondary w-30 mt-6">ثبت نام</button>

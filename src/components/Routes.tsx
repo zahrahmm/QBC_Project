@@ -3,7 +3,7 @@ import CartPage from "../Pages/CartPage";
 import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
 import NotFound from "../Pages/NotFound";
-import Layout from "./Layout";
+import Layout from "./Layout/Layout";
 import RegisterPage from "../Pages/RegisterPage";
 import LoginPage from "../Pages/LoginPage";
 import CreateNewProduct from "../Pages/CreateNewProduct";

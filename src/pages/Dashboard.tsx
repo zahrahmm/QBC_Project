@@ -7,6 +7,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { useEffect, useState } from "react";
+import server from "../utils/axios";
+
 const data = [
   { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
   { name: "محصول دوم", مقدار: 876, pv: 2400, amt: 2400 },
@@ -44,13 +47,29 @@ const renderBarChart = (
 );
 
 function Dashboard() {
+  const getTotalSales = "/api/orders/total-sales-by-date";
+  const [totalSales, setTotalSales] = useState(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await server.get(getTotalSales);
+        console.log(response);
+        setTotalSales();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPost();
+  }, []);
+
   return (
     <div>
       <div className="m-auto max-w-[1090px] pt-26">
         <div className="flex flex-row gap-3.5 justify-evenly pb-6">
           <div>
             <h3>فروش کل</h3>
-            <p>۰ تومان</p>
+            <p>{totalSales} تومان</p>
           </div>
           <div>
             <h3>مشتری ها</h3>

@@ -1,5 +1,5 @@
 // import User from "./Layout/User";
-import Menu from "./Layout/Menu";
+import Menu from "./Menu";
 import { Outlet } from "react-router";
 // import Admin from "./Layout/Admin";
 
