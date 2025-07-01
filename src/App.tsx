@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Layout from "./components/Layout";
-import TabSelector from "./components/TabSelector";
-import ReviewForm from "./components/ReviewForm";
-import ReviewList from "./components/ReviewList";
+import TabSelector from "./components/ProductPage/TabSelector";
+import ReviewForm from "./components/ProductPage/ReviewForm";
+import ReviewList from "./components/ProductPage/ReviewList";
 
 function App() {
   const [activeTab, setActiveTab] = useState<"view" | "add" | "related">(
