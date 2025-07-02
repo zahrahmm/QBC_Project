@@ -25,7 +25,7 @@ const EditProduct: React.FC<EditProductProps> = ({
   const handleDelete = async () => {
     try {
       await axios.delete(`https://qbc9.liara.run/api/products/${productId}`);
-      deleteProduct(productId); // حذف از Zustand
+      deleteProduct(productId); 
       if (onDeleted) onDeleted();
     } catch (error) {
       console.error("خطا در حذف محصول", error);
@@ -52,7 +52,7 @@ const EditProduct: React.FC<EditProductProps> = ({
         }
       );
 
-      // اضافه کردن به Zustand
+      
       updateProduct({
         productId,
         title: response.data.title,
@@ -69,8 +69,7 @@ const EditProduct: React.FC<EditProductProps> = ({
 
   return (
     <form className="m-auto max-w-[1090px] pt-26" onSubmit={(e) => e.preventDefault()}>
-      {/* همون فرم کامل که قبلاً دادی 👇 */}
-      {/* فقط دکمه‌های بروزرسانی و حذف رو اینطور بذار: */}
+      
       <div className="flex gap-2">
         <button
           type="button"
