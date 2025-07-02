@@ -1,6 +1,6 @@
 import { useCart } from "../context/CartContext";
 import Stepper from "../components/Cart/Stepper";
-import axios from "axios";
+import axiosInstance from "../lib/axios";
 import { useState } from "react";
 
 const CartSummaryPage = () => {
@@ -19,32 +19,39 @@ const CartSummaryPage = () => {
   const total = subtotal + shipping + tax;
 
   const handleSubmit = async () => {
-    if (items.length === 0) {
-      alert("سبد خرید شما خالی است!");
-      return;
-    }
-
     setLoading(true);
     setError("");
     setSuccess(false);
 
     try {
-      // waiting for the real API !!
-      await axios.post("https://jsonplaceholder.typicode.com/posts", {
-        items,
-        address,
-        paymentMethod,
-        total,
+      const response = await axiosInstance.post("/orders", {
+        orderItems: items.map((item) => ({
+          productId: item.id,
+          name: item.name,
+          qty: item.quantity,
+          image: item.image,
+          price: item.price,
+        })),
+        shippingAddress: {
+          address: address.address,
+          city: address.city,
+          country: address.country,
+          postalCode: address.postal,
+        },
+        paymentMethod: paymentMethod,
+        totalPrice: total,
       });
 
+      console.log("✅ سفارش  شما ثبت شد:", response.data);
       setSuccess(true);
-    } catch (err) {
-      setError("ثبت سفارش با خطا مواجه شد.");
-    } finally {
-      setLoading(false);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(`❌ خطا: ${err.message}`);
+      } else {
+        setError(`خطای رخ داده 🤷‍♂️`);
+      }
     }
   };
-
   return (
     <div
       className="bg-[#181818] min-h-screen flex flex-col items-center py-8 px-4 text-right"
