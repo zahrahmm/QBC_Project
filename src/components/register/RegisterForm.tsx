@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import InputField from "../../components/LoginPage/inputField"; //
 // import Button from "../button/button";
 import { Link } from "react-router-dom";
-import server from "../../utils/axios";
+import { register } from "../../utils/register";
 
 type FormData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
   confirm_Password: string;
@@ -13,7 +13,7 @@ type FormData = {
 
 function RegisterForm() {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirm_Password: "",
@@ -27,8 +27,6 @@ function RegisterForm() {
     });
   };
 
-  const Register_URL = "/api/users";
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -37,17 +35,9 @@ function RegisterForm() {
       return;
     } else {
       try {
-        const response = await server.post(
-          Register_URL,
-          JSON.stringify({
-            username: formData.name,
-            email: formData.email,
-            password: formData.password,
-            confirm_Password: formData.confirm_Password,
-          })
-        );
+        const response = await register(formData);
         console.log(formData);
-        console.log(response.data);
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -64,11 +54,11 @@ function RegisterForm() {
       <InputField
         label="نام"
         type="name"
-        value={formData.name}
+        value={formData.username}
         onChange={handleChange}
         placeholder="نام خود را وارد کنید"
         style="mb-[24px]"
-        name="name"
+        name="username"
       />
       <InputField
         label="ایمیل"

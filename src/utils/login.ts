@@ -4,7 +4,11 @@ import type { UserResponse } from "../types/user";
 
 const login_URL = "/api/users/auth";
 
-export async function login(payload: loginPayload): Promise<UserResponse> {
-  const response = await server.post<UserResponse>(login_URL, payload);
+export async function loginFunction(
+  payload: loginPayload
+): Promise<UserResponse> {
+  const response = await server.post<UserResponse>(login_URL, payload, {
+    withCredentials: true,
+  });
   return response.data;
 }

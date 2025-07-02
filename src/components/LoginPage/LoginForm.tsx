@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import InputField from "./inputField";
 import { Link } from "react-router-dom";
-import { login } from "../../utils/login";
+import { loginFunction } from "../../utils/login";
+import { logoutFunction } from "../../utils/logout";
+import InputField from "./inputField";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 interface FormData {
   email: string;
@@ -14,6 +16,8 @@ function LoginForm() {
     password: "",
   });
 
+  const { user, login, logout } = useAuthStore();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -22,30 +26,30 @@ function LoginForm() {
     });
   };
 
-  // const Login_URL = "/api/users/auth";
-
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      await login(formData); // 👈 call your function
+      const response = await loginFunction(formData);
+      console.log("Logged in user:", response);
+      login(user);
+      console.log(user);
+      console.log(login);
     } catch (error) {
       console.error("Login failed", error);
       alert("اطلاعات صحیح نمی باشد.");
     }
-    // try {
-    //   const response = await server.post(
-    //     Login_URL,
-    //     JSON.stringify({
-    //       email: formData.email,
-    //       password: formData.password,
-    //     })
-    //   );
-    //   console.log(formData);
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  };
+
+  const handleLogout = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await logoutFunction(formData);
+      console.log("Logged in user:", response);
+      logout();
+    } catch (error) {
+      console.error("Login failed", error);
+      alert("اطلاعات صحیح نمی باشد.");
+    }
   };
 
   return (
@@ -84,6 +88,9 @@ function LoginForm() {
           ثبت نام
         </Link>
       </p>
+      <button onClick={handleLogout} className="btn btn-secondary w-30 mt-6">
+        خروج
+      </button>
     </form>
   );
 }
