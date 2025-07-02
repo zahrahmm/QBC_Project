@@ -1,5 +1,3 @@
-// Each icon is a component that passes the className to the SVG element.
-
 export const IconStar = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

@@ -9,7 +9,6 @@ import {
   IconArchiveBox,
 } from "../icons/carouselIcons";
 
-// helper component
 const DetailItem = ({
   icon,
   label,

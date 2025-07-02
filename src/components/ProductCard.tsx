@@ -1,10 +1,6 @@
 import type { productType } from "../types/productType";
 
-export interface IProductCardProps {
-  productInfo: productType;
-}
-
-const ProductCard = ({ productInfo }: IProductCardProps) => {
+const ProductCard = ({ product }: productType) => {
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
       <figure>
@@ -14,10 +10,10 @@ const ProductCard = ({ productInfo }: IProductCardProps) => {
         />
       </figure>
       <div className="card-body">
-        <p>{productInfo.productDescription}</p>
+        <p>{product.productDescription}</p>
         <div className="card-actions justify-end">
           <div className="badge">
-            {productInfo.productPrice.toLocaleString()} تومان
+            {product.productPrice.toLocaleString()} تومان
           </div>
         </div>
       </div>
