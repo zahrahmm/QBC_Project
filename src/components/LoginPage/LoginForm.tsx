@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputField from "./inputField";
 import { Link } from "react-router-dom";
-import server from "../../utils/axios";
+import { login } from "../../utils/login";
 
 interface FormData {
   email: string;
@@ -22,24 +22,30 @@ function LoginForm() {
     });
   };
 
-  const Login_URL = "/api/users/auth";
+  // const Login_URL = "/api/users/auth";
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await server.post(
-        Login_URL,
-        JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        })
-      );
-      console.log(formData);
-      console.log(response.data);
+      await login(formData); // 👈 call your function
     } catch (error) {
-      console.log(error);
+      console.error("Login failed", error);
+      alert("اطلاعات صحیح نمی باشد.");
     }
+    // try {
+    //   const response = await server.post(
+    //     Login_URL,
+    //     JSON.stringify({
+    //       email: formData.email,
+    //       password: formData.password,
+    //     })
+    //   );
+    //   console.log(formData);
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (

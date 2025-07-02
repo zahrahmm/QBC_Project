@@ -1,5 +1,5 @@
-import type { regPayload } from "../types/RegPayload";
 import server from "./axios";
+import type { regPayload } from "../types/RegPayload";
 import type { UserResponse } from "../types/user";
 
 const Register_URL = "/api/users";
