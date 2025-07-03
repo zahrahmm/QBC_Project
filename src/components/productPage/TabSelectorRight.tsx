@@ -1,9 +1,9 @@
-type TabSelectorProps = {
+type TabSelectorRightProps = {
   activeTab: "view" | "add" | "related";
   setActiveTab: (tab: "view" | "add" | "related") => void;
 };
 
-function TabSelector({ activeTab, setActiveTab }: TabSelectorProps) {
+function TabSelectorRight({ activeTab, setActiveTab }: TabSelectorRightProps) {
   return (
     <div className="mr-32 flex flex-col items-start gap-5">
       <button
@@ -28,4 +28,4 @@ function TabSelector({ activeTab, setActiveTab }: TabSelectorProps) {
   );
 }
 
-export default TabSelector;
+export default TabSelectorRight;
