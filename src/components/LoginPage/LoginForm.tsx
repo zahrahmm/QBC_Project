@@ -72,7 +72,6 @@ function LoginForm() {
           ثبت نام
         </Link>
       </p>
-      {user ? <p>{user.username}</p> : <p>کاربر نیست</p>}
     </form>
   );
 }
