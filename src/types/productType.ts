@@ -1,11 +1,21 @@
 export type productType = {
-  productName: string;
-  productPrice: number;
-  productCardImage: string;
-  productDescription: string;
-  productRate: number;
-  productBrand:string;
-  productUpdateTime: Date;
-  productAvailability: number; // 'تعداد' (52) 
-  productReviewCount: number; //  'نظرات' (4202) 
+  _id: string;
+  name: string;
+  image: string;
+  quantity: number;
+  category: category;
+  description: string;
+  rating: number;
+  numReviews: number;
+  price: number;
+  countInStock: number;
+  reviews: object;
+  createdAt: Date;
+  updatedAt: Date;
+  //__v: number
+};
+
+export type category = {
+  _id: string;
+  name: string;
 };

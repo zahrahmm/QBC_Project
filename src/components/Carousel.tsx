@@ -1,5 +1,4 @@
 import type { productType } from "../types/productType";
-import { products } from "../sampleData/productData";
 import {
   IconStar,
   IconShoppingCart,
@@ -18,7 +17,7 @@ const DetailItem = ({
   label: string;
   value: string | number;
 }) => (
-  <div className="flex items-center space-x-2 rtl:space-x-reverse text-sm text-gray-200">
+  <div className="flex items-center space-x-2 rtl:space-x-reverse text-sm">
     {icon}
     <span className="font-semibold">{label}:</span>
     <span>{value}</span>
@@ -27,24 +26,24 @@ const DetailItem = ({
 
 // Component for a single slide
 const CarouselItem = ({ product }: { product: productType }) => {
-  const formattedPrice = `${product.productPrice.toLocaleString(
+  const formattedPrice = `${product.price.toLocaleString(
     "fa-IR"
   )} تومان`;
-  const formattedDate = product.productUpdateTime.toLocaleDateString("fa-IR");
+  const formattedDate = product.updatedAt.toLocaleDateString("fa-IR");
 
   return (
     <div className="">
       <img
-        src={product.productCardImage}
-        alt={product.productName}
+        src={product.image}
+        alt={product.name}
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-opacity-30 p-6 flex flex-col justify-end">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-white">
           <div className="flex flex-col justify-end space-y-2">
-            <h2 className="text-xl font-bold">{product.productName}</h2>
+            <h2 className="text-xl font-bold">{product.name}</h2>
             <p className="text-sm text-gray-300">
-              {product.productDescription}
+              {product.description}
             </p>
             <p className="text-lg font-bold">{formattedPrice}</p>
           </div>
@@ -54,17 +53,17 @@ const CarouselItem = ({ product }: { product: productType }) => {
             <DetailItem
               icon={<IconStar />}
               label="امتیاز"
-              value={product.productRate}
+              value={product.rating}
             />
             <DetailItem
               icon={<IconBuildingStorefront />}
               label="برند"
-              value={product.productBrand}
+              value={product.category.name}
             />
             <DetailItem
               icon={<IconShoppingCart />}
               label="تعداد"
-              value={product.productAvailability}
+              value={product.quantity}
             />
             <DetailItem
               icon={<IconClock />}
@@ -74,12 +73,12 @@ const CarouselItem = ({ product }: { product: productType }) => {
             <DetailItem
               icon={<IconArchiveBox />}
               label="موجودی"
-              value={product.productAvailability > 0 ? "موجود" : "ناموجود"}
+              value={product.countInStock > 0 ? "موجود" : "ناموجود"}
             />
             <DetailItem
               icon={<IconChatBubble />}
               label="نظرات"
-              value={product.productReviewCount}
+              value={product.numReviews}
             />
           </div>
         </div>
