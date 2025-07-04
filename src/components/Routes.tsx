@@ -7,7 +7,7 @@ import Layout from "./Layout";
 import RegisterPage from "../Pages/RegisterPage";
 import LoginPage from "../Pages/LoginPage";
 import CreateNewProduct from "../Pages/CreateNewProduct";
-import EditProduct from "../Pages/EditProduct";
+import EditProductPage from "../Pages/EditProduct";
 import AllProduct from "../Pages/AllProduct";
 
 function RoutesComponent() {
@@ -20,23 +20,12 @@ function RoutesComponent() {
         <Route path="Login" element={<LoginPage />} />
         <Route path="Register" element={<RegisterPage />} />
         <Route path="CreateNewProduct" element={<CreateNewProduct />} />
-        
-        {/* 🔧 اینجا Route باید درست بسته شود */}
-        <Route
-          path="EditProduct"
-          element={
-            <EditProduct
-              productId=""
-              productData={{
-                title: "",
-                price: "",
-                description: "",
-                image: undefined,
-              }}
-            />
-          }
-        />
-
+        <Route path="/edit-product/:id" element={<EditProductPage productId={""} productData={{
+          title: "",
+          price: "",
+          description: "",
+          image: undefined
+        }} />} />
         <Route path="AllProduct" element={<AllProduct />} />
       </Route>
 
