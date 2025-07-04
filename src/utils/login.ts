@@ -7,8 +7,6 @@ const login_URL = "/api/users/auth";
 export async function loginFunction(
   payload: loginPayload
 ): Promise<UserResponse> {
-  const response = await server.post<UserResponse>(login_URL, payload, {
-    withCredentials: true,
-  });
+  const response = await server.post<UserResponse>(login_URL, payload);
   return response.data;
 }

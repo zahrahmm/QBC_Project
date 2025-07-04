@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { loginFunction } from "../../utils/login";
-import { logoutFunction } from "../../utils/logout";
 import InputField from "./inputField";
 import { useAuthStore } from "../../stores/useAuthStore";
 
@@ -16,7 +15,7 @@ function LoginForm() {
     password: "",
   });
 
-  const { user, login, logout } = useAuthStore();
+  const { user, login } = useAuthStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,22 +29,11 @@ function LoginForm() {
     e.preventDefault();
     try {
       const response = await loginFunction(formData);
-      console.log("Logged in user:", response);
-      login(user);
-      console.log(user);
-      console.log(login);
-    } catch (error) {
-      console.error("Login failed", error);
-      alert("اطلاعات صحیح نمی باشد.");
-    }
-  };
-
-  const handleLogout = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await logoutFunction(formData);
-      console.log("Logged in user:", response);
-      logout();
+      login(response);
+      setFormData({
+        email: "",
+        password: "",
+      });
     } catch (error) {
       console.error("Login failed", error);
       alert("اطلاعات صحیح نمی باشد.");
@@ -59,7 +47,6 @@ function LoginForm() {
       onSubmit={handleLogin}
     >
       <p className="mb-8 text-2xl ">ورود</p>
-
       <InputField
         label="ایمیل"
         type="email"
@@ -69,7 +56,6 @@ function LoginForm() {
         style="mb-[24px]"
         name="email"
       />
-
       <InputField
         label="رمز عبور"
         type="password"
@@ -79,18 +65,14 @@ function LoginForm() {
         style=""
         name="password"
       />
-
       <button className="btn btn-secondary w-30 mt-6">ورود</button>
-
       <p className="mt-4">
         عضو نیستید؟
         <Link to="/register" className="text-secondary cursor-pointer">
           ثبت نام
         </Link>
       </p>
-      <button onClick={handleLogout} className="btn btn-secondary w-30 mt-6">
-        خروج
-      </button>
+      {user ? <p>{user.username}</p> : <p>کاربر نیست</p>}
     </form>
   );
 }

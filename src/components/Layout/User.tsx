@@ -1,6 +1,17 @@
+import { Link } from "react-router";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { logoutFunction } from "../../utils/logout";
+
 function User() {
+  const { logout } = useAuthStore();
+
+  function handleLogout() {
+    logoutFunction();
+    logout();
+  }
+
   return (
-    <div>
+    <>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">
         <div tabIndex={0} role="button" className="btn p-2">
           <p className="">کاربر</p>
@@ -62,7 +73,7 @@ function User() {
             </a>
           </li>
           <li>
-            <a>
+            <Link to={"/"} onClick={handleLogout}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -78,11 +89,11 @@ function User() {
                 />
               </svg>
               <p>خروج از حساب</p>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
-    </div>
+    </>
   );
 }
 

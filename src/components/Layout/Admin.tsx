@@ -1,4 +1,14 @@
+import { Link } from "react-router";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { logoutFunction } from "../../utils/logout";
+
 function Admin() {
+  const { logout } = useAuthStore();
+
+  function handleLogout() {
+    logoutFunction();
+    logout();
+  }
   return (
     <div>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">
@@ -112,7 +122,7 @@ function Admin() {
             </a>
           </li>
           <li>
-            <a>
+            <Link to={"/"} onClick={handleLogout}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -126,7 +136,7 @@ function Admin() {
                 />
               </svg>
               <p>خروج از حساب</p>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

@@ -1,4 +1,5 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 
 const CreateNewProduct: React.FC = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
