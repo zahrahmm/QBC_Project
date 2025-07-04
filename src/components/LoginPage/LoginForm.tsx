@@ -15,7 +15,7 @@ function LoginForm() {
     password: "",
   });
 
-  const { user, login } = useAuthStore();
+  const { login } = useAuthStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
