@@ -73,7 +73,7 @@ function User() {
             </a>
           </li>
           <li>
-            <Link to={"/"} onClick={handleLogout}>
+            <Link to={"/login"} onClick={handleLogout}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

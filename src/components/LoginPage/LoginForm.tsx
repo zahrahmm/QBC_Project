@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , Navigate, useNavigate } from "react-router-dom";
 import { loginFunction } from "../../utils/login";
 import InputField from "./inputField";
 import { useAuthStore } from "../../stores/useAuthStore";
@@ -25,11 +25,14 @@ function LoginForm() {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await loginFunction(formData);
       login(response);
+      navigate("/");
       setFormData({
         email: "",
         password: "",
