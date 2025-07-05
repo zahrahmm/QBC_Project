@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { createBrowserRouter } from "react-router";
 import CartPage from "../Pages/CartPage";
 import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
@@ -7,22 +7,24 @@ import Layout from "./Layout/Layout";
 import RegisterPage from "../Pages/RegisterPage";
 import LoginPage from "../Pages/LoginPage";
 import CreateNewProduct from "../Pages/CreateNewProduct";
+import UpdateProfile from "../Pages/UpdateProfile";
 
-function RoutesComponent() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="Shop" element={<Shop />} />
-        <Route path="Cart" element={<CartPage />} />
-        <Route path="Login" element={<LoginPage />} />
-        <Route path="Register" element={<RegisterPage />} />
-        <Route path="CreateNewProduct" element={<CreateNewProduct />} />
-      </Route>
+const Routes = createBrowserRouter([
+  {
+    path: "/",
+    Component: Layout,
+    children: [
+      { index: true, Component: Home },
+      { path: "/CartPage", Component: CartPage },
+      { path: "/Register", Component: RegisterPage },
+      { path: "/Login", Component: LoginPage },
+      { path: "/CreateNewProduct", Component: CreateNewProduct },
+      { path: "/Shop", Component: Shop },
+      { path: "/Profile", Component: UpdateProfile },
+    ],
+  },
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
-}
+  { path: "*", Component: NotFound },
+]);
 
-export default RoutesComponent;
+export default Routes;

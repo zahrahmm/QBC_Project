@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link , Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { loginFunction } from "../../utils/login";
 import InputField from "./inputField";
 import { useAuthStore } from "../../stores/useAuthStore";
@@ -15,6 +15,7 @@ function LoginForm() {
     password: "",
   });
 
+  const navigate = useNavigate();
   const { login } = useAuthStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +25,6 @@ function LoginForm() {
       [name]: value,
     });
   };
-
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

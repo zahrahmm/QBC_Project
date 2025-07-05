@@ -35,7 +35,7 @@ function User() {
           className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 mr-3 shadow-sm"
         >
           <li>
-            <a>
+            <Link to={"/Profile"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -51,10 +51,10 @@ function User() {
                 />
               </svg>
               <p>پروفایل</p>
-            </a>
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to={"/cart"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -70,7 +70,7 @@ function User() {
                 />
               </svg>
               <p>سفارشات من</p>
-            </a>
+            </Link>
           </li>
           <li>
             <Link to={"/login"} onClick={handleLogout}>

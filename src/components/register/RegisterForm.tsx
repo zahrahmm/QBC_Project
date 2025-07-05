@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import InputField from "../../components/LoginPage/inputField"; //
-// import Button from "../button/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../utils/register";
 
 type FormData = {
@@ -27,7 +26,9 @@ function RegisterForm() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirm_Password) {
@@ -35,7 +36,8 @@ function RegisterForm() {
       return;
     } else {
       try {
-        const response = await register(formData);
+        const response = register(formData);
+        navigate("/login");
         console.log(formData);
         console.log(response);
       } catch (error) {
