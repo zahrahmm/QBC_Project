@@ -1,87 +1,91 @@
-import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useProductStore } from "../store/useProductStore";
 
-type EditProductProps = {
-  productId: string;
-  productData: {
-    title: string;
-    price: string;
-    description: string;
-    image?: File;
-  };
-  onDeleted?: () => void;
-  onUpdated?: () => void;
+type ProductData = {
+  title: string;
+  price: string;
+  description: string;
+  imageUrl?: string;
 };
 
-const EditProduct: React.FC<EditProductProps> = ({
-  productId,
-  productData,
-  onDeleted,
-  onUpdated,
-}) => {
-  const { deleteProduct, updateProduct } = useProductStore();
+const EditProduct = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { fetchProducts, deleteProduct, updateProduct } = useProductStore();
 
-  const [title, setTitle] = useState(productData.title);
-  const [price, setPrice] = useState(productData.price);
-  const [description, setDescription] = useState(productData.description);
-  const [image, setImage] = useState<File | undefined>(productData.image);
+  const [productData, setProductData] = useState<ProductData>({
+    title: "",
+    price: "",
+    description: "",
+    imageUrl: "",
+  });
+  const [image, setImage] = useState<File | undefined>(undefined);
+  const [loading, setLoading] = useState(!!id);
 
+  // گرفتن اطلاعات محصول اگر id وجود دارد
   useEffect(() => {
-    setTitle(productData.title);
-    setPrice(productData.price);
-    setDescription(productData.description);
-    setImage(productData.image);
-  }, [productData]);
+    if (id) {
+      setLoading(true);
+      axios.get(`https://qbc9.liara.run/api/products/${id}`).then((res) => {
+        setProductData({
+          title: res.data.title,
+          price: res.data.price.toString(),
+          description: res.data.description,
+          imageUrl: res.data.imageUrl,
+        });
+        setLoading(false);
+      });
+    }
+  }, [id]);
 
+  // هندل حذف
   const handleDelete = async () => {
+    if (!id) return;
     try {
-      await axios.delete(`https://qbc9.liara.run/api/products/${productId}`);
-      deleteProduct(productId);
-      if (onDeleted) onDeleted();
+      await axios.delete(`https://qbc9.liara.run/api/products/${id}`);
+      deleteProduct(id);
+      fetchProducts();
+      navigate("/all-product");
     } catch (error) {
-      console.error("خطا در حذف محصول", error);
+      console.error("Delete error:", error);
     }
   };
 
+  // هندل ویرایش
   const handleUpdate = async () => {
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("price", price);
-    formData.append("description", description);
-    if (image) {
-      formData.append("image", image);
-    }
+    formData.append("title", productData.title);
+    formData.append("price", productData.price);
+    formData.append("description", productData.description);
+    if (image) formData.append("image", image);
 
     try {
       const response = await axios.put(
-        `https://qbc9.liara.run/api/products/${productId}`,
+        `https://qbc9.liara.run/api/products/${id}`,
         formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
-
       updateProduct({
-        productId,
+        productId: id!,
         title: response.data.title,
         price: response.data.price,
         description: response.data.description,
         imageUrl: response.data.imageUrl,
       });
-
-      if (onUpdated) onUpdated();
+      fetchProducts();
+      navigate("/all-product");
     } catch (error) {
-      console.error("خطا در بروزرسانی محصول:", error);
+      console.error("Update error:", error);
     }
   };
+
+  if (loading) return <div>در حال بارگذاری...</div>;
 
   return (
     <div>
       <form
-        action=""
         className="m-auto max-w-[1090px] pt-26"
         onSubmit={(e) => e.preventDefault()}
       >
@@ -99,8 +103,10 @@ const EditProduct: React.FC<EditProductProps> = ({
               type="text"
               className="input w-full"
               placeholder="نام محصول را وارد نمایید"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={productData.title}
+              onChange={(e) =>
+                setProductData({ ...productData, title: e.target.value })
+              }
             />
           </fieldset>
           <div className="flex gap-8">
@@ -112,8 +118,10 @@ const EditProduct: React.FC<EditProductProps> = ({
                 type="text"
                 className="input w-full"
                 placeholder="قیمت محصول را وارد نمایید"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={productData.price}
+                onChange={(e) =>
+                  setProductData({ ...productData, price: e.target.value })
+                }
               />
             </fieldset>
           </div>
@@ -124,13 +132,13 @@ const EditProduct: React.FC<EditProductProps> = ({
             <textarea
               className="textarea w-full h-36 text-base font-normal"
               placeholder="توضیحات محصول را وارد نمایید"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={productData.description}
+              onChange={(e) =>
+                setProductData({ ...productData, description: e.target.value })
+              }
             ></textarea>
           </fieldset>
-          <div className="flex gap-8">
-            {/* سایر فیلدها */}
-          </div>
+          <div className="flex gap-8">{/* سایر فیلدها */}</div>
           <button
             type="button"
             className="btn btn-soft btn-success hover:text-white mb-5"
@@ -138,13 +146,15 @@ const EditProduct: React.FC<EditProductProps> = ({
           >
             بروزرسانی محصول
           </button>
-          <button
-            type="button"
-            className="btn btn-soft btn-error hover:text-white mb-5 mr-3"
-            onClick={handleDelete}
-          >
-            حذف محصول
-          </button>
+          {id && (
+            <button
+              type="button"
+              className="btn btn-soft btn-error hover:text-white mb-5 mr-3"
+              onClick={handleDelete}
+            >
+              حذف محصول
+            </button>
+          )}
         </div>
       </form>
     </div>

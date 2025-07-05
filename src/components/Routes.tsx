@@ -20,12 +20,12 @@ function RoutesComponent() {
         <Route path="Login" element={<LoginPage />} />
         <Route path="Register" element={<RegisterPage />} />
         <Route path="CreateNewProduct" element={<CreateNewProduct />} />
-        <Route path="/edit-product/:id" element={<EditProductPage productId={""} productData={{
-          title: "",
-          price: "",
-          description: "",
-          image: undefined
-        }} />} />
+        <Route
+          path="/edit-product/:id"
+          element={
+            <EditProductPage />
+          }
+        />
         <Route path="AllProduct" element={<AllProduct />} />
       </Route>
 
