@@ -19,7 +19,7 @@ const CreateNewProduct: React.FC = () => {
 
   return (
     <div>
-      <form action="" className="m-auto max-w-[1090px] pt-26">
+      <form action="" className="m-auto max-w-[1090px] py-26">
         <h3 className="text-2xl font-medium mb-8">محصول جدید</h3>
         <div className="flex flex-col gap-6">
           {imageSrc && (
