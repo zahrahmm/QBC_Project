@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 import { useAuthStore } from "../../stores/useAuthStore";
 import User from "./User";
 import Admin from "./Admin";
@@ -8,8 +8,11 @@ function Menu() {
   return (
     <div>
       <ul className="menu bg-base-300 rounded-box gap-16">
-        <li>
-          <Link className="tooltip tooltip-left" data-tip="خانه" to="/">
+        <li className="tooltip tooltip-left" data-tip="خانه">
+          <NavLink
+            className={({ isActive }) => (isActive ? "text-secondary" : "")}
+            to="/"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -25,10 +28,13 @@ function Menu() {
               />
             </svg>
             <p className="hidden">داشبورد</p>
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link className="tooltip tooltip-left" data-tip="فروشگاه" to="/Shop">
+        <li className="tooltip tooltip-left" data-tip="فروشگاه">
+          <NavLink
+            className={({ isActive }) => (isActive ? "text-secondary" : "")}
+            to="/Shop"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -44,10 +50,13 @@ function Menu() {
               />
             </svg>
             <p className="hidden">فروشگاه</p>
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link className="tooltip tooltip-left" data-tip="سبد خرید" to="/Cart">
+        <li className="tooltip tooltip-left" data-tip="سبد خرید">
+          <NavLink
+            className={({ isActive }) => (isActive ? "text-secondary" : "")}
+            to="/Cart"
+          >
             <div className="indicator">
               <span className="indicator-item badge badge-secondary rounded-full">
                 1
@@ -68,12 +77,11 @@ function Menu() {
               </svg>
               <p className="hidden">سبد خرید</p>
             </div>
-          </Link>
+          </NavLink>
         </li>
-        <li>
-          <Link
-            className="tooltip tooltip-left"
-            data-tip="علاقه‌مندی‌ها"
+        <li className="tooltip tooltip-left" data-tip="علاقه‌مندی‌ها">
+          <NavLink
+            className={({ isActive }) => (isActive ? "text-secondary" : "")}
             to="/Fave"
           >
             <svg
@@ -85,15 +93,14 @@ function Menu() {
               <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
             </svg>
             <p className="hidden">علاقه‌مندی‌ها</p>
-          </Link>
+          </NavLink>
         </li>
       </ul>
       {!user && (
         <ul className="absolute bottom-3 menu bg-base-300 rounded-box gap-3">
-          <li>
-            <Link
-              className="join-item tooltip tooltip-left"
-              data-tip="ورود"
+          <li className="join-item tooltip tooltip-left" data-tip="ورود">
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
               to="/Login"
             >
               <svg
@@ -110,12 +117,11 @@ function Menu() {
                   d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"
                 />
               </svg>
-            </Link>
+            </NavLink>
           </li>
-          <li>
-            <Link
-              className="join-item tooltip tooltip-left"
-              data-tip="ثبت نام"
+          <li className="join-item tooltip tooltip-left" data-tip="ثبت نام">
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
               to="/Register"
             >
               <svg
@@ -132,7 +138,7 @@ function Menu() {
                   d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
                 />
               </svg>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       )}

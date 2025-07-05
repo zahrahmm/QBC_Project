@@ -15,12 +15,12 @@ const Routes = createBrowserRouter([
     Component: Layout,
     children: [
       { index: true, Component: Home },
-      { path: "/CartPage", Component: CartPage },
-      { path: "/Register", Component: RegisterPage },
-      { path: "/Login", Component: LoginPage },
-      { path: "/CreateNewProduct", Component: CreateNewProduct },
-      { path: "/Shop", Component: Shop },
-      { path: "/Profile", Component: UpdateProfile },
+      { path: "CartPage", Component: CartPage },
+      { path: "Register", Component: RegisterPage },
+      { path: "Login", Component: LoginPage },
+      { path: "CreateNewProduct", Component: CreateNewProduct },
+      { path: "Shop", Component: Shop },
+      { path: "Profile", Component: UpdateProfile },
     ],
   },
 
