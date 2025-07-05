@@ -26,9 +26,7 @@ const DetailItem = ({
 
 // Component for a single slide
 const CarouselItem = ({ product }: { product: productType }) => {
-  const formattedPrice = `${product.price.toLocaleString(
-    "fa-IR"
-  )} تومان`;
+  const formattedPrice = `${product.price.toLocaleString("fa-IR")} تومان`;
   const formattedDate = product.updatedAt.toLocaleDateString("fa-IR");
 
   return (
@@ -42,9 +40,7 @@ const CarouselItem = ({ product }: { product: productType }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-white">
           <div className="flex flex-col justify-end space-y-2">
             <h2 className="text-xl font-bold">{product.name}</h2>
-            <p className="text-sm text-gray-300">
-              {product.description}
-            </p>
+            <p className="text-sm text-gray-300">{product.description}</p>
             <p className="text-lg font-bold">{formattedPrice}</p>
           </div>
 
@@ -89,16 +85,16 @@ const CarouselItem = ({ product }: { product: productType }) => {
 
 // The main Carousel component
 const Carousel = () => {
-  const slideData = [
-    { id: "slide1", product: products[0], prev: "#slide4", next: "#slide2" },
-    { id: "slide2", product: products[0], prev: "#slide1", next: "#slide3" },
-    { id: "slide3", product: products[0], prev: "#slide2", next: "#slide4" },
-    { id: "slide4", product: products[0], prev: "#slide3", next: "#slide1" },
-  ];
+  // const slideData = [
+  //   { id: "slide1", product: products[0], prev: "#slide4", next: "#slide2" },
+  //   { id: "slide2", product: products[0], prev: "#slide1", next: "#slide3" },
+  //   { id: "slide3", product: products[0], prev: "#slide2", next: "#slide4" },
+  //   { id: "slide4", product: products[0], prev: "#slide3", next: "#slide1" },
+  // ];
 
   return (
     <div className="carousel w-full">
-      {slideData.map((slide) => (
+      {/* {slideData.map((slide) => (
         <div
           key={slide.id}
           id={slide.id}
@@ -113,7 +109,8 @@ const Carousel = () => {
             </a>
           </div>
         </div>
-      ))}
+      ))} */}
+      <p>Hi I am a Carousel</p>
     </div>
   );
 };
