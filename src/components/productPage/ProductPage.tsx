@@ -3,30 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import TabSelectorLeft from "./TabSelectorLeft";
 import TabSelectorRight from "./TabSelectorRight";
-
-interface Review {
-  _id: string;
-  name: string;
-  comment: string;
-  rating: number;
-  createdAt: string;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  rating: number;
-  quantity: number;
-  countInStock: number;
-  category?: {
-    name: string;
-  };
-  reviews: Review[];
-  updatedAt: string;
-}
+import type { Product } from "../../types/product";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -41,7 +18,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://qbc9.liara.run/api/products/685ee105e700e7d8beb7b51a`)
+      .get(`https://qbc9.liara.run/api/products/6862e311e700e7d8beb7b5fe`)
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err));
   }, [id]);
@@ -51,12 +28,12 @@ const ProductPage = () => {
   const formattedDate = new Date(product.updatedAt).toLocaleDateString("fa-IR");
   return (
     <div>
-      <div className="card card-side w-5/6 mx-auto bg-base-100 shadow-sm mb-6">
-        <figure>
+      <div className="card card-side w-5/6 mx-auto mb-6">
+        <figure className="rounded-lg shadow-sm">
           <img
             src={product.image}
             alt={product.name}
-            className="w-72 h-72 object-cover rounded-lg m-2"
+            className="w-72 h-72 object-cover rounded-lg m-4"
           />
         </figure>
         <div className="card-body">
@@ -261,9 +238,18 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex gap-8">
-        <TabSelectorRight activeTab={activeTab} setActiveTab={setActiveTab} />
-        <TabSelectorLeft activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className="flex">
+        <div className="w-1/5">
+          <TabSelectorRight activeTab={activeTab} setActiveTab={setActiveTab} />
+        </div>
+        <div className="w-4/5">
+          <TabSelectorLeft
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            product={product}
+            setProduct={setProduct}
+          />
+        </div>
       </div>
     </div>
   );
