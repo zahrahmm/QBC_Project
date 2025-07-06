@@ -1,23 +1,19 @@
-// import { useState } from "react";
+
 import { BrowserRouter as Router } from "react-router-dom";
- import RoutesComponent from "./components/Routes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import RoutesComponent from "./components/Routes";
 
-//  import AllProduct from "./Pages/AllProduct";
-//  import EditProduct from "./Pages/EditProduct";
 
+const queryClient = new QueryClient();
 
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
       <Router>
-       <RoutesComponent />
-     </Router>
-    //  <AllProduct />
-    // <EditProduct productId={""} productData={{
-    //   title: "",
-    //   price: "",
-    //   description: "",
-    //   image: undefined
-    // }}/>
+        <RoutesComponent />
+      </Router>
+  
+    </QueryClientProvider>
   );
 }
 

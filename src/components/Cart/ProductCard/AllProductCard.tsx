@@ -48,18 +48,3 @@ export default AllProductCard;
 
 
 
-// const AllProductCard = () => {
-//   return (
-//        <div className="card bg-base-100 shadow-xl w-[672px] h-[176px] rounded-[8px] p-2">
-//          <div className="card-body h-full">
-//            <h2 className="card-title">کارت اول</h2>
-//            <p>محتوا</p>
-//          </div>
-//        </div>
-
-
-
-//   )
-// }
-
-// export default AllProductCard
