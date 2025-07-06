@@ -58,8 +58,9 @@ function Menu() {
             to="/Cart"
           >
             <div className="indicator">
-              <span className="indicator-item badge badge-secondary rounded-full">
-                1
+              {/* تعداد باید طبق تعداد لیست باشد */}
+              <span className="indicator-item badge badge-secondary rounded-full size-5">
+                ۱
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
