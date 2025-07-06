@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { logoutFunction } from "../../utils/logout";
+import { toast } from "sonner";
 
 function User() {
   const { logout } = useAuthStore();
@@ -8,6 +9,7 @@ function User() {
   function handleLogout() {
     logoutFunction();
     logout();
+    toast.info("کاربر خارج شد.");
   }
 
   return (

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { logoutFunction } from "../../utils/logout";
+import { toast } from "sonner";
 
 function Admin() {
   const { logout } = useAuthStore();
@@ -8,7 +9,9 @@ function Admin() {
   function handleLogout() {
     logoutFunction();
     logout();
+    toast.info("کاربر خارج شد.");
   }
+
   return (
     <div>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">

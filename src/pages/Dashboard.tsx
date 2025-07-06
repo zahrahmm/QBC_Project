@@ -47,15 +47,14 @@ const renderBarChart = (
 );
 
 function Dashboard() {
-  const getTotalSales = "/api/orders/total-sales-by-date";
+  const getTotalSales = "/api/orders/total-sales";
   const [totalSales, setTotalSales] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await server.get(getTotalSales);
-        console.log(response);
-        setTotalSales();
+        setTotalSales(response.data.totalSales);
       } catch (error) {
         console.log(error);
       }

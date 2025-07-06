@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputField from "../../components/LoginPage/inputField"; //
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../utils/register";
+import { toast } from "sonner";
 
 type FormData = {
   username: string;
@@ -32,16 +33,25 @@ function RegisterForm() {
     e.preventDefault();
 
     if (formData.password !== formData.confirm_Password) {
-      alert("رمزعبور مطابقت ندارد!");
+      toast("رمزعبور مطابقت ندارد!");
       return;
+    } else if (
+      formData.username == "" ||
+      formData.email == "" ||
+      formData.password == "" ||
+      formData.confirm_Password == ""
+    ) {
+      toast("همه قسمت ها را پر کنید!");
     } else {
       try {
         const response = register(formData);
         navigate("/login");
+        toast.success("ثبت نام با موفقیت انجام شد.");
         console.log(formData);
         console.log(response);
       } catch (error) {
         console.log(error);
+        toast.error("خطا");
       }
     }
   };
