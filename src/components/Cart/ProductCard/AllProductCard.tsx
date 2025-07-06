@@ -6,7 +6,7 @@ type ProductCardProps = {
   price: string;
   date: string;
   imageUrl: string;
-  onView?: () => void; // اضافه شد
+  onView?: () => void; 
 };
 
 const AllProductCard: React.FC<ProductCardProps> = ({
