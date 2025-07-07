@@ -15,9 +15,12 @@ export interface Product {
   rating: number;
   quantity: number;
   countInStock: number;
-  category?: {
-    name: string;
-  };
+  category:
+    | {
+        _id: string;
+        name: string;
+      }
+    | undefined;
   reviews: Review[];
   updatedAt: string;
 }

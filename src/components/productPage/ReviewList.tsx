@@ -2,7 +2,7 @@ import type { Review } from "../../types/product";
 
 function ReviewList({ reviews }: { reviews: Review[] }) {
   return (
-    <div className=" flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       {reviews.length === 0 && (
         <p className="mt-2 self-center shadow-sm w-5/6 h-24 text-center flex items-center justify-center rounded-xl">
           نظری ثبت نشده است.

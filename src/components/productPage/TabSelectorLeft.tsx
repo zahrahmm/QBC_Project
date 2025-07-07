@@ -10,19 +10,23 @@ interface TabSelectorLeftProps {
   >;
   product: Product | null;
   setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
+  allProducts: Product[];
 }
 
 const TabSelectorLeft = ({
   activeTab,
   product,
   setProduct,
+  allProducts,
 }: TabSelectorLeftProps) => {
   if (!product) return null;
   return (
     <div>
       {activeTab === "add" && <ReviewForm setProduct={setProduct} />}
       {activeTab === "view" && <ReviewList reviews={product.reviews} />}
-      {activeTab === "related" && <RelatedProducts />}
+      {activeTab === "related" && (
+        <RelatedProducts currentProduct={product} allProducts={allProducts} />
+      )}
     </div>
   );
 };
