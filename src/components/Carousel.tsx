@@ -1,6 +1,9 @@
+import useProducts from "../utils/use-products";
 import CardCarousel from "./CardCarousel";
 
 const Carousel = () => {
+ const {data} = useProducts()
+ 
   return (
     <div className="carousel w-full">
       <div id="slide1" className="carousel-item relative w-full">
@@ -17,6 +20,9 @@ const Carousel = () => {
     </div>
   );
 };
+
+
+      // <ul>{query.data?.map((todo) => <li key={todo.id}>{todo.title}</li>)}</ul>
 
 export default Carousel;
 
