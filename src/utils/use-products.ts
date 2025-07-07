@@ -7,11 +7,6 @@ const useProducts = () => {
     queryKey: ["products"],
     queryFn: () =>
       axios.get<productType[]>("/api/products/allproducts").then((res) => {
-        // console.log("Full API Response:", res);
-        // console.log("Data from API:", res.data);
-
-        // Then return the data
-        // return res.data;
         res.data;
       }),
   });
