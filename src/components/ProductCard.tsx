@@ -1,3 +1,4 @@
+
 const ProductCard = () => {
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
@@ -9,16 +10,50 @@ const ProductCard = () => {
       </figure>
       <div className="card-body">
         <h2 className="card-title relative">
-          Card Title
-          <div className="badge badge-secondary absolute left-6">NEW</div>
+          Apple iPad Pro 12.9-inch{" "}
+          <div className="badge badge-secondary absolute left-2">
+            ۱۰,۰۰۰ تومان
+          </div>
         </h2>
         <p>
-          A card component has a figure, a body part, and inside body there are
-          title and actions parts
+          صفحه نمایش با فناوری ProMotion، تراشه A16 Bionic و سیستم دوربین سه
+          گانه ...
         </p>
-        <div className="card-actions justify-end">
-          <div className="badge badge-outline">Fashion</div>
-          <div className="badge badge-outline">Products</div>
+        <div className="card-actions justify-between">
+          <div className="badge badge-outline">اپل</div>
+          <div className="rating">
+            <input
+              type="radio"
+              name="rating-1"
+              className="mask mask-star"
+              aria-label="1 star"
+            />
+            <input
+              type="radio"
+              name="rating-1"
+              className="mask mask-star"
+              aria-label="2 star"
+              defaultChecked
+            />
+            <input
+              type="radio"
+              name="rating-1"
+              className="mask mask-star"
+              aria-label="3 star"
+            />
+            <input
+              type="radio"
+              name="rating-1"
+              className="mask mask-star"
+              aria-label="4 star"
+            />
+            <input
+              type="radio"
+              name="rating-1"
+              className="mask mask-star"
+              aria-label="5 star"
+            />
+          </div>
         </div>
       </div>
     </div>
