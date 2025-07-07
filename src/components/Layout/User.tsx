@@ -1,6 +1,19 @@
+import { NavLink } from "react-router";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { logoutFunction } from "../../utils/logout";
+import { toast } from "sonner";
+
 function User() {
+  const { logout } = useAuthStore();
+
+  function handleLogout() {
+    logoutFunction();
+    logout();
+    toast.info("کاربر خارج شد.");
+  }
+
   return (
-    <div>
+    <>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">
         <div tabIndex={0} role="button" className="btn p-2">
           <p className="">کاربر</p>
@@ -24,7 +37,10 @@ function User() {
           className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 mr-3 shadow-sm"
         >
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/Profile"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -40,10 +56,13 @@ function User() {
                 />
               </svg>
               <p>پروفایل</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/cart"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -59,10 +78,14 @@ function User() {
                 />
               </svg>
               <p>سفارشات من</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/login"}
+              onClick={handleLogout}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -78,11 +101,11 @@ function User() {
                 />
               </svg>
               <p>خروج از حساب</p>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
-    </div>
+    </>
   );
 }
 

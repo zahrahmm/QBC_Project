@@ -1,11 +1,24 @@
-import Layout from "../components/Layout";
+import { Navigate } from "react-router";
+import { useAuthStore } from "../stores/useAuthStore";
+import Carousel from "../components/Carousel";
+import ProductCard from "../components/ProductCard";
 
-function Home() {
+const Home = () => {
+  const { user } = useAuthStore();
+
+  if (user?.isAdmin) return <Navigate to="/dashboard" />;
+
   return (
-    <Layout>
-      <h1>test Home</h1>
-    </Layout>
+    <div className="grid grid-cols-2 px-22 pt-10 gap-6">
+      <div className="grid grid-cols-2">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </div>
+      <Carousel />
+    </div>
   );
-}
+};
 
 export default Home;

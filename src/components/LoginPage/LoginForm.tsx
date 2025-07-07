@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import InputField from "./inputField"; // فرض می‌کنم این فایل وجود داره
-import Button from "../button/button";
-import { Link } from "react-router-dom";
-// import mockData from "../../data/users";
+import { Link, useNavigate } from "react-router-dom";
+import { loginFunction } from "../../utils/login";
+import InputField from "./inputField";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { toast } from "sonner";
 
 interface FormData {
   email: string;
@@ -15,6 +16,9 @@ function LoginForm() {
     password: "",
   });
 
+  const navigate = useNavigate();
+  const { login } = useAuthStore();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -22,22 +26,21 @@ function LoginForm() {
       [name]: value,
     });
   };
-  const handleClick = () => {
-    console.log(`کلیک شد `);
-  };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const user = mockData.users.find(
-      (user: { username: string; password: string }) =>
-        user.username === formData.email && user.password === formData.password
-    );
-
-    if (user) {
-      alert("Login");
-    } else {
-      alert("ah");
+    try {
+      const response = await loginFunction(formData);
+      login(response);
+      toast.success("کاربر وارد شد.");
+      navigate("/");
+      setFormData({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("اطلاعات صحیح نمی باشد.");
     }
   };
 
@@ -48,7 +51,6 @@ function LoginForm() {
       onSubmit={handleLogin}
     >
       <p className="mb-8 text-2xl ">ورود</p>
-
       <InputField
         label="ایمیل"
         type="email"
@@ -58,7 +60,6 @@ function LoginForm() {
         style="mb-[24px]"
         name="email"
       />
-
       <InputField
         label="رمز عبور"
         type="password"
@@ -68,16 +69,7 @@ function LoginForm() {
         style=""
         name="password"
       />
-
-      <Button
-        type="submit"
-        text="ورود"
-        onClick={handleClick}
-        disabled={false}
-        loading={false}
-        variant="button2"
-        style="h-[48px] w-[74px] mt-[32px]"
-      />
+      <button className="btn btn-secondary w-30 mt-6">ورود</button>
       <p className="mt-4">
         عضو نیستید؟
         <Link to="/register" className="text-secondary cursor-pointer">

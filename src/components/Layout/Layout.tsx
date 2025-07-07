@@ -1,18 +1,14 @@
-// import User from "./Layout/User";
-import Menu from "./Layout/Menu";
+import Menu from "./Menu";
 import { Outlet } from "react-router";
-// import Admin from "./Layout/Admin";
+// import { Toaster } from "sonner";
 
 const Layout = () => {
   return (
     <div>
       <aside className="fixed z-10 right-0 min-h-screen p-2 bg-base-300">
         <Menu />
-        {/* <User /> */}
-        {/* <Admin /> */}
       </aside>
       <main className="min-h-screen">
-        {" "}
         <Outlet />
       </main>
     </div>

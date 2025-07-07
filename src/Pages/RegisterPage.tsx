@@ -1,17 +1,17 @@
 // import React from 'react';
-import loginPageImage from "../assets/loginPage.png";
+import loginPageImage from "../assets/loginPageLight.png";
 import RegisterForm from "../components/register/RegisterForm";
 
 function RegisterPage() {
   return (
-    <div className="loginPageContainer flex min-h-full min-w-full max-h-screen">
+    <div className="loginPageContainer flex min-w-full h-screen">
       <RegisterForm />
 
-      <div className="my-16 ml-16 max-h-screen max-w-[50%] rounded-xl">
+      <div className="my-16 ml-16 max-w-[60%] rounded-xl">
         <img
           src={loginPageImage}
           alt=""
-          className="object-cover h-full w-full overflow-hidden rounded-xl  "
+          className="object-cover h-full overflow-hidden rounded-xl"
         />
       </div>
     </div>

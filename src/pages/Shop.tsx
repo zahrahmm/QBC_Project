@@ -1,10 +1,8 @@
-import Layout from "../components/Layout";
-
 function Shop() {
   return (
-    <Layout>
+    <div>
       <h1>test Shop</h1>
-    </Layout>
+    </div>
   );
 }
 

@@ -1,10 +1,39 @@
-function CreateNewProduct() {
+import { useState } from "react";
+import type { ChangeEvent } from "react";
+
+const CreateNewProduct: React.FC = () => {
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImageSrc(reader.result as string);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div>
-      <form action="" className="m-auto max-w-[1090px] pt-26">
+      <form action="" className="m-auto max-w-[1090px] py-26">
         <h3 className="text-2xl font-medium mb-8">محصول جدید</h3>
         <div className="flex flex-col gap-6">
-          <input type="file" className="file-input w-full h-31" />
+          {imageSrc && (
+            <img
+              src={imageSrc}
+              alt="Preview"
+              className="w-64 h-auto border rounded m-auto "
+            />
+          )}
+          <input
+            type="file"
+            onChange={handleImageChange}
+            className="file-input w-full h-31"
+          />
           <fieldset className="fieldset">
             <legend className="fieldset-legend text-base font-normal">
               نام محصول
@@ -83,6 +112,6 @@ function CreateNewProduct() {
       </form>
     </div>
   );
-}
+};
 
 export default CreateNewProduct;

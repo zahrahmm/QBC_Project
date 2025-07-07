@@ -1,35 +1,81 @@
 import React, { useState } from "react";
 import InputField from "../../components/LoginPage/inputField"; //
-import Button from "../button/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../../utils/register";
+import { toast } from "sonner";
 
-function LoginForm() {
-  const [formData, setFormData] = useState<string>("");
+type FormData = {
+  username: string;
+  email: string;
+  password: string;
+  confirm_Password: string;
+};
+
+function RegisterForm() {
+  const [formData, setFormData] = useState<FormData>({
+    username: "",
+    email: "",
+    password: "",
+    confirm_Password: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(e.target.value);
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
-  const handleClick = () => {
-    console.log(`کلیک شد `);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirm_Password) {
+      toast("رمزعبور مطابقت ندارد!");
+      return;
+    } else if (
+      formData.username == "" ||
+      formData.email == "" ||
+      formData.password == "" ||
+      formData.confirm_Password == ""
+    ) {
+      toast("همه قسمت ها را پر کنید!");
+    } else {
+      try {
+        const response = register(formData);
+        navigate("/login");
+        toast.success("ثبت نام با موفقیت انجام شد.");
+        console.log(formData);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        toast.error("خطا");
+      }
+    }
   };
 
   return (
-    <form className="flex flex-col flex-1 px-16 mt-[77px]">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col flex-1 px-16 mt-[77px]"
+    >
       <p className="mb-8 text-2xl ">ورود</p>
 
       <InputField
         label="نام"
         type="name"
-        value={formData}
+        value={formData.username}
         onChange={handleChange}
         placeholder="نام خود را وارد کنید"
         style="mb-[24px]"
-        name="name"
+        name="username"
       />
       <InputField
         label="ایمیل"
         type="email"
-        value={formData}
+        value={formData.email}
         onChange={handleChange}
         placeholder="ایمیل خود را وارد کنید"
         style="mb-[24px]"
@@ -38,35 +84,27 @@ function LoginForm() {
       <InputField
         label="رمزعبور"
         type="password"
-        value={formData}
+        value={formData.password}
         onChange={handleChange}
         placeholder="رمزعبور خود را وارد کنید"
         style="mb-[24px]"
-        name=""
+        name="password"
       />
 
       <InputField
         label="تکرار رمزعبور"
         type="password"
-        value={formData}
+        value={formData.confirm_Password}
         onChange={handleChange}
         placeholder="تکرار رمزعبور خود را وارد کنید"
         style=""
-        name="password"
+        name="confirm_Password"
       />
 
-      <Button
-        type="submit"
-        text="ورود"
-        onClick={handleClick}
-        disabled={false}
-        loading={false}
-        variant="button2"
-        style="h-[48px] w-[74px] mt-[32px]"
-      />
+      <button className="btn btn-secondary w-30 mt-6">ثبت نام</button>
       <p className="mt-4">
         عضو هستید؟
-        <Link to="/" className="text-secondary cursor-pointer">
+        <Link to="/Login" className="text-secondary cursor-pointer">
           ورود
         </Link>
       </p>
@@ -74,4 +112,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

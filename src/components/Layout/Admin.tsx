@@ -1,4 +1,17 @@
+import { NavLink } from "react-router";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { logoutFunction } from "../../utils/logout";
+import { toast } from "sonner";
+
 function Admin() {
+  const { logout } = useAuthStore();
+
+  function handleLogout() {
+    logoutFunction();
+    logout();
+    toast.info("کاربر خارج شد.");
+  }
+
   return (
     <div>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">
@@ -24,7 +37,10 @@ function Admin() {
           className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 mr-3 shadow-sm"
         >
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/dashboard"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -35,10 +51,13 @@ function Admin() {
                 <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
               </svg>
               <p>داشبورد</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/allproducts"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -52,10 +71,13 @@ function Admin() {
                 />
               </svg>
               <p>محصول جدید</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/allusers"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -70,10 +92,13 @@ function Admin() {
                 <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
               </svg>
               <p>مدیریت کاربران</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/orders"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -92,10 +117,13 @@ function Admin() {
                 />
               </svg>
               <p>سفارشات</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/Profile"}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -109,10 +137,14 @@ function Admin() {
                 />
               </svg>
               <p>پروفایل</p>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a>
+            <NavLink
+              className={({ isActive }) => (isActive ? "text-secondary" : "")}
+              to={"/"}
+              onClick={handleLogout}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -126,7 +158,7 @@ function Admin() {
                 />
               </svg>
               <p>خروج از حساب</p>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
