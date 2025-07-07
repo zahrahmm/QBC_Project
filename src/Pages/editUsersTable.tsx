@@ -1,9 +1,8 @@
 import useUsers from "../utils/useUsers";
 
 const EditUsersTable = () => {
-  const { data: users, error } = useUsers();
-  console.log(users);
-  console.log(error?.message);
+  const {data} = useUsers();
+  console.log(data);
 
   return (
     <div className="overflow-x-auto p-16">
@@ -19,7 +18,7 @@ const EditUsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {users?.map((user, index) => (
+          {data?.map((user, index) => (
             <tr key={user._id}>
               <th>{index + 1}</th>
               <td>{user._id}</td>

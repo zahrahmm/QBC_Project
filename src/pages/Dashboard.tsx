@@ -6,9 +6,10 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import useTotalsales from "../utils/useTotalsales";
 
-import { useEffect, useState } from "react";
-import server from "../utils/axios";
+// import { useEffect, useState } from "react";
+// import server from "../utils/axios";
 
 const data = [
   { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
@@ -47,20 +48,22 @@ const renderBarChart = (
 );
 
 function Dashboard() {
-  const getTotalSales = "/api/orders/total-sales";
-  const [totalSales, setTotalSales] = useState(null);
+  // const getTotalSales = "/api/orders/total-sales";
+  // const [totalSales, setTotalSales] = useState(null);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await server.get(getTotalSales);
-        setTotalSales(response.data.totalSales);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPost();
-  }, []);
+  // useEffect(() => {
+  //   const fetchPost = async () => {
+  //     try {
+  //       const response = await server.get(getTotalSales);
+  //       setTotalSales(response.data.totalSales);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchPost();
+  // }, []);
+
+  const {data} = useTotalsales()
 
   return (
     <div>
@@ -68,7 +71,7 @@ function Dashboard() {
         <div className="flex flex-row gap-3.5 justify-evenly pb-6">
           <div>
             <h3>فروش کل</h3>
-            <p>{totalSales} تومان</p>
+            <p>{data?.totalSales} تومان</p>
           </div>
           <div>
             <h3>مشتری ها</h3>

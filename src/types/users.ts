@@ -5,4 +5,5 @@ export type userModel = {
   isAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;
+  __v: number
 };

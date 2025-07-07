@@ -13,6 +13,8 @@ import orders from "../Pages/orders";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import EditUsersTable from "../Pages/editUsersTable";
+import AllProduct from "../Pages/AllProduct";
+import EditProduct from "../Pages/EditProduct";
 
 const Routes = createBrowserRouter([
   {
@@ -33,6 +35,7 @@ const Routes = createBrowserRouter([
           { path: "orders", Component: orders },
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
+          { path: "allproducts", Component: EditProduct },
         ],
       },
       {
