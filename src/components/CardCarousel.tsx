@@ -17,15 +17,18 @@ const CardCarousel = () => {
         />
       </figure>
 
-      <div className="card-body grid grid-cols-2">
+      <div className="card-body grid grid-cols-2 grid-rows-3">
         <section className="">
           <h2 className="card-title relative pb-6">
-            Card Title
-            <div className="badge badge-secondary absolute left-6">NEW</div>
+            Apple iPhone 14 Pro
+            <div className="badge badge-secondary absolute left-6">
+              ۱۰,۰۰۰ تومان
+            </div>
           </h2>
           <p>
-            A card component has a figure, a body part, and inside body there
-            are title and actions parts
+            آیفون 14 پرو دارای صفحه نمایش 6.1 اینچی Super Retina XDR است صفحه
+            نمایش با فناوری ProMotion، تراشه A16 Bionic و سیستم دوربین سه گانه
+            ...
           </p>
         </section>
         <section className="grid grid-cols-2 ">
@@ -35,25 +38,25 @@ const CardCarousel = () => {
               امتیاز : <span>5</span>
             </p>
           </div>
-          <div className="inline-flex gap-2 pb-3 ">
+          <div className="inline-flex gap-2 pb-3">
             <CategoryIcon />
             <p>
               برند : <span>2</span>
             </p>
           </div>
-          <div className="inline-flex gap-2">
+          <div className="inline-flex gap-2 pb-3">
             <IconShoppingCart />
             <p>
               تعداد : <span>3</span>
             </p>
           </div>
-          <div className="inline-flex gap-2">
+          <div className="inline-flex gap-2 pb-3">
             <IconClock />
             <p>
               زمان بروزرسانی : <span>4</span>
             </p>
           </div>
-          <div className="inline-flex gap-2 ">
+          <div className="inline-flex gap-2">
             <IconArchiveBox />
             <p>
               موجودی : <span>5</span>
