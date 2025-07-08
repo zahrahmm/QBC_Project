@@ -9,8 +9,8 @@ const Home = () => {
   if (user?.isAdmin) return <Navigate to="/dashboard" />;
 
   return (
-    <div className="grid grid-cols-2 px-22 pt-10 gap-6">
-      <div className="grid grid-cols-2">
+    <div className="grid grid-cols-2 px-22 pt-10">
+      <div className="grid grid-cols-2 gap-3 ">
         <ProductCard />
         <ProductCard />
         <ProductCard />

@@ -11,7 +11,7 @@ const ProductCard = () => {
         <h2 className="card-title relative">
           Apple iPad Pro 12.9-inch{" "}
           <div className="badge badge-xs sm:badge-sm md:badge-md lg:badge-lg xl:badge-xl badge-secondary absolute left-2">
-            ۱۰,۰۰۰ تومان
+            جدید
           </div>
         </h2>
         <p>
