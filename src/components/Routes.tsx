@@ -35,7 +35,8 @@ const Routes = createBrowserRouter([
           { path: "orders", Component: orders },
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
-          { path: "allproducts", Component: EditProduct },
+          { path: "allproducts", Component: AllProduct },
+          { path: "EditProduct", Component: EditProduct },
         ],
       },
       {
