@@ -1,10 +1,15 @@
 import { NavLink } from "react-router";
-import { useAuthStore } from "../../stores/useAuthStore";
 import User from "./User";
 import Admin from "./Admin";
+import { useAuthStore } from "../../stores/useAuthStore";
+// import { useLogin } from "../../utils/login";
 
 function Menu() {
+  // const { data: user } = useLogin();
+  // const id = localStorage.getItem("id");
+  // const admin = localStorage.getItem("admin");
   const { user } = useAuthStore();
+
   return (
     <div>
       <ul className="menu bg-base-300 rounded-box gap-16">
@@ -143,7 +148,7 @@ function Menu() {
           </li>
         </ul>
       )}
-      {user && !user?.isAdmin && <User />}
+      {user && !user.isAdmin && <User />}
       {user?.isAdmin && <Admin />}
     </div>
   );

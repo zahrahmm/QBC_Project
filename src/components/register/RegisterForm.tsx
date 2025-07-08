@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputField from "../../components/LoginPage/inputField"; //
-import { Link, useNavigate } from "react-router-dom";
-import { register } from "../../utils/register";
+import { Link } from "react-router-dom";
+import { useRegister } from "../../utils/register";
 import { toast } from "sonner";
 
 type FormData = {
@@ -27,7 +27,7 @@ function RegisterForm() {
     });
   };
 
-  const navigate = useNavigate();
+  const { mutate: register, isPending } = useRegister();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,11 +44,9 @@ function RegisterForm() {
       toast("همه قسمت ها را پر کنید!");
     } else {
       try {
-        const response = register(formData);
-        navigate("/login");
+        register(formData);
         toast.success("ثبت نام با موفقیت انجام شد.");
         console.log(formData);
-        console.log(response);
       } catch (error) {
         console.log(error);
         toast.error("خطا");
@@ -101,7 +99,13 @@ function RegisterForm() {
         name="confirm_Password"
       />
 
-      <button className="btn btn-secondary w-30 mt-6">ثبت نام</button>
+      <button
+        type="submit"
+        disabled={isPending}
+        className="btn btn-secondary w-30 mt-6"
+      >
+        ثبت نام
+      </button>
       <p className="mt-4">
         عضو هستید؟
         <Link to="/Login" className="text-secondary cursor-pointer">

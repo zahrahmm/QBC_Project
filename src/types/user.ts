@@ -1,5 +1,5 @@
 export type UserResponse = {
-  _id: number;
+  _id: string;
   username: string;
   email: string;
   isAdmin: boolean;

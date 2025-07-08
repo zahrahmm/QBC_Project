@@ -1,7 +1,6 @@
-
 const ProductCard = () => {
   return (
-    <div className="card card-xs sm:card-sm md:card-md lg:card-lg xl:card-xl bg-base-100 shadow-sm">
+    <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
       <figure>
         <img
           src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"

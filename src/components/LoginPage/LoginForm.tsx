@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { loginFunction } from "../../utils/login";
+import { Link } from "react-router-dom";
+import { useLogin } from "../../utils/login";
 import InputField from "./inputField";
-import { useAuthStore } from "../../stores/useAuthStore";
-import { toast } from "sonner";
+// import { useAuthStore } from "../../stores/useAuthStore";
+// import { toast } from "sonner";
 
 interface FormData {
   email: string;
@@ -16,8 +16,8 @@ function LoginForm() {
     password: "",
   });
 
-  const navigate = useNavigate();
-  const { login } = useAuthStore();
+  // const { login } = useAuthStore();
+  const { mutate: loginFunction, isPending, data } = useLogin();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,19 +29,18 @@ function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await loginFunction(formData);
-      login(response);
-      toast.success("کاربر وارد شد.");
-      navigate("/");
-      setFormData({
-        email: "",
-        password: "",
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("اطلاعات صحیح نمی باشد.");
-    }
+    // try {
+    await loginFunction(formData);
+    console.log(JSON.stringify(data));
+    //   toast.success("کاربر وارد شد.");
+    setFormData({
+      email: "",
+      password: "",
+    });
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error("اطلاعات صحیح نمی باشد.");
+    // }
   };
 
   return (
@@ -69,7 +68,13 @@ function LoginForm() {
         style=""
         name="password"
       />
-      <button className="btn btn-secondary w-30 mt-6">ورود</button>
+      <button
+        type="submit"
+        disabled={isPending}
+        className="btn btn-secondary w-30 mt-6"
+      >
+        ورود
+      </button>
       <p className="mt-4">
         عضو نیستید؟
         <Link to="/register" className="text-secondary cursor-pointer">
