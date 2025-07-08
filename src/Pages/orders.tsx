@@ -1,3 +1,8 @@
+import {
+  persianNumberFormatter,
+  persianDateFormatter,
+  persianCurrencyFormatter,
+} from "../models/PersianLocale";
 import useOrders from "../utils/useOrders";
 
 const Orders = () => {
@@ -14,6 +19,7 @@ const Orders = () => {
             <th>نام محصول</th>
             <th>تاریخ</th>
             <th>کاربر</th>
+            <th>قیمت نهایی</th>
             <th>پرداخت</th>
             <th>ارسال</th>
             <th>عملیات</th>
@@ -22,12 +28,18 @@ const Orders = () => {
         <tbody>
           {orders?.map((order, index) => (
             <tr key={order._id}>
-              <th>{index + 1}</th>
-              <td>{<img src="order.orderItems[0].image" />}</td>
+              <th>{persianNumberFormatter.format(index + 1)}</th>
+              <td>
+                <img
+                  src={order.orderItems[0].image}
+                  alt={order.orderItems[0].name}
+                  className="h-10"
+                />
+              </td>
               <td>{order.orderItems[0].name}</td>
-              <td>{new Date(order.updatedAt).toLocaleDateString()}</td>
+              <td>{persianDateFormatter.format(new Date(order.updatedAt))}</td>
               <td>{order.user?.username}</td>
-              <td>{order.totalPrice}</td>
+              <td>{persianCurrencyFormatter.format(order.totalPrice)}</td>
               <td>
                 {order.isPaid ? (
                   <button className="btn btn-sm btn-success mx-3">
