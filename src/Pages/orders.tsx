@@ -23,10 +23,10 @@ const Orders = () => {
           {orders?.map((order, index) => (
             <tr key={order._id}>
               <th>{index + 1}</th>
-              <td>{order.orderItems[0].image}</td>
+              <td>{<img src="order.orderItems[0].image" />}</td>
               <td>{order.orderItems[0].name}</td>
-              <td>{order.updatedAt.toLocaleDateString()}</td>
-              <td>{order.user.username}</td>
+              <td>{new Date(order.updatedAt).toLocaleDateString()}</td>
+              <td>{order.user?.username}</td>
               <td>{order.totalPrice}</td>
               <td>
                 {order.isPaid ? (
