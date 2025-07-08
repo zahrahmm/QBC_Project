@@ -6,7 +6,7 @@ const useProducts = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      server.get<productType>("/api/products/allproducts").then((res) => res.data),
+      server.get<productType[]>("/api/products/allproducts").then((res) => res.data),
   });
 };
 

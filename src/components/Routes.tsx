@@ -36,6 +36,7 @@ const Routes = createBrowserRouter([
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
           { path: "allproducts", Component: EditProduct },
+          
         ],
       },
       {
