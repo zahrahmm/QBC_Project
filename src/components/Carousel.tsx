@@ -2,9 +2,9 @@ import useProducts from "../utils/use-products";
 import CardCarousel from "./CardCarousel";
 
 const Carousel = () => {
-  const { data } = useProducts();
+  const { data: products } = useProducts();
 
-  console.log(data);
+  console.log(products);
   return (
     <div className="carousel w-full">
       <div id="slide1" className="carousel-item relative w-full">
