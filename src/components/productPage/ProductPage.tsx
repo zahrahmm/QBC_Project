@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import TabSelectorLeft from "./TabSelectorLeft";
@@ -9,39 +9,58 @@ import RenderRatingStar from "./RenderRatingStar";
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const [categories, setCategories] = useState<
+    { _id: string; name: string }[] | null
+  >(null);
   const [activeTab, setActiveTab] = useState<"view" | "add" | "related">(
     "view"
   );
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [addedProduct, setAddedProduct] = useState<number>(1);
   const addToCartHandler = () => {
     console.log("افزوده شد:", addedProduct);
   };
 
   useEffect(() => {
-    axios
-      .get(`https://qbc9.liara.run/api/products/6849d43c84b146939019c32a`)
-      .then((res) => {
-        console.log("داده محصول:", res.data);
-        setProduct(res.data);
-      })
-      .catch((err) => console.log(err));
+    // if (!id) return;
+    {
+      axios
+        .get(`https://qbc9.liara.run/api/products/6849d43c84b146939019c32a`)
+        .then((res) => {
+          setProduct(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
   }, [id]);
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     axios
-      .get("/api/products")
+      .get("https://qbc9.liara.run/api/products")
       .then((res) => setAllProducts(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  if (!product)
+  useEffect(() => {
+    axios
+      .get("https://qbc9.liara.run/api/category/categories")
+      .then((res) => setCategories(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (!product || !categories)
     return <div className="text-center text-xl">در حال بارگذاری...</div>;
 
   const formattedDate = new Date(product.updatedAt).toLocaleString("fa-IR", {
     dateStyle: "medium",
     timeStyle: "short",
   });
+  const categoryId =
+    typeof product.category === "string"
+      ? product.category
+      : product.category?._id;
+
+  const categoryName =
+    categories.find((cat) => cat._id === categoryId)?.name || "نامشخص";
 
   return (
     <div>
@@ -130,7 +149,7 @@ const ProductPage = () => {
                       d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"
                     />
                   </svg>
-                  <span>برند : {product.category?.name}</span>
+                  <span>برند : </span> {categoryName}
                 </p>
                 <p className="mb-2 text-sm flex items-center gap-1">
                   <svg
@@ -204,6 +223,7 @@ const ProductPage = () => {
             product={product}
             setProduct={setProduct}
             allProducts={allProducts}
+            categories={categories}
           />
         </div>
       </div>

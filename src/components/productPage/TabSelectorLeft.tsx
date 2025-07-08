@@ -11,6 +11,7 @@ interface TabSelectorLeftProps {
   product: Product | null;
   setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
   allProducts: Product[];
+  categories: { _id: string; name: string }[];
 }
 
 const TabSelectorLeft = ({
