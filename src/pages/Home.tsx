@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import Carousel from "../components/Carousel";
-import ProductCard from "../components/ProductCard";
+import NewProductsSection from "../components/HomepageComponents/NewProductsSection";
 
 const Home = () => {
   const { user } = useAuthStore();
@@ -10,9 +10,8 @@ const Home = () => {
 
   return (
     <div className="grid grid-cols-2  px-20 pt-20 gap-16">
-      <div className="grid grid-cols-2 gap-6 ">
-        <ProductCard />
-        
+      <div>
+        <NewProductsSection />
       </div>
       <div className="col-span-1">
         <Carousel />
