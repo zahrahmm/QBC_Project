@@ -1,16 +1,16 @@
 import Stepper from "../components/Cart/Stepper";
-import { useCartStore } from "../stores/cartStore";
+import { useCartStore } from "../stores/cartstore";
 import server from "../utils/axios";
 import { useState } from "react";
 
 const CartSummaryPage = () => {
-  const { items, address, paymentMethod } = useCartStore();
+  const { cartItems, address, paymentMethod } = useCartStore();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const subtotal = items.reduce(
+  const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
@@ -25,8 +25,8 @@ const CartSummaryPage = () => {
 
     try {
       const response = await server.post("/orders", {
-        orderItems: items.map((item) => ({
-          productId: item.id,
+        orderItems: cartItems.map((item) => ({
+          productId: item._id,
           name: item.name,
           qty: item.quantity,
           image: item.image,
@@ -50,8 +50,11 @@ const CartSummaryPage = () => {
       } else {
         setError(`❌ خطا رخ داده است 🤷‍♂️`);
       }
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div
       className="min-h-screen flex flex-col items-center py-8 px-4 text-right"
@@ -76,8 +79,8 @@ const CartSummaryPage = () => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item.id} className="bg-transparent">
+            {cartItems.map((item) => (
+              <tr key={item._id} className="bg-transparent">
                 <td className="align-middle pr-2 py-2">
                   <img
                     src={item.image}
@@ -111,7 +114,11 @@ const CartSummaryPage = () => {
               روش :{" "}
               {paymentMethod === "pasargad"
                 ? "درگاه پرداخت پاسارگاد"
-                : "درگاه پرداخت زرین پال"}
+                : paymentMethod === "zarinpal"
+                ? "درگاه پرداخت زرین پال"
+                : paymentMethod === "mellat"
+                ? "درگاه پرداخت ملت"
+                : "نامشخص"}
             </div>
           </div>
           <div className="flex-1 text-right min-w-[200px]">
@@ -147,7 +154,9 @@ const CartSummaryPage = () => {
       </div>
 
       {error && <p className="text-error mt-4">{error}</p>}
-      {success && <p className="text-success mt-4">سفارش با موفقیت ثبت شد🥳</p>}
+      {success && (
+        <p className="text-success mt-4">سفارش با موفقیت ثبت شد 🥳</p>
+      )}
 
       <button
         onClick={handleSubmit}

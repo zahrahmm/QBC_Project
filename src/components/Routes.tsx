@@ -13,11 +13,12 @@ import orders from "../Pages/orders";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import EditUsersTable from "../Pages/editUsersTable";
-// import AllProduct from "../Pages/AllProduct";
+import AllProduct from "../Pages/AllProduct";
 import EditProduct from "../Pages/EditProduct";
 import CartProcessPage from "../Pages/CartProcessPage";
 import CartSummaryPage from "../Pages/CartSummaryPage";
 import OrdersMine from "../Pages/ordersMine";
+import ProductPage from "../Pages/ProductPage";
 
 const Routes = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const Routes = createBrowserRouter([
       { path: "cart", Component: CartPage }, // سفرشات وقتی کاربر (وارد نشده) گرفته میشود و پس از وارد شدن کاربر به سفارشات کاربر اضافه میشود
       { path: "cart/process", Component: CartProcessPage },
       { path: "cart/summary", Component: CartSummaryPage },
+      { path: "product/:id", Component: ProductPage },
       {
         Component: AdminRoute,
         children: [
@@ -40,8 +42,8 @@ const Routes = createBrowserRouter([
           { path: "orders", Component: orders },
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
-          // { path: "allproducts", Component: AllProduct },
-          { path: "EditProduct", Component: EditProduct },
+          { path: "allproducts", Component: AllProduct },
+          { path: "edit-product/:id", Component: EditProduct },
         ],
       },
       {
@@ -49,6 +51,7 @@ const Routes = createBrowserRouter([
         children: [
           { path: "Profile", Component: UpdateProfile },
           { path: "mycart", Component: CartPage }, // آدرس باید اصلاح بشه و سفارشات کاربر نمایش داده شود
+          // { path: "product/:id", Component: ProductPage },
         ],
       },
     ],

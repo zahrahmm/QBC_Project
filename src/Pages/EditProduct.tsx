@@ -1,129 +1,248 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import server from "../utils/axios";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
-export type ProductData = {
-  title: string;
-  price: string;
-  description: string;
-  imageUrl?: string;
-};
-
-const fetchProduct = async (id: string) => {
-  const { data } = await server.get(`/products/${id}`);
-  return {
-    title: data.title,
-    price: data.price.toString(),
-    description: data.description,
-    imageUrl: data.imageUrl,
-  };
-};
+import { useEffect, useState, type ChangeEvent } from "react";
+import { useProduct } from "../utils/useCRUDproduct";
+import type { productType } from "../types/productType";
+import useProductStore from "../stores/useProductStore";
 
 const EditProduct = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const productId = useProductStore((state) => state.selectedProductId);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["product", id],
-    queryFn: () => fetchProduct(id!),
-    enabled: !!id,
-  });
+  const {
+    product,
+    isLoading,
+    isError,
+    categories,
+    isCategoriesLoading,
+    updateProduct,
+    deleteProduct,
+  } = useProduct();
 
-  const [productData, setProductData] = useState<ProductData>({
-    title: "",
-    price: "",
-    description: "",
-    imageUrl: "",
-  });
-  const [image, setImage] = useState<File | undefined>(undefined);
+  const [productData, setProductData] = useState<Partial<productType>>({});
+  const [image, setImage] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
 
-  // Use data from the query to set initial state
-  useState(() => {
-    if (data) setProductData(data);
-  });
+  useEffect(() => {
+    if (product) {
+      setProductData({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        category: product.category,
+        quantity: product.quantity,
+        countInStock: product.countInStock,
+      });
+      if (product.image) {
+        setImageSrc(product.image);
+      }
+    }
+  }, [product]);
 
-  const updateMutation = useMutation({
-    mutationFn: async () => {
-      const formData = new FormData();
-      formData.append("title", productData.title);
-      formData.append("price", productData.price);
-      formData.append("description", productData.description);
-      if (image) formData.append("image", image);
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-      const response = await server.put(
-        `/products/6849d43c84b146939019c32a`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["product", id] });
-      navigate("/all-product");
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: async () => {
-      await server.delete(`/products/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      navigate("/all-product");
-    },
-  });
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || isCategoriesLoading)
+    return (
+      <div className="   text-center mt-10 ">
+        در حال بارگذاری
+        <span className="loading loading-dots loading-md mr-1"></span>
+      </div>
+    );
+  if (isError)
+    return (
+      <div className=" text-center mt-10 ">خطا در بارگذاری اطلاعات محصول!</div>
+    );
 
   return (
-    <div>
+    <div className="m-auto max-w-[1090px] pt-26">
       <form
-        className="m-auto max-w-[1090px] pt-26"
         onSubmit={(e) => e.preventDefault()}
+        className="flex flex-col gap-6"
       >
-        {/* Form fields remain the same */}
-        <div className="flex flex-col gap-6">
-          <input
-            type="file"
-            className="file-input w-full h-31"
-            onChange={(e) => setImage(e.target.files?.[0])}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt="Preview"
+            className="w-64 h-auto border rounded m-auto"
           />
-          <fieldset className="fieldset">
+        )}
+        <input
+          type="file"
+          className="file-input w-full h-31"
+          onChange={handleImageChange}
+        />
+
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend text-base font-normal">
+            نام محصول
+          </legend>
+          <input
+            type="text"
+            className="input w-full"
+            value={productData.name || ""}
+            onChange={(e) =>
+              setProductData({ ...productData, name: e.target.value })
+            }
+          />
+        </fieldset>
+
+        <div className="flex gap-8">
+          <fieldset className="fieldset flex-1">
             <legend className="fieldset-legend text-base font-normal">
-              Product Name
+              قیمت
             </legend>
             <input
-              type="text"
+              type="number"
               className="input w-full"
-              placeholder="Enter product name"
-              value={productData.title}
+              value={productData.price || ""}
               onChange={(e) =>
-                setProductData({ ...productData, title: e.target.value })
+                setProductData({
+                  ...productData,
+                  price: Number(e.target.value),
+                })
               }
             />
           </fieldset>
-          {/* Other form fields... */}
+
+          <fieldset className="fieldset flex-1">
+            <legend className="fieldset-legend text-base font-normal">
+              دسته‌بندی
+            </legend>
+            <select
+              className="select w-full"
+              value={productData.category?._id || ""}
+              onChange={(e) => {
+                const selected = categories.find(
+                  (cat) => cat._id === e.target.value
+                );
+                if (selected) {
+                  setProductData({ ...productData, category: selected });
+                }
+              }}
+            >
+              <option disabled value="">
+                دسته‌بندی را انتخاب کنید
+              </option>
+              {categories.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </fieldset>
+        </div>
+
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend text-base font-normal">
+            توضیحات
+          </legend>
+          <textarea
+            className="textarea w-full"
+            rows={5}
+            value={productData.description || ""}
+            onChange={(e) =>
+              setProductData({ ...productData, description: e.target.value })
+            }
+          />
+        </fieldset>
+
+        <div className="flex gap-8">
+          <fieldset className="fieldset flex-1">
+            <legend className="fieldset-legend text-base font-normal">
+              تعداد قابل خرید
+            </legend>
+            <input
+              type="number"
+              className="input w-full"
+              value={productData.quantity || ""}
+              onChange={(e) =>
+                setProductData({
+                  ...productData,
+                  quantity: Number(e.target.value),
+                })
+              }
+            />
+          </fieldset>
+
+          <fieldset className="fieldset flex-1">
+            <legend className="fieldset-legend text-base font-normal">
+              موجودی
+            </legend>
+            <select
+              className="select w-full"
+              value={productData.countInStock || ""}
+              onChange={(e) =>
+                setProductData({
+                  ...productData,
+                  countInStock: Number(e.target.value),
+                })
+              }
+            >
+              <option disabled value="">
+                موجودی را وارد نمایید
+              </option>
+              <option value="5">+ ۵</option>
+              <option value="10">+ ۱۰</option>
+              <option value="20">+ ۲۰</option>
+
+              <option value="30">+ ۳۰</option>
+              <option value="40">+ ۴۰</option>
+              <option value="50">+ ۵۰</option>
+              <option value="100">+ ۱۰۰</option>
+            </select>
+          </fieldset>
+        </div>
+
+        <div className="flex gap-4">
           <button
             type="button"
-            className="btn btn-soft btn-success hover:text-white mb-5"
-            onClick={() => updateMutation.mutate()}
-            disabled={updateMutation.isPending}
+            className="btn btn-success hover:text-white"
+            onClick={() => {
+              if (!productId || !productData.category?._id) {
+                console.warn("Product ID or category is missing!");
+                return;
+              }
+
+              const formData = new FormData();
+              formData.append("name", productData.name || "");
+              formData.append("price", String(productData.price || ""));
+              formData.append("description", productData.description || "");
+              formData.append("category", productData.category._id);
+              formData.append("quantity", String(productData.quantity || ""));
+              formData.append(
+                "countInStock",
+                String(productData.countInStock || "")
+              );
+              if (image) formData.append("image", image);
+
+              updateProduct.mutate(formData);
+            }}
+            disabled={updateProduct.isPending}
           >
-            {updateMutation.isPending ? "Updating..." : "Update Product"}
+            {updateProduct.isPending
+              ? "در حال بروزرسانی..."
+              : "بروزرسانی محصول"}
           </button>
-          {id && (
-            <button
-              type="button"
-              className="btn btn-soft btn-error hover:text-white mb-5 mr-3"
-              onClick={() => deleteMutation.mutate()}
-              disabled={deleteMutation.isPending}
-            >
-              {deleteMutation.isPending ? "Deleting..." : "Delete Product"}
-            </button>
-          )}
+
+          <button
+            type="button"
+            className="btn btn-error hover:text-white"
+            onClick={() => {
+              if (productId) {
+                deleteProduct.mutate(productId);
+              }
+            }}
+            disabled={deleteProduct.isPending}
+          >
+            {deleteProduct.isPending ? "در حال حذف..." : "حذف محصول"}
+          </button>
         </div>
       </form>
     </div>

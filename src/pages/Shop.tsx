@@ -3,9 +3,14 @@ import ProductCard from "../components/Shop/ProductCard";
 import SearchBar from "../components/Shop/SearchBar";
 import useProducts from "../utils/use-products";
 import type { productType as ProductCards } from "../types/productType";
+import { Navigate } from "react-router";
+import { useAuthStore } from "../stores/useAuthStore";
 
 function Shop() {
   const { data, isLoading } = useProducts();
+  const { user } = useAuthStore();
+
+  if (user?.isAdmin) return <Navigate to="/allproducts" />;
 
   if (isLoading) {
     return <div className="p-4">درحال بارگذاری</div>;

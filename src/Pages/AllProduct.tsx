@@ -1,76 +1,64 @@
-// import { useNavigate } from "react-router-dom";
-// import AllProductCard from "../components/Cart/ProductCard/AllProductCard";
-// import { useQuery } from "@tanstack/react-query";
-// import server from "../utils/axios";
+import { useNavigate } from "react-router-dom";
+import useProducts from "../utils/use-products";
+import useProductStore from "../stores/useProductStore";
 
-// type Product = {
-//   productId: string;
-//   title: string;
-//   price: number;
-//   description: string;
-//   imageUrl?: string;
-//   [key: string]: string | number | undefined;
-// };
+const AllProduct = () => {
+  const navigate = useNavigate();
+  const { data: products, isLoading, isError } = useProducts();
 
-// const fetchProducts = async (): Promise<Product[]> => {
-//   const response = await server.get("/products");
-//   return response.data.map((item: Product) => ({
-//     productId: item._id,
-//     title: item.title,
-//     price: item.price,
-//     description: item.description,
-//     imageUrl: item.imageUrl,
-//   }));
-// };
+  const setSelectedProductId = useProductStore(
+    (state) => state.setSelectedProductId
+  );
 
-// const getPersianDate = () => {
-//   const date = new Date();
-//   const formatter = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
-//     year: "numeric",
-//     month: "long",
-//     day: "numeric",
-//     weekday: "long",
-//   });
-//   return formatter.format(date);
-// };
+  if (isLoading)
+    return (
+      <div className="   text-center mt-10 ">
+        در حال بارگذاری<span className="loading loading-dots loading-md"></span>
+      </div>
+    );
+  if (isError)
+    return (
+      <div className=" text-center mt-10 ">خطا در بارگذاری اطلاعات محصول!</div>
+    );
 
-// const usePersianDate = () => {
-//   return useQuery({
-//     queryKey: ['persianDate'],
-//     queryFn: getPersianDate,
-//     refetchInterval: 24 * 60 * 60 * 1000, // Refetch every 24 hours
-//     staleTime: Infinity, // Consider the date fresh until next refetch
-//   });
-// };
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-center px-8 ">
+      {products?.map((product) => (
+        <div
+          key={product._id}
+          className="card bg-base-100 shadow-xl w-full max-w-[672px] h-[210px] rounded-[8px] p-2 flex flex-row"
+        >
+          <div>
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-32 h-auto rounded-xl ml-4"
+            />
+          </div>
+          <div className="card-body flex flex-col justify-between w-full gap-1">
+            <span className="text-sm  self-end">{"add date"}</span>
+            <h2 className="text-xl font-bold">{product.name}</h2>
+            <p className=" text-md ">{product.description}</p>
+            <div className="flex justify-between items-center mt-2">
+              <button
+                className="btn btn-secondary "
+                onClick={() => {
+                  setSelectedProductId(product._id);
+                  navigate(`/edit-product/${product._id}`);
+                }}
+              >
+                <span>مشاهده بیشتر</span>
+                <span>←</span>
+              </button>
+              <span className="text-lg font-semibold">
+                {product.price.toLocaleString()} تومان
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-// const AllProduct = () => {
-//   const navigate = useNavigate();
-
-//   const { data: products, isLoading: productsLoading } = useQuery<Product[]>({
-//     queryKey: ["products"],
-//     queryFn: fetchProducts,
-//   });
-
-//   const { data: persianDate, isLoading: dateLoading } = usePersianDate();
-
-//   if (productsLoading || dateLoading) return <div>Loading...</div>;
-
-//   return (
-//     <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px] justify-center px-8">
-//       {products &&
-//         products.map((product) => (
-//           <AllProductCard
-//             key={product.productId}
-//             title={product.title}
-//             description={product.description}
-//             price={product.price.toString()}
-//             imageUrl={product.imageUrl || ''}
-//             date={persianDate || ''}
-//             onView={() => navigate(`/edit-product/${product.productId}`)}
-//           />
-//         ))}
-//     </div>
-//   );
-// };
-
-// export default AllProduct;
+export default AllProduct;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useCartStore } from "../stores/cartStore";
+import { useCartStore } from "../stores/cartstore";
 import { useNavigate } from "react-router-dom";
 import Stepper from "../components/Cart/Stepper";
 
