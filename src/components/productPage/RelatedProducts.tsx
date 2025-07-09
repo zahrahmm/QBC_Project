@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import type { productType } from "../../types/productType";
 import useProducts from "../../utils/use-products";
 
 const RelatedProducts = ({
   categoryId,
   currentProductId,
+  onProductSelect,
 }: {
   categoryId: string;
   currentProductId: string;
+  onProductSelect?: (productId: string) => void;
 }) => {
   const { data, isLoading } = useProducts();
-  const [relatedProducts, setRelatedProducts] = useState<productType[]>([]);
-
-  useEffect(() => {
-    console.log(" categoryId:", categoryId);
-    console.log(" currentProductId:", currentProductId);
-    console.log(" all products:", data);
-    if (!data || !categoryId) return;
-
-    const filtered = data.filter(
-      (p: productType) =>
-        p.category._id === categoryId && p._id !== currentProductId
-    );
-    console.log(" related products after filter:", filtered);
-    setRelatedProducts(filtered);
-  }, [data, categoryId, currentProductId]);
 
   if (isLoading)
     return (
@@ -34,6 +19,16 @@ const RelatedProducts = ({
       </div>
     );
 
+  if (!data || !categoryId) return null;
+
+  const relatedProducts = data
+    .filter(
+      (p: productType) =>
+        p.category._id === categoryId && p._id !== currentProductId
+    )
+    .slice(0, 3);
+  console.log(relatedProducts);
+
   if (relatedProducts.length === 0)
     return (
       <div className="mt-2 mr-5 self-center shadow-sm w-5/6 h-24 text-center flex items-center justify-center rounded-xl">
@@ -41,14 +36,18 @@ const RelatedProducts = ({
       </div>
     );
 
+  const handleProductClick = (id: string) => {
+    if (onProductSelect) onProductSelect(id);
+  };
+
   return (
     <div className="relative mt-6">
-      <div className="flex overflow-x-auto space-x-4 scrollbar-hide pr-8">
+      <div className="flex space-x-4 pr-8 justify-start">
         {relatedProducts.map((item) => (
-          <Link
-            to={`/products/${item._id}`}
+          <div
             key={item._id}
-            className="min-w-[200px] card bg-base-100 shadow-sm flex-shrink-0"
+            onClick={() => handleProductClick(item._id)}
+            className="cursor-pointer min-w-[200px] card shadow-sm flex-shrink-0"
           >
             <figure>
               <img
@@ -63,20 +62,9 @@ const RelatedProducts = ({
                 {item.price.toLocaleString()} تومان
               </p>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
-
-      <button
-        className="absolute top-1/2 -right-1 transform -translate-y-1/2 btn btn-sm btn-circle"
-        onClick={() =>
-          document
-            .querySelector(".overflow-x-auto")
-            ?.scrollBy({ left: 300, behavior: "smooth" })
-        }
-      >
-        ❯
-      </button>
     </div>
   );
 };
