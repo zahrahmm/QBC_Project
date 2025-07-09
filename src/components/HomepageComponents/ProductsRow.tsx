@@ -13,7 +13,7 @@ const ProductsRow = () => {
 
     return (
         <>
-        <div className="flex justify-between px-22 pb-20">
+        <div className="flex justify-between px-40 pb-20">
         <h2 className="text-4xl">محصولات ویژه</h2>
         <button className="btn btn-secondary">فروشگاه</button>
         </div>
