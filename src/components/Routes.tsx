@@ -28,6 +28,7 @@ const Routes = createBrowserRouter([
       { path: "Login", Component: LoginPage },
       { path: "cart", Component: CartPage }, // سفرشات وقتی کاربر (وارد نشده) گرفته میشود و پس از وارد شدن کاربر به سفارشات کاربر اضافه میشود
       { path: "Shop", Component: Shop },
+
       {
         Component: AdminRoute,
         children: [
@@ -36,7 +37,6 @@ const Routes = createBrowserRouter([
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
           { path: "allproducts", Component: EditProduct },
-          
         ],
       },
       {
