@@ -86,9 +86,7 @@ const CartPage = () => {
 
         <div className="flex flex-col gap-6 items-end flex-grow">
           {items.length === 0 ? (
-            <p className="text-white text-4xl font-bold">
-              ! سبد خرید شما خالی است
-            </p>
+            <p className="text-4xl font-bold">! سبد خرید شما خالی است</p>
           ) : (
             <>
               <div className="mt-4 text-right">
