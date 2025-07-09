@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
 import CartPage from "../Pages/CartPage";
 import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
@@ -26,8 +26,9 @@ const Routes = createBrowserRouter([
       { path: "CartPage", Component: CartPage },
       { path: "Register", Component: RegisterPage },
       { path: "Login", Component: LoginPage },
-      { path: "cart", Component: CartPage }, // سفرشات وقتی کاربر (وارد نشده) گرفته میشود و پس از وارد شدن کاربر به سفارشات کاربر اضافه میشود
+      { path: "cart", Component: CartPage },
       { path: "Shop", Component: Shop },
+
       {
         Component: AdminRoute,
         children: [
@@ -35,15 +36,16 @@ const Routes = createBrowserRouter([
           { path: "orders", Component: orders },
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
-          { path: "allproducts", Component: EditProduct },
-          
+          { path: "allproducts", Component: AllProduct },
+          { path: "edit-product/:id", Component: EditProduct },
         ],
       },
+
       {
         Component: UserRoute,
         children: [
           { path: "Profile", Component: UpdateProfile },
-          { path: "mycart", Component: CartPage }, // آدرس باید اصلاح بشه و سفارشات کاربر نمایش داده شود
+          { path: "mycart", Component: CartPage },
         ],
       },
     ],

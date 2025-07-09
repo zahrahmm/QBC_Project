@@ -7,17 +7,42 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import useTotalsales from "../utils/useTotalsales";
+//  import useTotalsalesByDate from "../utils/useTotalSaleByDate";
+//  import type { totalsalesbydateModel } from "../types/totalsalesbydateModel";
+import useUsers from "../utils/useUsers";
+import useOrders from "../utils/useOrders";
 
 // import { useEffect, useState } from "react";
 // import server from "../utils/axios";
 
-const data = [
-  { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
-  { name: "محصول دوم", مقدار: 876, pv: 2400, amt: 2400 },
-  { name: "محصول سوم", مقدار: 34, pv: 2400, amt: 2400 },
-  { name: "محصول چهارم", مقدار: 345, pv: 2400, amt: 2400 },
-  { name: "محصول پنجم", مقدار: 675, pv: 2400, amt: 2400 },
-];
+
+
+// const { data: salesByDate } = useTotalsalesByDate();
+// const data = salesByDate.map((item: totalsalesbydateModel) => ({
+//   name: item._id,
+//   مقدار: item.totalSales,
+// }));
+
+
+
+// const data = [
+//   { name: "محصول اول", مقدار: 125, pv: 2000, amt: 2400 },
+//   { name: "محصول دوم", مقدار: 876, pv: 2400, amt: 2400 },
+//   { name: "محصول سوم", مقدار: 34, pv: 2400, amt: 2400 },
+//   { name: "محصول چهارم", مقدار: 345, pv: 2400, amt: 2400 },
+//   { name: "محصول پنجم", مقدار: 675, pv: 2400, amt: 2400 },
+// ];
+
+// const { data: salesByDate } = useTotalsalesByDate();
+
+// const data = salesByDate?.map((item: totalsalesbydateModel) => ({
+//   name: item._id,
+//   مقدار: item.totalSales,
+//   pv: 2400,
+//   amt: 2400,
+// })) || [];
+
+
 
 const renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
   return (
@@ -48,22 +73,25 @@ const renderBarChart = (
 );
 
 function Dashboard() {
-  // const getTotalSales = "/api/orders/total-sales";
-  // const [totalSales, setTotalSales] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     try {
-  //       const response = await server.get(getTotalSales);
-  //       setTotalSales(response.data.totalSales);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchPost();
-  // }, []);
+  const { data } = useTotalsales()
 
-  const {data} = useTotalsales()
+
+  const { data: users, isLoading: isUsersLoading, isError: isUsersError } = useUsers();
+  const { data: orders, isLoading: isOrdersLoading, isError: isOrdersError } = useOrders();
+
+  if (isUsersLoading || isOrdersLoading) {
+    return (
+      <div className="text-center mt-10">
+        در حال بارگذاری...
+        <span className="loading loading-spinner loading-md ml-2"></span>
+      </div>
+    );
+  }
+
+  if (isUsersError || isOrdersError) {
+    return <div className="text-center text-red-500 mt-10">خطا در دریافت اطلاعات!</div>;
+  }
 
   return (
     <div>
@@ -75,11 +103,11 @@ function Dashboard() {
           </div>
           <div>
             <h3>مشتری ها</h3>
-            <p>۱۰</p>
+            <p>{users?.length ?? 0}</p>
           </div>
           <div>
             <h3>سفارشات</h3>
-            <p>۱۰۰</p>
+            <p>{orders?.length ?? 0}</p>
           </div>
         </div>
         <div className="h-180" dir="left">
@@ -91,3 +119,111 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+
+
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   ResponsiveContainer,
+//   Tooltip,
+// } from "recharts";
+
+// import useTotalsales from "../utils/useTotalsales";
+// import useTotalsalesByDate from "../utils/useTotalSaleByDate";
+// import type { totalsalesbydateModel } from "../types/totalsalesbydateModel";
+// import useUsers from "../utils/useUsers";
+// import useOrders from "../utils/useOrders";
+
+// const renderCustomBarLabel = ({
+//   x,
+//   y,
+//   width,
+//   value,
+// }: {
+//   x: number;
+//   y: number;
+//   width: number;
+//   value: number;
+// }) => {
+//   return (
+//     <text
+//       x={x + width / 2}
+//       y={y - 10}
+//       fill="currentColor"
+//       textAnchor="middle"
+//       fontSize={12}
+//     >
+//       {`مقدار: ${value}`}
+//     </text>
+//   );
+// };
+
+// function Dashboard() {
+//   const { data: totalSalesData } = useTotalsales();
+//   const { data: users, isLoading: isUsersLoading, isError: isUsersError } = useUsers();
+//   const { data: orders, isLoading: isOrdersLoading, isError: isOrdersError } = useOrders();
+//   const { data: salesByDate } = useTotalsalesByDate();
+
+//   const chartData =
+//     salesByDate?.map((item: totalsalesbydateModel) => ({
+//       name: item._id,
+//       مقدار: item.totalSales,
+//     })) ?? [];
+
+//   if (isUsersLoading || isOrdersLoading) {
+//     return (
+//       <div className="text-center mt-10">
+//         در حال بارگذاری...
+//         <span className="loading loading-spinner loading-md ml-2"></span>
+//       </div>
+//     );
+//   }
+
+//   if (isUsersError || isOrdersError) {
+//     return <div className="text-center text-red-500 mt-10">خطا در دریافت اطلاعات!</div>;
+//   }
+
+//   return (
+//     <div className="m-auto max-w-[1090px] pt-26">
+//       <div className="flex flex-row gap-3.5 justify-evenly pb-6">
+//         <div>
+//           <h3>فروش کل</h3>
+//           <p>{totalSalesData?.totalSales ?? 0} تومان</p>
+//         </div>
+//         <div>
+//           <h3>مشتری‌ها</h3>
+//           <p>{users?.length ?? 0}</p>
+//         </div>
+
+
+//         <div>
+//           <h3>سفارشات</h3>
+//           <p>{orders?.length ?? 0}</p>
+//         </div>
+//       </div>
+
+//       <div className="h-180" dir="ltr">
+//         <ResponsiveContainer width="100%" height={300}>
+//           <BarChart data={chartData}>
+//             <XAxis dataKey="name" stroke="currentColor" />
+//             <YAxis stroke="currentColor" />
+//             <CartesianGrid stroke="#ccc" strokeDasharray="1 15" />
+//             <Tooltip />
+//             <Bar
+//               dataKey="مقدار"
+//               fill="#8884d8"
+//               barSize={30}
+//               label={renderCustomBarLabel}
+//             />
+//           </BarChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Dashboard;

@@ -1,25 +1,35 @@
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { useQuery, useMutation } from "@tanstack/react-query";
 import server from "./axios";
 import useProductStore from "../stores/useProductStore";
-import type { productType } from "../types/productType";
-
+import type { productType, category } from "../types/productType";
+import { useNavigate } from "react-router-dom";
 
 export const useProduct = () => {
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const productId = useProductStore((state) => state.selectedProductId);
 
-  
-  const { data, isLoading, isError } = useQuery({
+
+  const { data: product, isLoading, isError } = useQuery({
     queryKey: ["product", productId],
     queryFn: async () => {
       const { data } = await server.get(`/api/products/${productId}`);
       return data as productType;
     },
-    enabled: !!productId, 
+    enabled: !!productId,
   });
 
-  
+
+  const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data } = await server.get("/api/category/categories");
+      return data as category[];
+    },
+  });
+
+
   const updateProduct = useMutation({
     mutationFn: async (updatedProduct: FormData) => {
       const { data } = await server.put(
@@ -30,26 +40,30 @@ export const useProduct = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      queryClient.invalidateQueries({ queryKey: ["product", productId] });
+
+      navigate("/allproducts");
     },
   });
 
-  
+
   const deleteProduct = useMutation({
-    mutationFn: async () => {
-      await server.delete(`/api/products/${productId}`);
+    mutationFn: async (id: string) => {
+      await server.delete(`/api/products/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+
+      navigate("/allproducts");
     },
   });
 
   return {
-    product: data,
+    product,
     isLoading,
     isError,
+    categories,
+    isCategoriesLoading,
     updateProduct,
     deleteProduct,
   };
 };
+
