@@ -1,5 +1,5 @@
 import useNewProducts from "../../utils/useNewProducts";
-import ProductCard from "../ProductCard";
+import ProductCard from "./ProductCard";
 
 const ProductsRow = () => {
       const { data: newProducts, isLoading, error } = useNewProducts();

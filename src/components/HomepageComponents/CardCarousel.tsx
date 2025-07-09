@@ -6,9 +6,9 @@ import {
   IconClock,
   IconShoppingCart,
   IconStar,
-} from "../assets/carouselIcons";
-import type { productType } from "../types/productType";
-import { persianDateFormatter, persianCurrencyFormatter} from "../models/PersianLocale";
+} from "../../assets/carouselIcons";
+import type { productType } from "../../types/productType";
+import { persianDateFormatter, persianCurrencyFormatter} from "../../models/PersianLocale";
 
 const CardCarousel = (product: productType) => {
   return (

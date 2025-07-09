@@ -1,5 +1,5 @@
-import useFavoriteProducts from "../stores/favouriteProductsStore";
-import type { productType } from "../types/productType";
+import useFavoriteProducts from "../../stores/favouriteProductsStore";
+import type { productType } from "../../types/productType";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 interface Props {

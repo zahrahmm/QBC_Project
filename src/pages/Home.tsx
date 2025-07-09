@@ -1,6 +1,6 @@
 import { Navigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
-import Carousel from "../components/Carousel";
+import Carousel from "../components/HomepageComponents/Carousel";
 import NewProductsSection from "../components/HomepageComponents/NewProductsSection";
 import ProductsRow from "../components/HomepageComponents/ProductsRow";
 
