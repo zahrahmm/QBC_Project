@@ -22,8 +22,8 @@ const ProductCard = ({ product }: Props) => {
 
   return (
     <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
-      <figure>
-        <img src={product.image} alt={product.name} />
+      <figure className="">
+        <img className="w-80 h-70 object-cover rounded-2xl" src={product.image} alt={product.name} />
       </figure>
       <div className="card-body">
         <div className="flex justify-between items-center">

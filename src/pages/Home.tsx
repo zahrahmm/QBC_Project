@@ -2,6 +2,7 @@ import { Navigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import Carousel from "../components/Carousel";
 import NewProductsSection from "../components/HomepageComponents/NewProductsSection";
+import ProductsRow from "../components/HomepageComponents/ProductsRow";
 
 const Home = () => {
   const { user } = useAuthStore();
@@ -9,6 +10,7 @@ const Home = () => {
   if (user?.isAdmin) return <Navigate to="/dashboard" />;
 
   return (
+    <>
     <div className="grid grid-cols-2  px-20 pt-20 gap-16">
       <div>
         <NewProductsSection />
@@ -16,8 +18,11 @@ const Home = () => {
       <div className="col-span-1">
         <Carousel />
       </div>
-      
     </div>
+    <div>
+      <ProductsRow />
+    </div>
+    </>
   );
 };
 
