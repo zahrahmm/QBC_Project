@@ -1,21 +1,23 @@
 import useNewProducts from "../utils/use-new-products";
 
 const ProductCard = () => {
-  const { data: products } = useNewProducts();
-
+  const { data: newProducts } = useNewProducts();
+  console.log(newProducts);
   return (
     <div>
-      {products?.slice(0, 4).map((product) => (
+      {newProducts?.slice(0, 4).map((newProducts) => (
         <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
           <figure>
-            <img src={product.image} alt="Shoes" />
+            <img src={newProducts.image} alt="Shoes" />
           </figure>
           <div className="card-body">
             <div className="badge badge-soft badge-secondary ">جدید</div>
-            <h2 className="card-title pt-2 ">{product.name}</h2>
-            <p>{product.description}</p>
+            <h2 className="card-title pt-2 ">{newProducts.name}</h2>
+            <p>{newProducts.description}</p>
             <div className="card-actions justify-between">
-              <div className="badge badge-outline">{product.category.name}</div>
+              <div className="badge badge-outline">
+                {newProducts.category.name}
+              </div>
               <div className="rating">
                 <div className="mask mask-star" aria-label="1 star"></div>
                 <div className="mask mask-star" aria-label="2 star"></div>

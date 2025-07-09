@@ -4,7 +4,7 @@ import type { productType } from "../types/productType";
 
 const useNewProducts = () => {
   return useQuery({
-    queryKey: ["products"],
+    queryKey: ["newProducts"],
     queryFn: () =>
       server
         .get<productType[]>("/api/products/sort/new")
