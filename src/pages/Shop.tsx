@@ -1,11 +1,11 @@
 // Shop.tsx
 import ProductCard from "../components/Shop/ProductCard";
 import SearchBar from "../components/Shop/SearchBar";
-import useAllProducts from "../Hooks/useAllProducts";
-import type { ProductCards } from "../types/types";
+import useProducts from "../utils/use-products";
+import type { productType as ProductCards } from "../types/productType";
 
 function Shop() {
-  const { data, isLoading } = useAllProducts();
+  const { data, isLoading } = useProducts();
 
   if (isLoading) {
     return <div className="p-4">درحال بارگذاری</div>;
@@ -22,10 +22,7 @@ function Shop() {
       <SearchBar />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data.map((item: ProductCards) => (
-          <ProductCard
-            key={item._id}
-            product={item}
-          />
+          <ProductCard key={item._id} product={item} />
         ))}
       </div>
     </div>

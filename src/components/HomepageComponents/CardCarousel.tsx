@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import {
   CategoryIcon,
   IconArchiveBox,
@@ -5,22 +6,23 @@ import {
   IconClock,
   IconShoppingCart,
   IconStar,
-} from "../assets/carouselIcons";
-import type { productType } from "../types/productType";
+} from "../../assets/carouselIcons";
+import type { productType } from "../../types/productType";
+import { persianDateFormatter, persianCurrencyFormatter} from "../../models/PersianLocale";
 
 const CardCarousel = (product: productType) => {
   return (
+    <Link to={"/"}>
     <div className="card bg-base-100 w-full shadow-sm">
-      <figure className="h-120">
+      <figure className="h-180 object-cover rounded-4xl ">
         <img className="" src={product.image} />
       </figure>
-
       <div className="card-body grid grid-cols-2 grid-rows-3">
         <section className="">
           <h2 className="card-title relative pb-6">
             {product.name}
-            <div className="badge badge-secondary absolute left-6">
-              {product.price}
+            <div className="badge badge-soft badge-secondary absolute left-6">
+              {persianCurrencyFormatter.format(product.price) }
             </div>
           </h2>
           <p>{product.description}</p>
@@ -28,9 +30,9 @@ const CardCarousel = (product: productType) => {
         <section className="grid grid-cols-2 ">
           <div className="inline-flex gap-2 pb-3">
             <IconStar />
-            <p>
+            <h6>
               امتیاز : <span>{product.rating}</span>
-            </p>
+            </h6>
           </div>
           <div className="inline-flex gap-2 pb-3">
             <CategoryIcon />
@@ -47,8 +49,7 @@ const CardCarousel = (product: productType) => {
           <div className="inline-flex gap-2 pb-3">
             <IconClock />
             <p>
-              زمان بروزرسانی :{" "}
-              <span>{new Date(product.updatedAt).toLocaleDateString()}</span>
+              زمان بروزرسانی : <span>{persianDateFormatter.format(new Date(product.updatedAt))}</span>
             </p>
           </div>
           <div className="inline-flex gap-2">
@@ -66,6 +67,8 @@ const CardCarousel = (product: productType) => {
         </section>
       </div>
     </div>
+    </Link>
+    
   );
 };
 

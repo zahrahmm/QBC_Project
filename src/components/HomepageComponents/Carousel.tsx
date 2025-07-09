@@ -1,4 +1,4 @@
-import useProducts from "../utils/use-products";
+import useProducts from "../../utils/useProducts";
 import CardCarousel from "./CardCarousel";
 import { useState } from "react";
 
