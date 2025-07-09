@@ -1,4 +1,4 @@
-// import RelatedProducts from "./RelatedProducts";
+import RelatedProducts from "./RelatedProducts";
 import ReviewForm from "./ReviewForm";
 import ReviewList from "./ReviewList";
 import type { productType } from "../../types/productType";
@@ -24,9 +24,16 @@ const TabSelectorLeft = ({
         <ReviewForm product={product} setProduct={setProduct} />
       )}
       {activeTab === "view" && <ReviewList reviews={product.reviews} />}
-      {/* {activeTab === "related" && (
-        <RelatedProducts currentProduct={product} allProducts={allProducts} />
-      )} */}
+      {activeTab === "related" && (
+        <RelatedProducts
+          categoryId={
+            typeof product.category === "string"
+              ? product.category
+              : product.category?._id
+          }
+          currentProductId={product._id}
+        />
+      )}
     </div>
   );
 };

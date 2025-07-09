@@ -4,7 +4,7 @@ import TabSelectorLeft from "./TabSelectorLeft";
 import TabSelectorRight from "./TabSelectorRight";
 import type { productType } from "../../types/productType";
 import RenderRatingStar from "./RenderRatingStar";
-import useCartStore from "../../stores/useCartStore";
+import { useCartStore } from "../../stores/cartstore";
 import { useAuthStore } from "../../stores/useAuthStore";
 
 const ProductPage = () => {
@@ -16,59 +16,10 @@ const ProductPage = () => {
 
   const addToCart = useCartStore((state) => state.addToCart);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  useEffect(() => {
-    if (product && addedProduct > product.countInStock) {
-      setAddedProduct(product.countInStock);
-    }
-  }, [product, addedProduct]);
-
-  const addToCartHandler = async () => {
-    if (!isAuthenticated) {
-      alert("لطفا ابتدا وارد حساب کاربری خود شوید.");
-      return;
-    }
-
-    if (product && product.countInStock >= addedProduct) {
-      addToCart(product, addedProduct);
-
-      try {
-        await axios.put(
-          `https://qbc9.liara.run/api/products/686d05f4e700e7d8beb8802f`,
-          {
-            countInStock: product.countInStock - addedProduct,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-
-        alert(
-          `محصول ${product.name} به تعداد ${addedProduct} به سبد خرید اضافه شد.`
-        );
-
-        setProduct((prev) =>
-          prev
-            ? {
-                ...prev,
-                countInStock: prev.countInStock - addedProduct,
-              }
-            : prev
-        );
-      } catch (error) {
-        const err = error as Error;
-        console.error(err.message);
-      }
-    }
-  };
-
-  // const cartItems = useCartStore((state) => state.cartItems);
-  // useEffect(() => {
-  //   console.log("سبد خرید فعلی:", cartItems);
-  // }, [cartItems]);بررسی اینکه سبد خرید درست کار میکنه یا نه
 
   useEffect(() => {
     axios
-      .get(`https://qbc9.liara.run/api/products/686d05f4e700e7d8beb8802f`)
+      .get(`https://qbc9.liara.run/api/products/686e506ee700e7d8beb936a1`)
       .then((res) => {
         setProduct(res.data);
 
@@ -98,6 +49,21 @@ const ProductPage = () => {
     dateStyle: "medium",
     timeStyle: "short",
   });
+
+  const addToCartHandler = () => {
+    if (!isAuthenticated) {
+      alert("لطفا ابتدا وارد شوید");
+      return;
+    }
+
+    if (product && addedProduct <= product.countInStock) {
+      addToCart(product, addedProduct);
+      setProduct({
+        ...product,
+        countInStock: product.countInStock - addedProduct,
+      });
+    }
+  };
 
   return (
     <div>
@@ -234,6 +200,7 @@ const ProductPage = () => {
               value={addedProduct}
               onChange={(e) => setAddedProduct(Number(e.target.value))}
               className="select w-16 mr-16"
+              disabled={product.countInStock === 0}
             >
               {[...Array(product.countInStock).keys()].map((x) => (
                 <option key={x + 1} value={x + 1}>
