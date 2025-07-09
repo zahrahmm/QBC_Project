@@ -5,4 +5,5 @@ export type newProductPayload = {
   category: string;
   quantity: number;
   image: string;
+  countInStock: number;
 };

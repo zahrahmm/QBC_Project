@@ -8,24 +8,25 @@ import {
   useDeleteCategory,
 } from "../utils/useCategoryApi";
 import server from "../utils/axios";
-
-const fetchCategories = () =>
-  server.get("api/category/categories").then((res) => res.data);
+import { useCreateNewProduct } from "../utils/createNewProducts";
 
 const CreateNewProduct: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState("");
   const [editMode, setEditMode] = useState<{ id: string; name: string } | null>(
     null
   );
+  const { mutate: CreateProduct, isPending: Pending } = useCreateNewProduct();
 
+  const fetchCategories = () =>
+    server.get("api/category/categories").then((res) => res.data);
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
 
-  const { mutate: createCategory } = useCreateCategory();
+  const { mutate: createCategory, isPending } = useCreateCategory();
   const { mutate: editCategory } = useEditCategory();
   const { mutate: deleteCategory } = useDeleteCategory();
 
@@ -47,21 +48,20 @@ const CreateNewProduct: React.FC = () => {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("آیا از حذف این دسته‌بندی مطمئن هستید؟")) {
-      deleteCategory(id);
-    }
+    deleteCategory(id);
   };
 
   const [formData, setFormData] = useState<newProductPayload>({
     name: "",
     description: "",
-    price: 0,
+    price: 100000,
     category: "",
-    quantity: 0,
+    quantity: 5,
     image: "",
+    countInStock: 5,
   });
 
-  const { mutate } = useUploadImage();
+  const { mutate: UploadImage } = useUploadImage();
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -71,7 +71,9 @@ const CreateNewProduct: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "price" || name === "quantity" ? Number(value) : value,
+      [name]: ["price", "quantity", "countInStock"].includes(name)
+        ? Number(value)
+        : value,
     }));
   };
 
@@ -85,24 +87,46 @@ const CreateNewProduct: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedFile) return alert("لطفا یک تصویر انتخاب کنید");
 
-    const imageForm = new FormData();
-    imageForm.append("image", selectedFile);
-
-    mutate(imageForm, {
-      onSuccess: (uploadedImageUrl: string) => {
-        const newProduct = {
-          ...formData,
-          image: uploadedImageUrl,
-        };
-
-        console.log("📦 Final product payload:", newProduct);
-        // 👉 TODO: send newProduct to your product creation endpoint here
+    UploadImage(formData, {
+      onSuccess: (response) => {
+        // response will be of type ImageResponse
+        CreateProduct(
+          {
+            ...formData,
+            image: response.image, // Use the image URL from response
+          },
+          {
+            onSuccess: () => {
+              // Reset form on success
+              setFormData({
+                name: "",
+                description: "",
+                price: 100000,
+                category: cat,
+                quantity: 5,
+                image: "",
+                countInStock: 5,
+              });
+              setSelectedFile(null);
+              setImageSrc(null);
+              alert("محصول با موفقیت اضافه شد!");
+            },
+            onError: (error) => {
+              console.error("Error creating product:", error);
+              alert("خطا در ایجاد محصول");
+            },
+          }
+        );
+      },
+      onError: (error) => {
+        console.error("Error uploading image:", error);
+        alert("خطا در آپلود تصویر");
       },
     });
   };
 
+  console.log(formData);
   return (
     <div>
       <form onSubmit={handleSubmit} className="m-auto max-w-[1090px] py-26">
@@ -143,93 +167,111 @@ const CreateNewProduct: React.FC = () => {
                 placeholder="قیمت محصول را وارد نمایید"
               />
             </fieldset>
-            {/* <fieldset className="fieldset flex-1">
-              <legend className="fieldset-legend">برند</legend>
+            {/* Create Category */}
+            <fieldset className="fieldset flex gap-2">
+              <legend className="fieldset-legend">ایجاد برند</legend>
+
               <input
                 type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="input w-full"
-                placeholder="برند محصول را وارد نمایید"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                placeholder="نام برند جدید"
+                className="input input-bordered w-full"
               />
-            </fieldset> */}
-            <div className="max-w-xl mx-auto py-10">
-              <h2 className="text-2xl font-semibold mb-6">
-                مدیریت دسته‌بندی‌ها
-              </h2>
-
-              {/* Create Category */}
-              <div className="flex gap-4 mb-6">
-                <input
-                  type="text"
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
-                  placeholder="نام دسته‌بندی جدید"
-                  className="input input-bordered w-full"
-                />
-                <button className="btn btn-secondary" onClick={handleCreate}>
-                  افزودن
-                </button>
-              </div>
-
-              {/* List Categories */}
+              <button
+                className="btn btn-secondary"
+                disabled={isPending}
+                onClick={handleCreate}
+              >
+                افزودن
+              </button>
+            </fieldset>
+            {/* List Categories */}
+            <fieldset className="fieldset flex-1">
+              <legend className="fieldset-legend">لیست برندها</legend>
               {isLoading ? (
                 <div>در حال بارگذاری...</div>
               ) : (
-                <ul className="space-y-4">
-                  {categories?.map((cat: { _id: string; name: string }) => (
-                    <li
-                      key={cat._id}
-                      className="flex items-center justify-between bg-base-200 p-4 rounded"
-                    >
-                      {editMode?.id === cat._id ? (
-                        <div className="flex gap-2 w-full">
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                  {categories
+                    ?.filter((cat) =>
+                      formData.category ? cat._id === formData.category : true
+                    )
+                    .map((cat) => (
+                      <div
+                        key={cat._id}
+                        className="flex items-center justify-between gap-2 p-2 rounded border bg-base-100"
+                      >
+                        {editMode?.id === cat._id ? (
                           <input
-                            type="text"
-                            value={editMode.name}
+                            value={editMode?.name}
                             onChange={(e) =>
-                              setEditMode({ ...editMode, name: e.target.value })
+                              setEditMode({
+                                ...editMode!,
+                                name: e.target.value,
+                              })
                             }
-                            className="input input-bordered w-full"
+                            className="input input-sm flex-1"
                           />
-                          <button
-                            className="btn btn-primary"
-                            onClick={handleEditSave}
+                        ) : (
+                          <span
+                            className="cursor-pointer flex-1 text-right"
+                            onClick={() =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                category: cat._id,
+                              }))
+                            }
                           >
-                            ذخیره
-                          </button>
-                          <button
-                            className="btn btn-ghost"
-                            onClick={() => setEditMode(null)}
-                          >
-                            لغو
-                          </button>
-                        </div>
-                      ) : (
-                        <>
-                          <span>{cat.name}</span>
-                          <div className="flex gap-2">
-                            <button
-                              className="btn btn-sm btn-outline btn-info"
-                              onClick={() => handleEdit(cat._id, cat.name)}
-                            >
-                              ویرایش
-                            </button>
-                            <button
-                              className="btn btn-sm btn-outline btn-error"
-                              onClick={() => handleDelete(cat._id)}
-                            >
-                              حذف
-                            </button>
+                            {cat.name}
+                          </span>
+                        )}
+                        {!formData.category && (
+                          <div className="flex gap-1">
+                            {editMode?.id === cat._id ? (
+                              <button
+                                className="btn btn-xs btn-success"
+                                onClick={handleEditSave}
+                                type="button"
+                              >
+                                ذخیره
+                              </button>
+                            ) : (
+                              <>
+                                <button
+                                  className="btn btn-xs btn-info"
+                                  onClick={() => handleEdit(cat._id, cat.name)}
+                                  type="button"
+                                >
+                                  ویرایش
+                                </button>
+                                <button
+                                  className="btn btn-xs btn-error"
+                                  onClick={() => handleDelete(cat._id)}
+                                  type="button"
+                                >
+                                  حذف
+                                </button>
+                              </>
+                            )}
                           </div>
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                        )}
+                        {formData.category && (
+                          <button
+                            className="btn btn-xs btn-outline"
+                            onClick={() =>
+                              setFormData((prev) => ({ ...prev, category: "" }))
+                            }
+                            type="button"
+                          >
+                            نمایش همه برندها
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                </div>
               )}
-            </div>
+            </fieldset>
           </div>
           <fieldset className="fieldset">
             <legend className="fieldset-legend">توضیحات</legend>
@@ -276,10 +318,10 @@ const CreateNewProduct: React.FC = () => {
           </div>
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={Pending}
             className="btn btn-soft btn-secondary"
           >
-            {isLoading ? "در حال آپلود تصویر..." : "ساخت محصول جدید"}
+            اضافه کردن محصول
           </button>
         </div>
       </form>
