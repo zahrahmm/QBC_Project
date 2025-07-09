@@ -9,14 +9,16 @@ const Home = () => {
   if (user?.isAdmin) return <Navigate to="/dashboard" />;
 
   return (
-    <div className="grid grid-cols-2 px-22 pt-10">
-      <div className="grid grid-cols-2 gap-3 ">
+    <div className="grid grid-cols-2 gap-20 px-32 pt-16">
+      <div className="grid grid-cols-2 gap-8 ">
         <ProductCard />
         <ProductCard />
         <ProductCard />
         <ProductCard />
       </div>
-      <Carousel />
+      <div className="items-center">
+        <Carousel />
+      </div>
     </div>
   );
 };

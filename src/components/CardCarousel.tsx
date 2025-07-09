@@ -11,8 +11,8 @@ import type { productType } from "../types/productType";
 const CardCarousel = (product: productType) => {
   return (
     <div className="card bg-base-100 w-full shadow-sm">
-      <figure>
-        <img src={product.image} />
+      <figure className="h-120">
+        <img className="" src={product.image} />
       </figure>
 
       <div className="card-body grid grid-cols-2 grid-rows-3">
