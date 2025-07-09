@@ -6,10 +6,12 @@ import type { productType } from "../types/productType";
 import RenderRatingStar from "../components/productPage/RenderRatingStar";
 import { useCartStore } from "../stores/cartstore";
 import { useAuthStore } from "../stores/useAuthStore";
+import useProductStore from "../stores/useProductStore";
 
 const ProductPage = () => {
   //   const { id } = useParams();
   const [product, setProduct] = useState<productType | null>(null);
+  const productId = useProductStore((state) => state.selectedProductId);
   const [categoryName, setCategoryName] = useState<string>("");
   const [activeTab, setActiveTab] = useState<"view" | "add" | "related">("add");
   const [addedProduct, setAddedProduct] = useState<number>(1);
@@ -18,8 +20,9 @@ const ProductPage = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   useEffect(() => {
-    if (product) {
-      
+    axios
+      .get(`https://qbc9.liara.run/api/products/${productId}`)
+      .then((res) => {
         setProduct(res.data);
 
         const categoryId =
