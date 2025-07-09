@@ -2,11 +2,11 @@ import useNewProducts from "../utils/useNewProducts";
 
 const ProductCard = () => {
   const { data: newProducts } = useNewProducts();
-  console.log(newProducts);
+  // console.log(newProducts);
   return (
     <div>
-      {newProducts?.slice(0, 4).map((newProducts) => (
-        <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
+      {newProducts?.map((newProducts) => (
+        <div key={newProducts._id} className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
           <figure>
             <img src={newProducts.image} alt="Shoes" />
           </figure>
