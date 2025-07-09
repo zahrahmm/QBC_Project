@@ -1,19 +1,28 @@
-import useProducts from "../utils/use-products";
+import useProducts from "../utils/useProducts";
 import CardCarousel from "./CardCarousel";
 
 const Carousel = () => {
-  const {data} = useProducts();
+  const { data } = useProducts();
 
   console.log(data);
   return (
     <div className="carousel w-full">
-      <div id="slide1" className="carousel-item relative w-full">
+      <div
+        id="slide1"
+        className="carousel-item relative w-full"
+      >
         <CardCarousel />
         <div className="absolute left-5 right-5 top-1/3 flex -translate-y-1/2 transform justify-between">
-          <a href="#slide4" className="btn btn-circle">
+          <a
+            href="#slide4"
+            className="btn btn-circle"
+          >
             ❮
           </a>
-          <a href="#slide2" className="btn btn-circle">
+          <a
+            href="#slide2"
+            className="btn btn-circle"
+          >
             ❯
           </a>
         </div>

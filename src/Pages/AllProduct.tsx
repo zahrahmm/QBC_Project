@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import useProducts from "../utils/use-products";
+import useProducts from "../utils/useProducts";
 import useProductStore from "../stores/useProductStore";
 
 const AllProduct = () => {
   const navigate = useNavigate();
   const { data: products, isLoading, isError } = useProducts();
 
-  const setSelectedProductId = useProductStore((state) => state.setSelectedProductId);
+  const setSelectedProductId = useProductStore(
+    (state) => state.setSelectedProductId
+  );
 
   if (isLoading) return <div>در حال بارگذاری...</div>;
   if (isError) return <div>خطا در بارگذاری محصولات</div>;
@@ -28,12 +30,14 @@ const AllProduct = () => {
           <div className="card-body flex flex-col justify-between w-full">
             <span className="text-sm text-gray-500 self-end">{"add date"}</span>
             <h2 className="text-2xl font-bold">{product.name}</h2>
-            <p className="text-gray-700 text-md line-clamp-2">{product.description}</p>
+            <p className="text-gray-700 text-md line-clamp-2">
+              {product.description}
+            </p>
             <div className="flex justify-between items-center mt-2">
               <button
                 className="btn btn-secondary hover:text-white"
                 onClick={() => {
-                  setSelectedProductId(product._id); 
+                  setSelectedProductId(product._id);
                   navigate(`/edit-product/${product._id}`);
                 }}
               >
@@ -52,4 +56,3 @@ const AllProduct = () => {
 };
 
 export default AllProduct;
-

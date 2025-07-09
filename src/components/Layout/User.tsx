@@ -15,7 +15,11 @@ function User() {
   return (
     <>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">
-        <div tabIndex={0} role="button" className="btn p-2">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn p-2"
+        >
           <p className="">کاربر</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"

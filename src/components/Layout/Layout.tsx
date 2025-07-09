@@ -1,6 +1,6 @@
 import Menu from "./Menu";
 import { Outlet } from "react-router";
-// import { Toaster } from "sonner";
+import { Toaster } from "sonner";
 
 const Layout = () => {
   return (

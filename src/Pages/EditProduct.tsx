@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProduct } from "../utils/use-product";
+import { useProduct } from "../utils/useProduct";
 import type { productType } from "../types/productType";
 
 const EditProduct = () => {
   const navigate = useNavigate();
-  const {
-    product,
-    isLoading,
-    isError,
-    updateProduct,
-    deleteProduct,
-  } = useProduct();
+  const { product, isLoading, isError, updateProduct, deleteProduct } =
+    useProduct();
 
   const [productData, setProductData] = useState<Partial<productType>>({});
   const [image, setImage] = useState<File | null>(null);
 
-  
   useEffect(() => {
     if (product) {
       setProductData({
@@ -50,7 +44,10 @@ const EditProduct = () => {
 
   return (
     <div className="m-auto max-w-[1090px] pt-26">
-      <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-6">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="flex flex-col gap-6"
+      >
         <input
           type="file"
           className="file-input w-full h-31"
@@ -58,32 +55,44 @@ const EditProduct = () => {
         />
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend text-base font-normal">نام محصول</legend>
+          <legend className="fieldset-legend text-base font-normal">
+            نام محصول
+          </legend>
           <input
             type="text"
             className="input w-full"
             value={productData.name || ""}
-            onChange={(e) => setProductData({ ...productData, name: e.target.value })}
+            onChange={(e) =>
+              setProductData({ ...productData, name: e.target.value })
+            }
           />
         </fieldset>
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend text-base font-normal">قیمت</legend>
+          <legend className="fieldset-legend text-base font-normal">
+            قیمت
+          </legend>
           <input
             type="number"
             className="input w-full"
             value={productData.price || ""}
-            onChange={(e) => setProductData({ ...productData, price: Number(e.target.value) })}
+            onChange={(e) =>
+              setProductData({ ...productData, price: Number(e.target.value) })
+            }
           />
         </fieldset>
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend text-base font-normal">توضیحات</legend>
+          <legend className="fieldset-legend text-base font-normal">
+            توضیحات
+          </legend>
           <textarea
             className="textarea w-full"
             rows={5}
             value={productData.description || ""}
-            onChange={(e) => setProductData({ ...productData, description: e.target.value })}
+            onChange={(e) =>
+              setProductData({ ...productData, description: e.target.value })
+            }
           />
         </fieldset>
 
@@ -94,7 +103,9 @@ const EditProduct = () => {
             onClick={handleUpdate}
             disabled={updateProduct.isPending}
           >
-            {updateProduct.isPending ? "در حال بروزرسانی..." : "بروزرسانی محصول"}
+            {updateProduct.isPending
+              ? "در حال بروزرسانی..."
+              : "بروزرسانی محصول"}
           </button>
 
           <button

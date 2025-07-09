@@ -15,7 +15,11 @@ function Admin() {
   return (
     <div>
       <div className="absolute bottom-3 dropdown dropdown-right dropdown-end">
-        <div tabIndex={0} role="button" className="btn p-1">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn p-1"
+        >
           <p className="">ادمین</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"

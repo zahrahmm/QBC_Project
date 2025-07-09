@@ -108,7 +108,10 @@ function RegisterForm() {
       </button>
       <p className="mt-4">
         عضو هستید؟
-        <Link to="/Login" className="text-secondary cursor-pointer">
+        <Link
+          to="/Login"
+          className="text-secondary cursor-pointer"
+        >
           ورود
         </Link>
       </p>

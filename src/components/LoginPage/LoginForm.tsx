@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../../utils/login";
 import InputField from "./inputField";
 // import { useAuthStore } from "../../stores/useAuthStore";
-// import { toast } from "sonner";
+import { toast } from "sonner";
 
 interface FormData {
   email: string;
@@ -32,14 +32,14 @@ function LoginForm() {
     // try {
     await loginFunction(formData);
     console.log(JSON.stringify(data));
-    //   toast.success("کاربر وارد شد.");
+    toast.success("کاربر وارد شد.");
     setFormData({
       email: "",
       password: "",
     });
     // } catch (error) {
     //   console.log(error);
-    //   toast.error("اطلاعات صحیح نمی باشد.");
+    toast.error("اطلاعات صحیح نمی باشد.");
     // }
   };
 
@@ -77,7 +77,10 @@ function LoginForm() {
       </button>
       <p className="mt-4">
         عضو نیستید؟
-        <Link to="/register" className="text-secondary cursor-pointer">
+        <Link
+          to="/register"
+          className="text-secondary cursor-pointer"
+        >
           ثبت نام
         </Link>
       </p>
