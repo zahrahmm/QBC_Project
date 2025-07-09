@@ -13,8 +13,11 @@ import orders from "../Pages/orders";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import EditUsersTable from "../Pages/editUsersTable";
-import AllProduct from "../Pages/AllProduct";
+// import AllProduct from "../Pages/AllProduct";
 import EditProduct from "../Pages/EditProduct";
+import CartProcessPage from "../Pages/CartProcessPage";
+import CartSummaryPage from "../Pages/CartSummaryPage";
+import OrdersMine from "../Pages/ordersMine";
 
 const Routes = createBrowserRouter([
   {
@@ -23,11 +26,13 @@ const Routes = createBrowserRouter([
     Component: Layout,
     children: [
       { index: true, Component: Home },
-      { path: "CartPage", Component: CartPage },
+      { path: "Shop", Component: Shop },
+      { path: "OrdersMine", Component: OrdersMine },
       { path: "Register", Component: RegisterPage },
       { path: "Login", Component: LoginPage },
       { path: "cart", Component: CartPage }, // سفرشات وقتی کاربر (وارد نشده) گرفته میشود و پس از وارد شدن کاربر به سفارشات کاربر اضافه میشود
-      { path: "Shop", Component: Shop },
+      { path: "cart/process", Component: CartProcessPage },
+      { path: "cart/summary", Component: CartSummaryPage },
       {
         Component: AdminRoute,
         children: [
@@ -35,7 +40,7 @@ const Routes = createBrowserRouter([
           { path: "orders", Component: orders },
           { path: "CreateNewProduct", Component: CreateNewProduct },
           { path: "allusers", Component: EditUsersTable },
-          { path: "allproducts", Component: AllProduct },
+          // { path: "allproducts", Component: AllProduct },
           { path: "EditProduct", Component: EditProduct },
         ],
       },

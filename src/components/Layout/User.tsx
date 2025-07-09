@@ -61,7 +61,7 @@ function User() {
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? "text-secondary" : "")}
-              to={"/cart"}
+              to={"/OrdersMine"}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
