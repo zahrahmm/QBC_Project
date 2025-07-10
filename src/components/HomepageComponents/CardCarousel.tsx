@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import {
   CategoryIcon,
   IconArchiveBox,
@@ -9,11 +8,20 @@ import {
 } from "../../assets/carouselIcons";
 import type { productType } from "../../types/productType";
 import { persianDateFormatter, persianCurrencyFormatter} from "../../models/PersianLocale";
+import { useNavigate } from "react-router";
+import useProductStore from "../../stores/useProductStore";
 
 const CardCarousel = (product: productType) => {
+  const setSelectedProductId = useProductStore(
+    (state) => state.setSelectedProductId
+  );
+    const navigate = useNavigate();
+
   return (
-    <Link to={"/"}>
-    <div className="card bg-base-100 w-full shadow-sm">
+    <div onClick={() => {
+          setSelectedProductId(product._id);
+          navigate(`/product/${product._id}`);
+        }} className="card bg-base-100 w-full shadow-sm">
       <figure className="h-180 object-cover rounded-4xl ">
         <img className="" src={product.image} />
       </figure>
@@ -67,8 +75,6 @@ const CardCarousel = (product: productType) => {
         </section>
       </div>
     </div>
-    </Link>
-    
   );
 };
 
