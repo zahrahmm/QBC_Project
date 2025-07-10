@@ -5,7 +5,7 @@ type TabSelectorRightProps = {
 
 function TabSelectorRight({ activeTab, setActiveTab }: TabSelectorRightProps) {
   return (
-    <div className="mr-32 flex flex-col items-start gap-5">
+    <div className="mr-22 flex flex-col items-start gap-5">
       <button
         onClick={() => setActiveTab("add")}
         className={activeTab === "add" ? "font-bold" : "font-normal"}

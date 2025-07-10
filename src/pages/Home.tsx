@@ -1,9 +1,8 @@
-import { Navigate, useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
 import Carousel from "../components/HomepageComponents/Carousel";
 import NewProductsSection from "../components/HomepageComponents/NewProductsSection";
 import ProductsRow from "../components/HomepageComponents/ProductsRow";
-import useProductStore from "../stores/useProductStore";
 
 const Home = () => {
   const { user } = useAuthStore();
