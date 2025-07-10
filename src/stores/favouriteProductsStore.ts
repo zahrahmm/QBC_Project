@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { productType } from "../types/productType";
+import { persist } from "zustand/middleware";
 
 interface FavoriteProductsStore {
   products: productType[];
@@ -7,7 +8,9 @@ interface FavoriteProductsStore {
   disLikeProduct: (id: string) => void;
 }
 
-const useFavoriteProducts = create<FavoriteProductsStore>((set) => ({
+
+const useFavoriteProducts = create<FavoriteProductsStore>()(persist(
+  (set) => ({
   products: [],
   likeProduct: (product) =>
     set((state) => {
@@ -27,5 +30,8 @@ const useFavoriteProducts = create<FavoriteProductsStore>((set) => ({
     set((state) => ({
       products: state.products.filter((product) => product._id !== id),
     })),
-}));
+}),
+{ name: "fav-storage" }
+));
 export default useFavoriteProducts;
+
