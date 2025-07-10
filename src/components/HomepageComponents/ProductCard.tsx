@@ -27,10 +27,10 @@ const setSelectedProductId = useProductStore(
   };
 
   return (
-    <div onClick={() => { 
+    <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
+      <figure onClick={() => { 
       setSelectedProductId(product._id); 
-      navigate(`/product/${product._id}`);}} className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
-      <figure className="">
+      navigate(`/product/${product._id}`);}}  className="">
         <img className="w-80 h-70 object-cover rounded-2xl" src={product.image} alt={product.name} />
       </figure>
       <div className="card-body">

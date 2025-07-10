@@ -6,12 +6,12 @@ const Favorites = () => {
     if (favoriteProducts.length === 0) {
 
     return(        
-        <div>
+        <div className="flex flex-col gap-3 justify-center h-screen items-center">
         هنوز هیچ محصولی به علاقه‌مندی‌ها اضافه نشده است.
         </div>
     )    }
     return(
-        <div>
+        <div className="grid grid-cols-4 px-22 py-22">
             {favoriteProducts.map((product) => (
         <ProductCard key={product._id} product={product} />
       ))}</div>
