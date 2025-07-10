@@ -4,29 +4,29 @@ const EditUsersTable = () => {
   const { data } = useUsers();
   console.log(data);
 
-  const handleEditClick = (user) => {
-    setEditUserId(user._id);
-    setEditFormData({ username: user.username, email: user.email });
-  };
+  // const handleEditClick = (user) => {
+  //   setEditUserId(user._id);
+  //   setEditFormData({ username: user.username, email: user.email });
+  // };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditFormData((prev) => ({ ...prev, [name]: value }));
+  // };
 
-  const handleSave = (id) => {
-    updateMutation.mutate({ id, updatedUser: editFormData });
-  };
+  // const handleSave = (id) => {
+  //   updateMutation.mutate({ id, updatedUser: editFormData });
+  // };
 
-  const handleCancel = () => {
-    setEditUserId(null);
-  };
+  // const handleCancel = () => {
+  //   setEditUserId(null);
+  // };
 
-  const handleDelete = (id) => {
-    if (window.confirm("آیا مطمئن هستید؟")) {
-      deleteMutation.mutate(id);
-    }
-  };
+  // const handleDelete = (id) => {
+  //   if (window.confirm("آیا مطمئن هستید؟")) {
+  //     deleteMutation.mutate(id);
+  //   }
+  // };
 
   return (
     <div className="overflow-x-auto p-16">
@@ -41,7 +41,7 @@ const EditUsersTable = () => {
             <th>عملیات</th>
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody>
           {data?.map((user, index) => (
             <tr key={user._id}>
               <th>{index + 1}</th>
@@ -112,9 +112,9 @@ const EditUsersTable = () => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody> */}
 
-        {/* <tbody>
+        <tbody>
           {data?.map((user, index) => (
             <tr key={user._id}>
               <th>{index + 1}</th>
@@ -198,7 +198,7 @@ const EditUsersTable = () => {
               </td>
             </tr>
           ))}
-        </tbody> */}
+        </tbody>
       </table>
     </div>
   );
