@@ -1,123 +1,81 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import CheckoutCard from "../components/Order/Checkout_card";
-import type { UserResponse as user } from "../types/user";
-import type { orderModel as orders } from "../types/orderModel";
+import { Link } from "react-router-dom";
+import {
+  persianNumberFormatter,
+  persianDateFormatter,
+  persianCurrencyFormatter,
+} from "../models/PersianLocale";
+import useOrders from "../utils/useOrders";
 
-const Checkout = () => {
-  const [user, setUser] = useState<user | null>(null);
-  const [orders, setOrders] = useState<orders | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [ordersResponse, userResponse] = await Promise.all([
-          axios.get("https://qbc9.liara.run/api/orders/mine"),
-          axios.get("https://qbc9.liara.run/api/users/profile"),
-        ]);
-        setOrders(ordersResponse.data);
-        setUser(userResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (isLoading) return <div className="text-white">Loading...</div>;
-  if (!orders || !user)
-    return <div className="text-white">No data available</div>;
+const Orders = () => {
+  const { data: orders } = useOrders();
 
   return (
-    <div className="flex gap-14 h-screen mt-24 mr-52">
-      {/* Order Items Section */}
-      <div className="w-[909px] border border-gray-700 p-6">
-        <div className="w-full flex flex-col gap-8">
-          {/* Table Header */}
-          <div className="flex justify-between pb-2 border-b border-gray-700">
-            <div className="flex gap-4">
-              <span className="text-white text-base">عکس</span>
-              <span className="text-white text-base w-[250px]">نام محصول</span>
-            </div>
-            <span className="text-white text-base">تعداد</span>
-            <span className="text-white text-base">قیمت</span>
-            <span className="text-white text-base">قیمت نهایی</span>
-          </div>
-
-          {/* Order Items */}
-          <div className="flex flex-col">
-            <CheckoutCard />
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-8 w-[549px]">
-        <div className="flex flex-col gap-6">
-          <h3 className="text-white text-xl font-medium">آدرس دریافت</h3>
-          <div className="flex flex-col gap-6">
-            <p className="text-pink-600 text-base font-bold">
-              شماره سفارش:{" "}
-              <span className="text-white font-normal">{orders._id}</span>
-            </p>
-            <p className="text-pink-600 text-base font-bold">
-              نام:{" "}
-              <span className="text-white font-normal">{user.username}</span>
-            </p>
-            <p className="text-pink-600 text-base font-bold">
-              ایمیل:{" "}
-              <span className="text-white font-normal">{user.email}</span>
-            </p>
-            <p className="text-pink-600 text-base font-bold">
-              آدرس:{" "}
-              <span className="text-white font-normal">
-                {orders.shippingAddress?.address}
-              </span>
-            </p>
-            <p className="text-pink-600 text-base font-bold">
-              روش پرداخت:{" "}
-              <span className="text-white font-normal">درگاه بانک سامان</span>
-            </p>
-          </div>
-
-          <div className="border border-gray-700 rounded bg-gray-800 p-2">
-            <p className="text-base">Status</p>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <h3 className="text-white text-xl font-medium">خلاصه خرید</h3>
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between">
-              <p className="text-gray-400 text-base font-bold">قیمت محصولات:</p>
-              <p className="text-white text-base">{orders.itemsPrice} تومان</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-400 text-base font-bold">هزینه ارسال:</p>
-              <p className="text-white text-base">
-                {orders.shippingPrice} تومان
-              </p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-400 text-base font-bold">مالیات:</p>
-              <p className="text-white text-base">{orders.taxPrice} تومان</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-400 text-base font-bold">مبلغ نهایی:</p>
-              <p className="text-white text-base">{orders.totalPrice} تومان</p>
-            </div>
-          </div>
-        </div>
-
-        <button className="w-full h-12 bg-pink-600 rounded-full text-white text-xl font-medium">
-          پرداخت
-        </button>
-      </div>
+    <div className="overflow-x-auto p-16">
+      <table className="table table-md">
+        <thead>
+          <tr>
+            <th></th>
+            <th>عکس</th>
+            <th>نام محصول</th>
+            <th>تاریخ</th>
+            <th>کاربر</th>
+            <th>قیمت نهایی</th>
+            <th>پرداخت</th>
+            <th>ارسال</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders?.map((order, index) => (
+            <tr key={order._id}>
+              <th>{persianNumberFormatter.format(index + 1)}</th>
+              <td>
+                <img
+                  src={order.orderItems[0].image}
+                  alt={order.orderItems[0].name}
+                  className="h-10"
+                />
+              </td>
+              <td>{order.orderItems[0].name}</td>
+              <td>{persianDateFormatter.format(new Date(order.updatedAt))}</td>
+              <td>{order.user?.username}</td>
+              <td>{persianCurrencyFormatter.format(order.totalPrice)}</td>
+              <td>
+                {order.isPaid ? (
+                  <button className="btn btn-sm btn-success mx-3">
+                    <p>پرداخت شده</p>
+                  </button>
+                ) : (
+                  <button className="btn btn-sm btn-error mx-3">
+                    <p>پرداخت نشده</p>
+                  </button>
+                )}
+              </td>
+              <td>
+                {order.isDelivered ? (
+                  <button className="btn btn-sm btn-success mx-3">
+                    <p>ارسال شده</p>
+                  </button>
+                ) : (
+                  <button className="btn btn-sm btn-error mx-3">
+                    <p>ارسال نشده</p>
+                  </button>
+                )}
+              </td>
+              <td>
+                <Link
+                  to={`/orders/${order._id}`}
+                  className="btn btn-sm btn-warning mx-3"
+                >
+                  جزئیات
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Checkout;
+export default Orders;

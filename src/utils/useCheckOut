@@ -1,0 +1,19 @@
+import { useQuery } from "@tanstack/react-query";
+import server from "./axios";
+import type { productType } from "../types/productType";
+import type { orderModel as OrderDetail } from "../types/orderModel";
+
+const useCheckout = (orderId: string) => {
+  return useQuery<OrderDetail>({
+    queryKey: ["order", orderId],
+    queryFn: async () => {
+      const response = await server.get(
+        `https://qbc9.liara.run/api/orders/${orderId}`
+      );
+      return response.data;
+    },
+    enabled: !!orderId,
+  });
+};
+
+export default useCheckout;

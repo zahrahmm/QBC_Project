@@ -18,6 +18,7 @@ import EditProduct from "../Pages/EditProduct";
 import CartProcessPage from "../Pages/CartProcessPage";
 import CartSummaryPage from "../Pages/CartSummaryPage";
 import OrdersMine from "../Pages/ordersMine";
+import Checkout from "../Pages/checkout";
 
 const Routes = createBrowserRouter([
   {
@@ -33,6 +34,8 @@ const Routes = createBrowserRouter([
       { path: "cart", Component: CartPage }, // سفرشات وقتی کاربر (وارد نشده) گرفته میشود و پس از وارد شدن کاربر به سفارشات کاربر اضافه میشود
       { path: "cart/process", Component: CartProcessPage },
       { path: "cart/summary", Component: CartSummaryPage },
+      { path: "checkout", Component: Checkout },
+      // { path: "/orders/:id", Component: OrderDetail },
       {
         Component: AdminRoute,
         children: [
