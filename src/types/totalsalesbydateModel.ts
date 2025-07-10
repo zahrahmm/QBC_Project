@@ -1,5 +1,4 @@
 export type totalsalesbydateModel = {
-    _id: string
-    totalSales: number
-
-}
+  _id: Date;
+  totalSales: number;
+};

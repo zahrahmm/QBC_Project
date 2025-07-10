@@ -1,10 +1,9 @@
 
-
-
+import { useProduct } from "../utils/useCRUDproduct";
 import { useEffect, useState, type ChangeEvent } from "react";
-import { useProduct } from "../utils/use-product";
 import type { productType } from "../types/productType";
 import useProductStore from "../stores/useProductStore";
+import { toast } from "sonner";
 
 const EditProduct = () => {
   const productId = useProductStore((state) => state.selectedProductId);
@@ -51,8 +50,15 @@ const EditProduct = () => {
     }
   };
 
-  if (isLoading || isCategoriesLoading) return <div className="   text-center mt-10 ">در حال بارگذاری<span className="loading loading-dots loading-md mr-1"></span></div>;
-  if (isError) return <div className=" text-center mt-10 ">خطا در بارگذاری اطلاعات محصول!</div>;
+  if (isLoading || isCategoriesLoading)
+    return (
+      <div className="text-center mt-10">
+        در حال بارگذاری
+        <span className="loading loading-dots loading-md mr-1"></span>
+      </div>
+    );
+  if (isError)
+    return <div className="text-center mt-10">خطا در بارگذاری اطلاعات محصول!</div>;
 
   return (
     <div className="m-auto max-w-[1090px] pt-26">
@@ -79,6 +85,7 @@ const EditProduct = () => {
             onChange={(e) =>
               setProductData({ ...productData, name: e.target.value })
             }
+            id="name"
           />
         </fieldset>
 
@@ -92,6 +99,7 @@ const EditProduct = () => {
               onChange={(e) =>
                 setProductData({ ...productData, price: Number(e.target.value) })
               }
+              id="price"
             />
           </fieldset>
 
@@ -101,13 +109,18 @@ const EditProduct = () => {
               className="select w-full"
               value={productData.category?._id || ""}
               onChange={(e) => {
-                const selected = categories.find((cat) => cat._id === e.target.value);
+                const selected = categories.find(
+                  (cat) => cat._id === e.target.value
+                );
                 if (selected) {
                   setProductData({ ...productData, category: selected });
                 }
               }}
+              id="category"
             >
-              <option disabled value="">دسته‌بندی را انتخاب کنید</option>
+              <option disabled value="">
+                دسته‌بندی را انتخاب کنید
+              </option>
               {categories.map((cat) => (
                 <option key={cat._id} value={cat._id}>
                   {cat.name}
@@ -126,12 +139,15 @@ const EditProduct = () => {
             onChange={(e) =>
               setProductData({ ...productData, description: e.target.value })
             }
+            id="description"
           />
         </fieldset>
 
         <div className="flex gap-8">
           <fieldset className="fieldset flex-1">
-            <legend className="fieldset-legend text-base font-normal">تعداد قابل خرید</legend>
+            <legend className="fieldset-legend text-base font-normal">
+              تعداد قابل خرید
+            </legend>
             <input
               type="number"
               className="input w-full"
@@ -139,6 +155,7 @@ const EditProduct = () => {
               onChange={(e) =>
                 setProductData({ ...productData, quantity: Number(e.target.value) })
               }
+              id="quantity"
             />
           </fieldset>
 
@@ -150,12 +167,14 @@ const EditProduct = () => {
               onChange={(e) =>
                 setProductData({ ...productData, countInStock: Number(e.target.value) })
               }
+              id="countInStock"
             >
-              <option disabled value="">موجودی را وارد نمایید</option>
+              <option disabled value="">
+                موجودی را وارد نمایید
+              </option>
               <option value="5">+ ۵</option>
               <option value="10">+ ۱۰</option>
               <option value="20">+ ۲۰</option>
-
               <option value="30">+ ۳۰</option>
               <option value="40">+ ۴۰</option>
               <option value="50">+ ۵۰</option>
@@ -167,11 +186,37 @@ const EditProduct = () => {
         <div className="flex gap-4">
           <button
             type="button"
-            className="btn btn-success hover:text-white"
+            className="btn btn-soft btn-success"
             onClick={() => {
               if (!productId || !productData.category?._id) {
-                console.warn("Product ID or category is missing!");
+                toast.error("شناسه محصول یا دسته‌بندی مشخص نیست.");
                 return;
+              }
+
+              // اعتبارسنجی فیلدهای ضروری:
+              const requiredFields: {
+                key: keyof Partial<productType>;
+                label: string;
+              }[] = [
+                  { key: "name", label: "نام محصول" },
+                  { key: "price", label: "قیمت" },
+                  { key: "description", label: "توضیحات" },
+                  { key: "quantity", label: "تعداد قابل خرید" },
+                  { key: "countInStock", label: "موجودی" },
+                ];
+
+              for (const field of requiredFields) {
+                const value = productData[field.key];
+
+                if (
+                  value === undefined ||
+                  value === null ||
+                  (typeof value === "string" && value.trim() === "") ||
+                  (typeof value === "number" && isNaN(value))
+                ) {
+                  toast.error(`لطفاً فیلد "${field.label}" را پر کنید.`);
+                  return;
+                }
               }
 
               const formData = new FormData();
@@ -192,7 +237,7 @@ const EditProduct = () => {
 
           <button
             type="button"
-            className="btn btn-error hover:text-white"
+            className="btn   btn-soft btn-error "
             onClick={() => {
               if (productId) {
                 deleteProduct.mutate(productId);
@@ -209,3 +254,12 @@ const EditProduct = () => {
 };
 
 export default EditProduct;
+
+
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@ import type { loginPayload } from "../types/loginPayload";
 import type { UserResponse } from "../types/user";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../stores/useAuthStore";
+import { toast } from "sonner";
 
 // export async function loginFunction(
 //   payload: loginPayload
@@ -22,6 +23,7 @@ export const useLogin = () => {
       server.post<UserResponse>(login_URL, credentials).then((res) => res.data),
 
     onSuccess: (data) => {
+      toast.success("کاربر وارد شد.");
       localStorage.setItem("id", data._id);
       localStorage.setItem("admin", JSON.stringify(data.isAdmin));
       login(data);
@@ -29,6 +31,7 @@ export const useLogin = () => {
     },
 
     onError: (error) => {
+      toast.error("اطلاعات صحیح نمی باشد.");
       console.error("Login failed:", error.message);
     },
   });

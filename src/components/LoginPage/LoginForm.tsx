@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../utils/login";
 import InputField from "./inputField";
-// import { useAuthStore } from "../../stores/useAuthStore";
-// import { toast } from "sonner";
 
 interface FormData {
   email: string;
@@ -16,7 +14,6 @@ function LoginForm() {
     password: "",
   });
 
-  // const { login } = useAuthStore();
   const { mutate: loginFunction, isPending, data } = useLogin();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,20 +24,14 @@ function LoginForm() {
     });
   };
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // try {
-    await loginFunction(formData);
+    loginFunction(formData);
     console.log(JSON.stringify(data));
-    //   toast.success("کاربر وارد شد.");
     setFormData({
       email: "",
       password: "",
     });
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error("اطلاعات صحیح نمی باشد.");
-    // }
   };
 
   return (

@@ -4,10 +4,12 @@ import type { totalsalesbydateModel } from "../types/totalsalesbydateModel";
 
 const useTotalsalesByDate = () => {
   return useQuery({
-    queryKey: ["orders"],
+    queryKey: ["Total"],
     queryFn: () =>
-      server.get<totalsalesbydateModel[]>("/api/orders/total-sales-by-date").then((res) => res.data),
+      server
+        .get<totalsalesbydateModel[]>("/api/orders/total-sales-by-date")
+        .then((res) => res.data),
   });
 };
 
-export default useTotalsalesByDate  ;
+export default useTotalsalesByDate;

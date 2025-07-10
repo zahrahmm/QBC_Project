@@ -56,7 +56,7 @@ function Admin() {
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? "text-secondary" : "")}
-              to={"/allproducts"}
+              to={"/CreateNewProduct"}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ function Admin() {
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? "text-secondary" : "")}
-              to={"/allproducts"}
+              to={"/orders"}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

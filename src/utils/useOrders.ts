@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import server from "./axios";
-import type { userModel } from "../types/users";
+import type { orderModel } from "../types/orderModel";
 
 const useOrders = () => {
   return useQuery({
-    queryKey: ["orders"],
+    queryKey: ["allorders"],
     queryFn: () =>
-      server.get<userModel[]>("/api/orders").then((res) => res.data),
+      server.get<orderModel[]>("/api/orders").then((res) => res.data),
   });
 };
 
