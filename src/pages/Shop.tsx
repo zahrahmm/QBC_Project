@@ -1,13 +1,17 @@
 import ProductCard from "../components/Shop/ProductCard";
 import SearchBar from "../components/Shop/SearchBar";
 import Loading from "../components/Loading/Loading";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useProducts from "../utils/use-products";
 import { useFilterStore } from "../stores/filterStore";
+import { useAuthStore } from "../stores/useAuthStore";
 
 function Shop() {
   const { category, price } = useFilterStore();
   const { data, isLoading } = useProducts();
+  const { user } = useAuthStore();
+
+  if (user?.isAdmin) return <Navigate to="/allproducts" />;
 
   if (isLoading) {
     return (

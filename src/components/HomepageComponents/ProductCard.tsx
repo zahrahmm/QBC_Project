@@ -11,13 +11,16 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-  const { products: favoriteProducts, likeProduct, disLikeProduct } = useFavoriteProducts();
-const setSelectedProductId = useProductStore(
+  const {
+    products: favoriteProducts,
+    likeProduct,
+    disLikeProduct,
+  } = useFavoriteProducts();
+  const setSelectedProductId = useProductStore(
     (state) => state.setSelectedProductId
   );
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-   
   const isFavorite = favoriteProducts.some((p) => p._id === product._id);
 
   const handleLikeToggle = () => {
@@ -30,28 +33,39 @@ const setSelectedProductId = useProductStore(
 
   return (
     <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
-      <figure onClick={() => { 
-      setSelectedProductId(product._id); 
-      navigate(`/product/${product._id}`);}}  className="">
-        <img className="w-80 h-70 object-cover rounded-2xl" src={product.image} alt={product.name} />
+      <figure
+        onClick={() => {
+          setSelectedProductId(product._id);
+          navigate(`/product/${product._id}`);
+        }}
+        className=""
+      >
+        <img
+          className="w-80 h-70 object-cover rounded-2xl"
+          src={product.image}
+          alt={product.name}
+        />
       </figure>
       <div className="card-body">
         <div className="flex justify-between items-center">
-            <div className="badge badge-soft badge-secondary ">جدید</div>
-            
-            <div onClick={handleLikeToggle} className="cursor-pointer text-xl text-secondary">
-                {isFavorite ? <BsHeartFill /> : <BsHeart />}
-            </div>
+          <div className="badge badge-soft badge-secondary ">جدید</div>
+
+          <div
+            onClick={handleLikeToggle}
+            className="cursor-pointer text-xl text-secondary"
+          >
+            {isFavorite ? <BsHeartFill /> : <BsHeart />}
+          </div>
         </div>
         <h2 className="card-title pt-2 ">{product.name}</h2>
         <p>{product.description}</p>
         <div className="card-actions justify-between">
           <div className="badge badge-soft badge-secondary ">
-             {persianCurrencyFormatter.format(product.price) }
+            {persianCurrencyFormatter.format(product.price)}
           </div>
-          <div className="rating rating-xl rating-half flex-row-reverse">
-              {RenderRatingStar(product.rating)}
-            </div>
+          <div className="rating rating-xl readonly rating-half flex-row-reverse">
+            {RenderRatingStar(product.rating)}
+          </div>
         </div>
       </div>
     </div>
@@ -60,19 +74,13 @@ const setSelectedProductId = useProductStore(
 
 export default ProductCard;
 
-
-
-
-
-
 // import useFavoriteProducts from "../stores/favouriteProductsStore";
 // import type { productType } from "../types/productType";
-// import { BsHeart, BsHeartFill } from "react-icons/bs"; 
+// import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 // interface Props {
 //   product: productType;
 // }
-
 
 // const ProductCard = ({product}: Props) => {
 //  const{likeProduct, disLikeProduct} = useFavoriteProducts()
@@ -107,11 +115,6 @@ export default ProductCard;
 // };
 
 // export default ProductCard;
-
-
-
-
-
 
 // import useNewProducts from "../utils/useNewProducts";
 
