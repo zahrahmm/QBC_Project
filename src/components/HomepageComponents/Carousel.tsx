@@ -1,4 +1,5 @@
 import useProducts from "../../utils/useProducts";
+import Loading from "../Loading";
 import CardCarousel from "./CardCarousel";
 import { useState } from "react";
 
@@ -42,7 +43,8 @@ const Carousel = () => {
             updatedAt={currentProduct.updatedAt}
           />
         ) : (
-          <div>Loading products...</div>
+          // <div>Loading products...</div>
+          <Loading />
         )}
         <div className="absolute left-5 right-5 top-1/3 flex -translate-y-1/2 transform justify-between">
           <button

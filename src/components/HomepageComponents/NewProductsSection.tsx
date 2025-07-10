@@ -1,14 +1,17 @@
 import useNewProducts from "../../utils/useNewProducts";
+import Loading from "../Loading";
 import ProductCard from "./ProductCard";
 
 const NewProductsSection = () => {
       const { data: newProducts, isLoading, error } = useNewProducts();
       if (isLoading) {
-    return <div>Loading products...</div>;
+    return <Loading />;
   }
 
   if (error) {
-    return <div>Error fetching products: {error.message}</div>;
+    return  
+    <Loading />
+    // <div>Error fetching products: {error.message}</div>;
   }
 
     return (
