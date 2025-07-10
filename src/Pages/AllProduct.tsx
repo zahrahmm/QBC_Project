@@ -1,25 +1,25 @@
+
+
 import { useNavigate } from "react-router-dom";
 import useProducts from "../utils/use-products";
 import useProductStore from "../stores/useProductStore";
+
 
 const AllProduct = () => {
   const navigate = useNavigate();
   const { data: products, isLoading, isError } = useProducts();
 
-  const setSelectedProductId = useProductStore(
-    (state) => state.setSelectedProductId
-  );
+  const setSelectedProductId = useProductStore((state) => state.setSelectedProductId);
 
-  if (isLoading)
-    return (
-      <div className="   text-center mt-10 ">
-        در حال بارگذاری<span className="loading loading-dots loading-md"></span>
-      </div>
-    );
-  if (isError)
-    return (
-      <div className=" text-center mt-10 ">خطا در بارگذاری اطلاعات محصول!</div>
-    );
+  const persianDateFormatter = new Intl.DateTimeFormat("fa-IR", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
+
+
+  if (isLoading) return <div className="   text-center mt-10 ">در حال بارگذاری<span className="loading loading-dots loading-md mr-1"></span></div>;
+  if (isError) return <div className=" text-center mt-10 ">خطا در بارگذاری اطلاعات محصول!</div>;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-center px-8 ">
@@ -36,7 +36,14 @@ const AllProduct = () => {
             />
           </div>
           <div className="card-body flex flex-col justify-between w-full gap-1">
-            <span className="text-sm  self-end">{"add date"}</span>
+            {/* <span className="text-sm  self-end">{persianDateFormatter.format(new Date(product.createdAt))}</span> */}
+            <span className="text-sm self-end ">
+              {persianDateFormatter.format(
+                new Date(
+                  product.updatedAt !== product.createdAt ? product.updatedAt : product.createdAt
+                )
+              )}
+            </span>
             <h2 className="text-xl font-bold">{product.name}</h2>
             <p className=" text-md ">{product.description}</p>
             <div className="flex justify-between items-center mt-2">
@@ -62,3 +69,4 @@ const AllProduct = () => {
 };
 
 export default AllProduct;
+

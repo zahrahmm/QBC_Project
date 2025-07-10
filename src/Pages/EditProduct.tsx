@@ -1,7 +1,9 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+
 import { useProduct } from "../utils/useCRUDproduct";
+import { useEffect, useState, type ChangeEvent } from "react";
 import type { productType } from "../types/productType";
 import useProductStore from "../stores/useProductStore";
+import { toast } from "sonner";
 
 const EditProduct = () => {
   const productId = useProductStore((state) => state.selectedProductId);
@@ -50,22 +52,17 @@ const EditProduct = () => {
 
   if (isLoading || isCategoriesLoading)
     return (
-      <div className="   text-center mt-10 ">
+      <div className="text-center mt-10">
         در حال بارگذاری
         <span className="loading loading-dots loading-md mr-1"></span>
       </div>
     );
   if (isError)
-    return (
-      <div className=" text-center mt-10 ">خطا در بارگذاری اطلاعات محصول!</div>
-    );
+    return <div className="text-center mt-10">خطا در بارگذاری اطلاعات محصول!</div>;
 
   return (
     <div className="m-auto max-w-[1090px] pt-26">
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="flex flex-col gap-6"
-      >
+      <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-6">
         {imageSrc && (
           <img
             src={imageSrc}
@@ -80,9 +77,7 @@ const EditProduct = () => {
         />
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend text-base font-normal">
-            نام محصول
-          </legend>
+          <legend className="fieldset-legend text-base font-normal">نام محصول</legend>
           <input
             type="text"
             className="input w-full"
@@ -90,31 +85,26 @@ const EditProduct = () => {
             onChange={(e) =>
               setProductData({ ...productData, name: e.target.value })
             }
+            id="name"
           />
         </fieldset>
 
         <div className="flex gap-8">
           <fieldset className="fieldset flex-1">
-            <legend className="fieldset-legend text-base font-normal">
-              قیمت
-            </legend>
+            <legend className="fieldset-legend text-base font-normal">قیمت</legend>
             <input
               type="number"
               className="input w-full"
               value={productData.price || ""}
               onChange={(e) =>
-                setProductData({
-                  ...productData,
-                  price: Number(e.target.value),
-                })
+                setProductData({ ...productData, price: Number(e.target.value) })
               }
+              id="price"
             />
           </fieldset>
 
           <fieldset className="fieldset flex-1">
-            <legend className="fieldset-legend text-base font-normal">
-              دسته‌بندی
-            </legend>
+            <legend className="fieldset-legend text-base font-normal">دسته‌بندی</legend>
             <select
               className="select w-full"
               value={productData.category?._id || ""}
@@ -126,6 +116,7 @@ const EditProduct = () => {
                   setProductData({ ...productData, category: selected });
                 }
               }}
+              id="category"
             >
               <option disabled value="">
                 دسته‌بندی را انتخاب کنید
@@ -140,9 +131,7 @@ const EditProduct = () => {
         </div>
 
         <fieldset className="fieldset">
-          <legend className="fieldset-legend text-base font-normal">
-            توضیحات
-          </legend>
+          <legend className="fieldset-legend text-base font-normal">توضیحات</legend>
           <textarea
             className="textarea w-full"
             rows={5}
@@ -150,6 +139,7 @@ const EditProduct = () => {
             onChange={(e) =>
               setProductData({ ...productData, description: e.target.value })
             }
+            id="description"
           />
         </fieldset>
 
@@ -163,27 +153,21 @@ const EditProduct = () => {
               className="input w-full"
               value={productData.quantity || ""}
               onChange={(e) =>
-                setProductData({
-                  ...productData,
-                  quantity: Number(e.target.value),
-                })
+                setProductData({ ...productData, quantity: Number(e.target.value) })
               }
+              id="quantity"
             />
           </fieldset>
 
           <fieldset className="fieldset flex-1">
-            <legend className="fieldset-legend text-base font-normal">
-              موجودی
-            </legend>
+            <legend className="fieldset-legend text-base font-normal">موجودی</legend>
             <select
               className="select w-full"
               value={productData.countInStock || ""}
               onChange={(e) =>
-                setProductData({
-                  ...productData,
-                  countInStock: Number(e.target.value),
-                })
+                setProductData({ ...productData, countInStock: Number(e.target.value) })
               }
+              id="countInStock"
             >
               <option disabled value="">
                 موجودی را وارد نمایید
@@ -191,7 +175,6 @@ const EditProduct = () => {
               <option value="5">+ ۵</option>
               <option value="10">+ ۱۰</option>
               <option value="20">+ ۲۰</option>
-
               <option value="30">+ ۳۰</option>
               <option value="40">+ ۴۰</option>
               <option value="50">+ ۵۰</option>
@@ -206,8 +189,34 @@ const EditProduct = () => {
             className="btn btn-success hover:text-white"
             onClick={() => {
               if (!productId || !productData.category?._id) {
-                console.warn("Product ID or category is missing!");
+                toast.error("شناسه محصول یا دسته‌بندی مشخص نیست.");
                 return;
+              }
+
+              // اعتبارسنجی فیلدهای ضروری:
+              const requiredFields: {
+                key: keyof Partial<productType>;
+                label: string;
+              }[] = [
+                  { key: "name", label: "نام محصول" },
+                  { key: "price", label: "قیمت" },
+                  { key: "description", label: "توضیحات" },
+                  { key: "quantity", label: "تعداد قابل خرید" },
+                  { key: "countInStock", label: "موجودی" },
+                ];
+
+              for (const field of requiredFields) {
+                const value = productData[field.key];
+
+                if (
+                  value === undefined ||
+                  value === null ||
+                  (typeof value === "string" && value.trim() === "") ||
+                  (typeof value === "number" && isNaN(value))
+                ) {
+                  toast.error(`لطفاً فیلد "${field.label}" را پر کنید.`);
+                  return;
+                }
               }
 
               const formData = new FormData();
@@ -216,19 +225,14 @@ const EditProduct = () => {
               formData.append("description", productData.description || "");
               formData.append("category", productData.category._id);
               formData.append("quantity", String(productData.quantity || ""));
-              formData.append(
-                "countInStock",
-                String(productData.countInStock || "")
-              );
+              formData.append("countInStock", String(productData.countInStock || ""));
               if (image) formData.append("image", image);
 
               updateProduct.mutate(formData);
             }}
             disabled={updateProduct.isPending}
           >
-            {updateProduct.isPending
-              ? "در حال بروزرسانی..."
-              : "بروزرسانی محصول"}
+            {updateProduct.isPending ? "در حال بروزرسانی..." : "بروزرسانی محصول"}
           </button>
 
           <button
