@@ -1,16 +1,25 @@
+import { useNavigate } from "react-router";
+import useProductStore from "../../stores/useProductStore";
 import type { productType } from "../../types/productType";
 import useProducts from "../../utils/use-products";
 
 const RelatedProducts = ({
   categoryId,
   currentProductId,
-  onProductSelect,
+  // onProductSelect,
 }: {
   categoryId: string;
   currentProductId: string;
   onProductSelect?: (productId: string) => void;
 }) => {
   const { data, isLoading } = useProducts();
+  
+  const setSelectedProductId = useProductStore(
+    (state) => state.setSelectedProductId
+  );
+    const navigate = useNavigate();
+
+   
 
   if (isLoading)
     return (
@@ -36,17 +45,20 @@ const RelatedProducts = ({
       </div>
     );
 
-  const handleProductClick = (id: string) => {
-    if (onProductSelect) onProductSelect(id);
-  };
+  // const handleProductClick = (id: string) => {
+  //   if (onProductSelect) onProductSelect(id);
+  // };
 
   return (
-    <div className="relative mt-6">
+    <div  className="relative mt-6">
       <div className="flex space-x-4 pr-8 justify-start">
         {relatedProducts.map((item) => (
           <div
+          onClick={() => {
+                  setSelectedProductId(item._id);
+                  navigate(`/product/${item._id}`);
+                }}
             key={item._id}
-            onClick={() => handleProductClick(item._id)}
             className="cursor-pointer min-w-[200px] card shadow-sm flex-shrink-0"
           >
             <figure>

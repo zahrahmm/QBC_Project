@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router";
 import useFavoriteProducts from "../../stores/favouriteProductsStore";
+import useProductStore from "../../stores/useProductStore";
 import type { productType } from "../../types/productType";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
@@ -8,8 +10,12 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const { products: favoriteProducts, likeProduct, disLikeProduct } = useFavoriteProducts();
+const setSelectedProductId = useProductStore(
+    (state) => state.setSelectedProductId
+  );
+    const navigate = useNavigate();
 
-
+   
   const isFavorite = favoriteProducts.some((p) => p._id === product._id);
 
   const handleLikeToggle = () => {
@@ -21,7 +27,10 @@ const ProductCard = ({ product }: Props) => {
   };
 
   return (
-    <div className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
+    <div onClick={() => {
+                  setSelectedProductId(product._id);
+                  navigate(`/product/${product._id}`);
+                }} className="card max-sm:w-24 w-92 bg-base-100 shadow-sm">
       <figure className="">
         <img className="w-80 h-70 object-cover rounded-2xl" src={product.image} alt={product.name} />
       </figure>

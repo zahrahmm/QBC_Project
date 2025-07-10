@@ -6,6 +6,8 @@ const ProductsRow = () => {
       if (isLoading) {
     return <div>Loading products...</div>;
   }
+  
+                
 
   if (error) {
     return <div>Error fetching products: {error.message}</div>;
