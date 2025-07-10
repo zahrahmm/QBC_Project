@@ -4,9 +4,11 @@ import type { totalsalesModel } from "../types/totalsalesModel";
 
 const useTotalsales = () => {
   return useQuery({
-    queryKey: ["orders"],
+    queryKey: ["sales"],
     queryFn: () =>
-      server.get<totalsalesModel>("/api/orders/total-sales").then((res) => res.data),
+      server
+        .get<totalsalesModel>("/api/orders/total-sales")
+        .then((res) => res.data),
   });
 };
 

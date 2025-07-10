@@ -4,7 +4,7 @@ import type { orderModel } from "../types/orderModel";
 
 const useOrders = () => {
   return useQuery({
-    queryKey: ["orders"],
+    queryKey: ["allorders"],
     queryFn: () =>
       server.get<orderModel[]>("/api/orders").then((res) => res.data),
   });

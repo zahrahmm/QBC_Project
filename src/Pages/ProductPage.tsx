@@ -42,7 +42,7 @@ const ProductPage = () => {
         }
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [productId]);
 
   if (!product)
     return <div className="text-center text-xl">در حال بارگذاری...</div>;

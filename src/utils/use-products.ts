@@ -4,7 +4,7 @@ import type { productType } from "../types/productType";
 
 const useProducts = () => {
   return useQuery({
-    queryKey: ["products"],
+    queryKey: ["product"],
     queryFn: () =>
       server
         .get<productType[]>("/api/products/allproducts")

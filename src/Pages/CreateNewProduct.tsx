@@ -101,36 +101,39 @@ const CreateNewProduct: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.image || !formData.category || !formData.name.trim()) {
       alert("لطفاً تمام فیلدهای الزامی را پر کنید.");
       return;
     }
-
-    CreateProduct(formData)
-      // onSuccess: (data) => {
-      //   alert("✅ محصول با موفقیت اضافه شد.");
-      //   console.log("Uploaded!", data);
-      //   setFormData({
-      //     name: "",
-      //     description: "",
-      //     price: 0,
-      //     category: "",
-      //     quantity: 0,
-      //     image: "",
-      //   });
-      //   setImageSrc(null);
-      //   setUploadStatus("idle");
-      // },
-      // onError: (error) => {
-      //   console.error("Error creating product:", error);
-      //   alert("⚠️ خطا در افزودن محصول");
-      // },
-    ;
+    try {
+      await CreateProduct(formData);
+    } catch (error) {
+      console.error("خطا در ایجاد محصول:", error);
+    }
   };
   console.log(formData);
+
+  // onSuccess: (data) => {
+  //   alert("✅ محصول با موفقیت اضافه شد.");
+  //   console.log("Uploaded!", data);
+  //   setFormData({
+  //     name: "",
+  //     description: "",
+  //     price: 0,
+  //     category: "",
+  //     quantity: 0,
+  //     image: "",
+  //   });
+  //   setImageSrc(null);
+  //   setUploadStatus("idle");
+  // },
+  // onError: (error) => {
+  //   console.error("Error creating product:", error);
+  //
+  // },
 
   return (
     <div>
@@ -335,7 +338,7 @@ const CreateNewProduct: React.FC = () => {
           <button
             type="submit"
             // disabled={Pending || !formData.image}
-            // disabled={Pending}
+            disabled={Pending}
             className="btn btn-soft btn-secondary"
           >
             اضافه کردن محصول
