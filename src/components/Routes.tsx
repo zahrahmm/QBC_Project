@@ -18,6 +18,7 @@ import EditProduct from "../Pages/EditProduct";
 import CartProcessPage from "../Pages/CartProcessPage";
 import CartSummaryPage from "../Pages/CartSummaryPage";
 import OrdersMine from "../Pages/ordersMine";
+import Favorites from "../Pages/Favourite";
 
 const Routes = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const Routes = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "Shop", Component: Shop },
+      { path: "Favorites", Component: Favorites },
       { path: "OrdersMine", Component: OrdersMine },
       { path: "Register", Component: RegisterPage },
       { path: "Login", Component: LoginPage },
