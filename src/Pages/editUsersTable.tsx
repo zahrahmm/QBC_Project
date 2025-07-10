@@ -4,6 +4,30 @@ const EditUsersTable = () => {
   const { data } = useUsers();
   console.log(data);
 
+  const handleEditClick = (user) => {
+    setEditUserId(user._id);
+    setEditFormData({ username: user.username, email: user.email });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = (id) => {
+    updateMutation.mutate({ id, updatedUser: editFormData });
+  };
+
+  const handleCancel = () => {
+    setEditUserId(null);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("آیا مطمئن هستید؟")) {
+      deleteMutation.mutate(id);
+    }
+  };
+
   return (
     <div className="overflow-x-auto p-16">
       <table className="table table-md">
@@ -18,6 +42,79 @@ const EditUsersTable = () => {
           </tr>
         </thead>
         <tbody>
+          {data?.map((user, index) => (
+            <tr key={user._id}>
+              <th>{index + 1}</th>
+              <td>{user._id}</td>
+              <td>
+                {editUserId === user._id ? (
+                  <input
+                    name="username"
+                    value={editFormData.username}
+                    onChange={handleInputChange}
+                    className="input input-sm input-bordered"
+                  />
+                ) : (
+                  user.username
+                )}
+              </td>
+              <td>
+                {editUserId === user._id ? (
+                  <input
+                    name="email"
+                    value={editFormData.email}
+                    onChange={handleInputChange}
+                    className="input input-sm input-bordered"
+                  />
+                ) : (
+                  user.email
+                )}
+              </td>
+              <td>
+                {user.isAdmin ? (
+                  <span className="text-success">✔</span>
+                ) : (
+                  <span className="text-error">✘</span>
+                )}
+              </td>
+              <td>
+                {editUserId === user._id ? (
+                  <>
+                    <button
+                      onClick={() => handleSave(user._id)}
+                      className="btn btn-sm btn-success mx-1"
+                    >
+                      ذخیره
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      className="btn btn-sm btn-secondary mx-1"
+                    >
+                      لغو
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => handleEditClick(user)}
+                      className="btn btn-sm btn-warning mx-1"
+                    >
+                      ویرایش
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user._id)}
+                      className="btn btn-sm btn-error mx-1"
+                    >
+                      حذف
+                    </button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+
+        {/* <tbody>
           {data?.map((user, index) => (
             <tr key={user._id}>
               <th>{index + 1}</th>
@@ -101,7 +198,7 @@ const EditUsersTable = () => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody> */}
       </table>
     </div>
   );

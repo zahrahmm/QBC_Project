@@ -11,7 +11,10 @@ import server from "../utils/axios";
 import { useCreateNewProduct } from "../utils/createNewProducts";
 
 const CreateNewProduct: React.FC = () => {
-  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<
+    "idle" | "success" | "error" | "uploading"
+  >("idle");
+
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState("");
   const [editMode, setEditMode] = useState<{ id: string; name: string } | null>(
@@ -58,7 +61,6 @@ const CreateNewProduct: React.FC = () => {
     category: "",
     quantity: 5,
     image: "",
-    countInStock: 5,
   });
 
   const { mutate: UploadImage } = useUploadImage();
@@ -71,62 +73,65 @@ const CreateNewProduct: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: ["price", "quantity", "countInStock"].includes(name)
-        ? Number(value)
-        : value,
+      [name]: name === "price" || name === "quantity" ? Number(value) : value,
     }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedFile(file);
-      setImageSrc(URL.createObjectURL(file));
+      setUploadStatus("uploading");
+
+      UploadImage(file, {
+        onSuccess: (data) => {
+          console.log("Uploaded!", data);
+          setImageSrc(URL.createObjectURL(file));
+          setUploadStatus("success");
+          setFormData((prev) => ({
+            ...prev,
+            image: data.image, // set image from response
+          }));
+        },
+        onError: (error) => {
+          console.error("Upload failed:", error);
+          setUploadStatus("error");
+          console.error("خطا در آپلود تصویر:", error);
+        },
+      });
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    UploadImage(formData, {
-      onSuccess: (response) => {
-        // response will be of type ImageResponse
-        CreateProduct(
-          {
-            ...formData,
-            image: response.image, // Use the image URL from response
-          },
-          {
-            onSuccess: () => {
-              // Reset form on success
-              setFormData({
-                name: "",
-                description: "",
-                price: 100000,
-                category: cat,
-                quantity: 5,
-                image: "",
-                countInStock: 5,
-              });
-              setSelectedFile(null);
-              setImageSrc(null);
-              alert("محصول با موفقیت اضافه شد!");
-            },
-            onError: (error) => {
-              console.error("Error creating product:", error);
-              alert("خطا در ایجاد محصول");
-            },
-          }
-        );
+    if (!formData.image || !formData.category || !formData.name.trim()) {
+      alert("لطفاً تمام فیلدهای الزامی را پر کنید.");
+      return;
+    }
+
+    CreateProduct(formData, {
+      onSuccess: (data) => {
+        alert("✅ محصول با موفقیت اضافه شد.");
+        console.log("Uploaded!", data);
+        setFormData({
+          name: "",
+          description: "",
+          price: 0,
+          category: "",
+          quantity: 0,
+          image: "",
+        });
+        setImageSrc(null);
+        setUploadStatus("idle");
       },
       onError: (error) => {
-        console.error("Error uploading image:", error);
-        alert("خطا در آپلود تصویر");
+        console.error("Error creating product:", error);
+        alert("⚠️ خطا در افزودن محصول");
       },
     });
   };
+  // console.log(formData);
 
-  console.log(formData);
   return (
     <div>
       <form onSubmit={handleSubmit} className="m-auto max-w-[1090px] py-26">
@@ -141,9 +146,20 @@ const CreateNewProduct: React.FC = () => {
           )}
           <input
             type="file"
+            accept="image/*"
+            name="image"
             onChange={handleImageChange}
             className="file-input w-full h-31"
           />
+          {uploadStatus === "uploading" && (
+            <span className="text-blue-500">در حال آپلود...</span>
+          )}
+          {uploadStatus === "success" && (
+            <span className="text-green-500">✅</span>
+          )}
+          {uploadStatus === "error" && (
+            <span className="text-red-500">⚠️ خطا در آپلود</span>
+          )}
           <fieldset className="fieldset">
             <legend className="fieldset-legend">نام محصول</legend>
             <input
@@ -179,6 +195,7 @@ const CreateNewProduct: React.FC = () => {
                 className="input input-bordered w-full"
               />
               <button
+                type="button"
                 className="btn btn-secondary"
                 disabled={isPending}
                 onClick={handleCreate}
@@ -230,25 +247,25 @@ const CreateNewProduct: React.FC = () => {
                           <div className="flex gap-1">
                             {editMode?.id === cat._id ? (
                               <button
+                                type="button"
                                 className="btn btn-xs btn-success"
                                 onClick={handleEditSave}
-                                type="button"
                               >
                                 ذخیره
                               </button>
                             ) : (
                               <>
                                 <button
+                                  type="button"
                                   className="btn btn-xs btn-info"
                                   onClick={() => handleEdit(cat._id, cat.name)}
-                                  type="button"
                                 >
                                   ویرایش
                                 </button>
                                 <button
+                                  type="button"
                                   className="btn btn-xs btn-error"
                                   onClick={() => handleDelete(cat._id)}
-                                  type="button"
                                 >
                                   حذف
                                 </button>
@@ -258,11 +275,11 @@ const CreateNewProduct: React.FC = () => {
                         )}
                         {formData.category && (
                           <button
+                            type="button"
                             className="btn btn-xs btn-outline"
                             onClick={() =>
                               setFormData((prev) => ({ ...prev, category: "" }))
                             }
-                            type="button"
                           >
                             نمایش همه برندها
                           </button>
@@ -299,7 +316,6 @@ const CreateNewProduct: React.FC = () => {
               <legend className="fieldset-legend">موجودی</legend>
               <select
                 name="countInStock"
-                onChange={handleChange}
                 className="select w-full"
                 defaultValue=""
               >
@@ -318,7 +334,8 @@ const CreateNewProduct: React.FC = () => {
           </div>
           <button
             type="submit"
-            disabled={Pending}
+            // disabled={Pending || !formData.image}
+            // disabled={Pending}
             className="btn btn-soft btn-secondary"
           >
             اضافه کردن محصول
