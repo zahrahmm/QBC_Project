@@ -7,8 +7,6 @@ interface FavoriteProductsStore {
   likeProduct: (product: productType) => void;
   disLikeProduct: (id: string) => void;
 }
-
-
 const useFavoriteProducts = create<FavoriteProductsStore>()(persist(
   (set) => ({
   products: [],
