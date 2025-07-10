@@ -1,3 +1,4 @@
+import { persianNumberFormatter } from "../models/PersianLocale";
 import useUsers from "../utils/useUsers";
 
 const EditUsersTable = () => {
@@ -117,7 +118,7 @@ const EditUsersTable = () => {
         <tbody>
           {data?.map((user, index) => (
             <tr key={user._id}>
-              <th>{index + 1}</th>
+              <th>{persianNumberFormatter.format(index + 1)}</th>
               <td>{user._id}</td>
               <td>
                 <button className="btn btn-sm btn-warning mx-3">
