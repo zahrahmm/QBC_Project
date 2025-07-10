@@ -109,28 +109,28 @@ const CreateNewProduct: React.FC = () => {
       return;
     }
 
-    CreateProduct(formData, {
-      onSuccess: (data) => {
-        alert("✅ محصول با موفقیت اضافه شد.");
-        console.log("Uploaded!", data);
-        setFormData({
-          name: "",
-          description: "",
-          price: 0,
-          category: "",
-          quantity: 0,
-          image: "",
-        });
-        setImageSrc(null);
-        setUploadStatus("idle");
-      },
-      onError: (error) => {
-        console.error("Error creating product:", error);
-        alert("⚠️ خطا در افزودن محصول");
-      },
-    });
+    CreateProduct(formData)
+      // onSuccess: (data) => {
+      //   alert("✅ محصول با موفقیت اضافه شد.");
+      //   console.log("Uploaded!", data);
+      //   setFormData({
+      //     name: "",
+      //     description: "",
+      //     price: 0,
+      //     category: "",
+      //     quantity: 0,
+      //     image: "",
+      //   });
+      //   setImageSrc(null);
+      //   setUploadStatus("idle");
+      // },
+      // onError: (error) => {
+      //   console.error("Error creating product:", error);
+      //   alert("⚠️ خطا در افزودن محصول");
+      // },
+    ;
   };
-  // console.log(formData);
+  console.log(formData);
 
   return (
     <div>

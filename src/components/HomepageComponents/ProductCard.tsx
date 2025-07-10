@@ -3,6 +3,8 @@ import useFavoriteProducts from "../../stores/favouriteProductsStore";
 import useProductStore from "../../stores/useProductStore";
 import type { productType } from "../../types/productType";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import RenderRatingStar from "../productPage/RenderRatingStar";
+import { persianCurrencyFormatter } from "../../models/PersianLocale";
 
 interface Props {
   product: productType;
@@ -44,16 +46,12 @@ const setSelectedProductId = useProductStore(
         <h2 className="card-title pt-2 ">{product.name}</h2>
         <p>{product.description}</p>
         <div className="card-actions justify-between">
-          <div className="badge badge-outline">
-            {product.category.name}
+          <div className="badge badge-soft badge-secondary ">
+             {persianCurrencyFormatter.format(product.price) }
           </div>
-          <div className="rating">
-            <div className="mask mask-star" aria-label="1 star"></div>
-            <div className="mask mask-star" aria-label="2 star"></div>
-            <div className="mask mask-star" aria-label="3 star" aria-current="true"></div>
-            <div className="mask mask-star" aria-label="4 star"></div>
-            <div className="mask mask-star" aria-label="5 star"></div>
-          </div>
+          <div className="rating rating-xl rating-half flex-row-reverse">
+              {RenderRatingStar(product.rating)}
+            </div>
         </div>
       </div>
     </div>

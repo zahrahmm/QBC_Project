@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 
 export const useCreateNewProduct = () => {
   const navigate = useNavigate();
-  const createNewProduct_URL = "api/products";
+  const createNewProduct_URL = "/api/products";
 
   return useMutation({
     mutationFn: (product: newProductPayload) =>
