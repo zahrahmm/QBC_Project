@@ -14,7 +14,7 @@ Welcome to the **QBC Project** repository! This is a modern, responsive e-commer
 🚀 **Technologies Used**
 - **React**, **TypeScript**, **Vite**
 - **Tailwind CSS**, **DaisyUI**
-- **Zustand** (state management)
+- **Zustand**, **React Query** (state management)
 - **React Router** (routing)
 - **Axios** (HTTP requests)
 
