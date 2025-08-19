@@ -1,54 +1,26 @@
-# React + TypeScript + Vite
+# QBC Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **QBC Project** repository! This is a modern, responsive e-commerce web application built with **React**, **TypeScript**, and **Vite**, developed as a **group project**. It allows users to browse products, view details, and add items to their shopping cart.
 
-Currently, two official plugins are available:
+🌟 **Features**
+- **Product Listing**: Browse products with detailed cards.
+- **Shopping Cart**: Add products to your cart and manage quantities.
+- **Favorites**: Mark products as favorites using global state managed by **Zustand**.
+- **User Dashboard**: A dedicated panel for users to manage their profile, view order history, and other user-specific actions.
+- **Admin Panel**: A panel for administrators to manage products, orders, users, and other backend functionalities.
+- **Responsive Design**: Built with **Tailwind CSS** and **DaisyUI** for a seamless experience across devices.
+- **Client-Side Routing**: Navigation between pages using **React Router**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 **Technologies Used**
+- **React**, **TypeScript**, **Vite**
+- **Tailwind CSS**, **DaisyUI**
+- **Zustand** (state management)
+- **React Router** (routing)
+- **Axios** (HTTP requests)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+🛠️ **Installation**
+```bash
+git clone https://github.com/zahrahmm/QBC_Project.git
+cd QBC_Project
+npm install
+npm run dev
